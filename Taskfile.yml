@@ -1,0 +1,38 @@
+version: 3
+
+tasks:
+  build:
+    desc: Build the app
+    cmds:
+      - GOFLAGS=-mod=mod go build -o bin/go-tmf-service-inventory src/main.go
+
+  build.win32:
+    desc: Build the app for Win 32 bits
+    cmds:
+      - GOOS=windows GOARCH=386 go build -o bin/go-tmf-service-inventory-win-386 src/main.go
+
+  build.win64:
+    desc: Build the app for Win 64 bits
+    cmds:
+      - GOOS=windows GOARCH=amd64 go build -o bin/go-tmf-service-inventory-win-64 src/main.go
+
+  build.linux64:
+    desc: Build the app for Linux 64 bits
+    cmds:
+      - GOOS=linux GOARCH=amd64 go build -o bin/go-tmf-service-inventory-linux-64 src/main.go
+
+  build.linux32:
+    desc: Build the app for Linux 32 bits
+    cmds:
+      - GOOS=linux GOARCH=386 go build -o bin/go-tmf-service-inventory-linux-386 src/main.go
+
+  run:
+    desc: Run the app
+    cmds:
+#      - GOFLAGS=-mod=mod go build -o bin/tmf-service-inventory src/main.go
+      - GOFLAGS=-mod=mod go run src/main.go
+
+  oapi-codegen.gen.v5:
+    desc: Generate Go code
+    cmds:
+      - GOFLAGS=-mod=mod go generate github.com/MxelA/go-tmf-service-inventory github.com/MxelA/go-tmf-service-inventory/src/oapi_codegen/tmf638v5
