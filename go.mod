@@ -1,3 +1,3 @@
-module github.com/MxelA/go-tmf-service
+module github.com/MxelA/tmf-service
 
 go 1.21.4
