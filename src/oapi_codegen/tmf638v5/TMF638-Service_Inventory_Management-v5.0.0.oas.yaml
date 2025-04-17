@@ -247,7 +247,7 @@ paths:
         - $ref: '#/components/parameters/Id'
         - $ref: '#/components/parameters/Fields'
       requestBody:
-        $ref: '#/components/requestBodies/Service_MVO'
+#        $ref: '#/components/requestBodies/Service_MVO'
       responses:
         '200':
           $ref: '#/components/responses/200Service_Patch'
