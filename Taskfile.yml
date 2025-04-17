@@ -32,6 +32,14 @@ tasks:
 #      - GOFLAGS=-mod=mod go build -o bin/tmf-service-inventory src/main.go
       - GOFLAGS=-mod=mod go run src/main.go
 
+  swagger.validate.tmf638.v4_2:
+    desc: Validate swagger
+    cmds:
+      - swagger validate internal/tmf-service-inventory/swagger/tmf638v4_2/TMF638_Service_Inventory_Management_API_v4.2.0_beta_swagger.json
+  swagger.gen.tmf638.v4_2:
+    desc: Generate Go code
+    cmds:
+      - GOFLAGS=-mod=mod go generate github.com/MxelA/tmf-service-go github.com/MxelA/tmf-service-go/pkg/swagger/tmf641v4_1
   oapi-codegen.gen.v5:
     desc: Generate Go code
     cmds:
