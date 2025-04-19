@@ -1075,43 +1075,59 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Identifier of the context update"
+          "description": "Identifier of the context update",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-nullable": true
         },
         "lastUpdate": {
           "type": "string",
           "format": "date-time",
-          "description": "The date and time the status/state last changed."
+          "description": "The date and time the status/state last changed.",
+          "x-go-custom-tag": "bson:\"lastUpdate,omitempty\"",
+          "x-nullable": true
         },
         "reason": {
           "type": "string",
-          "description": "The reason/context for the current value of the status/state."
+          "description": "The reason/context for the current value of the status/state.",
+          "x-go-custom-tag": "bson:\"reason,omitempty\"",
+          "x-nullable": true
         },
         "relatedEntity": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/EntityRef"
           },
-          "description": "A list of entities that represent observations, anomalies or managing entities etc associated to the current status/state value."
+          "description": "A list of entities that represent observations, anomalies or managing entities etc associated to the current status/state value.",
+          "x-go-custom-tag": "bson:\"relatedEntity,omitempty\"",
+          "x-nullable": true
         },
         "relatedParty": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/RelatedParty"
           },
-          "description": "List of parties associated to the current status/state value."
+          "description": "List of parties associated to the current status/state value.",
+          "x-go-custom-tag": "bson:\"relatedParty,omitempty\"",
+          "x-nullable": true
         },
         "@baseType": {
           "type": "string",
-          "description": "When sub-classing, this defines the super-class"
+          "description": "When sub-classing, this defines the super-class",
+          "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
+          "x-nullable": true
         },
         "@schemaLocation": {
           "type": "string",
           "format": "uri",
-          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
+          "x-go-custom-tag": "bson:\"@schemaLocation,omitempty\"",
+          "x-nullable": true
         },
         "@type": {
           "type": "string",
-          "description": "When sub-classing, this defines the sub-class Extensible name"
+          "description": "When sub-classing, this defines the sub-class Extensible name",
+          "x-go-custom-tag": "bson:\"@type,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -1121,12 +1137,16 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "unique identifier"
+          "description": "unique identifier",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-nullable": true
         },
         "href": {
           "type": "string",
           "format": "uri",
-          "description": "Hyperlink reference"
+          "description": "Hyperlink reference",
+          "x-go-custom-tag": "bson:\"href,omitempty\"",
+          "x-nullable": true
         },
         "@baseType": {
           "type": "string",
