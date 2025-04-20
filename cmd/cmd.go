@@ -18,6 +18,10 @@ func init() {
 
 	apiCmd.Flags().StringVar(&port, "port", "8080", "Port to run the API server")
 	apiCmd.Flags().StringVar(&host, "host", "0.0.0.0", "Host to run the API server")
-
 	rootCmd.Execute()
+
+}
+
+func Execute() error {
+	return rootCmd.Execute()
 }

@@ -15,24 +15,24 @@ type DatabaseNeo4j struct {
 func NewDatabaseNeo4j(l *Logger) *DatabaseNeo4j {
 	_ = godotenv.Load()
 
-	host, ok := os.LookupEnv("NEO4j_DB_HOST")
+	host, ok := os.LookupEnv("NEO4J_DB_HOST")
 	if !ok {
-		log.Fatalf("NEO4j_DB_HOST not found")
+		log.Fatalf(".env property NEO4J_DB_HOST not found")
 	}
 
-	port, ok := os.LookupEnv("NEO4j_DB_PORT")
+	port, ok := os.LookupEnv("NEO4J_DB_PORT")
 	if !ok {
-		log.Fatalf("NEO4j_DB_PORT not found")
+		log.Fatalf(".env property NEO4J_DB_PORT not found")
 	}
 
-	username, ok := os.LookupEnv("NEO4j_DB_USERNAME")
+	username, ok := os.LookupEnv("NEO4J_DB_USERNAME")
 	if !ok {
-		log.Fatalf("NEO4j_DB_USERNAME not found")
+		log.Fatalf(".env property NEO4J_DB_USERNAME not found")
 	}
 
-	password, ok := os.LookupEnv("NEO4j_DB_PASSWORD")
+	password, ok := os.LookupEnv("NEO4J_DB_PASSWORD")
 	if !ok {
-		log.Fatalf("NEO4j_DB_PASSWORD not found")
+		log.Fatalf(".env property NEO4J_DB_PASSWORD not found")
 	}
 
 	ctx := context.Background()
@@ -46,14 +46,14 @@ func NewDatabaseNeo4j(l *Logger) *DatabaseNeo4j {
 		neo4j.BasicAuth(dbUser, dbPassword, ""))
 
 	if err != nil {
-		l.core.Error("Failed to connect to Neo4j database", err)
+		log.Fatalf("Failed to connect to Neo4j database", err)
 	}
 
 	defer driver.Close(ctx)
 
 	err = driver.VerifyConnectivity(ctx)
 	if err != nil {
-		l.core.Error("Failed to Verify Connectivity to Neo4j database", err)
+		log.Fatalf("Failed to Verify Connectivity to Neo4j database", err)
 	}
 
 	l.core.Info("Connection established to Neo4j database")

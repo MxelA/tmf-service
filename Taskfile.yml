@@ -29,8 +29,8 @@ tasks:
   run:
     desc: Run the app
     cmds:
-#      - GOFLAGS=-mod=mod go build -o bin/tmf-service-inventory src/main.go
-      - GOFLAGS=-mod=mod go run src/main.go
+      - GOFLAGS=-mod=mod go build -o bin/tmf-service main.go
+      - GOFLAGS=-mod=mod go run main.go
 
   swagger.validate.tmf638.v4_2:
     desc: Validate swagger
