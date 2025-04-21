@@ -9,14 +9,13 @@ import (
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations/service"
 	"github.com/go-openapi/loads"
 	"log"
-	"net/http"
 )
 
 type TmfServiceInventoryPkg struct {
 	Server *restapi.Server
 }
 
-func NewTmfServiceInventory(l *core.Logger, db *core.DatabaseNeo4j, apiCore *core.API) *TmfServiceInventoryPkg {
+func NewTmfServiceInventory(l *core.Logger, db *core.DatabaseNeo4j) *TmfServiceInventoryPkg {
 
 	// Initialize Swagger
 	swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "")
@@ -35,9 +34,6 @@ func NewTmfServiceInventory(l *core.Logger, db *core.DatabaseNeo4j, apiCore *cor
 
 	server := restapi.NewServer(api)
 	server.ConfigureAPI()
-
-	// Register handlers in apiCore
-	apiCore.GetRouter().Handle("/tmf-api/serviceInventory/v4/", http.StripPrefix("", server.GetHandler()))
 
 	defer server.Shutdown()
 	defer l.GetCore().Info("Initializing tmf-service-inventory package")

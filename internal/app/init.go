@@ -3,6 +3,7 @@ package app
 import (
 	"github.com/MxelA/tmf-service/internal/core"
 	tmf_service_inventory "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory"
+	"net/http"
 )
 
 // initCore initialize core packages of application
@@ -29,13 +30,14 @@ func (app *app) initCore() {
 // packages should be initialized.
 func (app *app) initPackages() {
 	var (
-		db  = app.DB
-		api = app.API
+		db = app.DB
+		//api = app.API
 		//pubSub = app.PubSub
 		logger = app.Logger
 	)
 
-	app.TmfServiceInventoryPkg = tmf_service_inventory.NewTmfServiceInventory(logger, db, api)
+	tmfServiceInventoryPkg := tmf_service_inventory.NewTmfServiceInventory(logger, db)
+	app.API.GetRouter().Handle("/tmf-api/serviceInventory/v4/", http.StripPrefix("", tmfServiceInventoryPkg.Server.GetHandler()))
 
 	defer logger.GetCore().Info("Initialize packages done!")
 }
