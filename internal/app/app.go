@@ -32,17 +32,6 @@ func (app *app) Serve() {
 	logger := app.Logger.GetCore()
 	//pubSub := app.PubSub.GetCore()
 
-	//mux := http.NewServeMux()
-
-	//if app.TmfServiceInventoryPkg != nil {
-	//	mux.Handle("/tmf-api/serviceInventory/v4/", http.StripPrefix("/tmf-api/serviceInventory/v4", app.TmfServiceInventoryPkg.Server.GetHandler()))
-	//}
-
-	mux := app.API.GetRouter()
-
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "Hello, world!")
-	})
 	server := &http.Server{
 		Addr:    app.Addr,
 		Handler: app.API.GetRouter(),
