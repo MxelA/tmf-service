@@ -17,7 +17,6 @@ type TmfServiceInventoryPkg struct {
 }
 
 func NewTmfServiceInventory(l *core.Logger, db *core.DatabaseNeo4j, apiCore *core.API) *TmfServiceInventoryPkg {
-	defer l.GetCore().Info("Initializing TMF SERVICE INVENTORY module")
 
 	// Initialize Swagger
 	swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "")
@@ -35,11 +34,13 @@ func NewTmfServiceInventory(l *core.Logger, db *core.DatabaseNeo4j, apiCore *cor
 	api.ServiceRetrieveServiceHandler = service.RetrieveServiceHandlerFunc(serviceInventoryHandler.RetrieveServiceHandler)
 
 	server := restapi.NewServer(api)
-	defer server.Shutdown()
 	server.ConfigureAPI()
 
 	// Register handlers in apiCore
 	apiCore.GetRouter().Handle("/tmf-api/serviceInventory/v4/", http.StripPrefix("", server.GetHandler()))
+
+	defer server.Shutdown()
+	defer l.GetCore().Info("Initializing tmf-service-inventory package")
 
 	return &TmfServiceInventoryPkg{
 		Server: server,
