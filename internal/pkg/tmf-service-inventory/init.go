@@ -9,13 +9,14 @@ import (
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations/service"
 	"github.com/go-openapi/loads"
 	"log"
+	"net/http"
 )
 
 type TmfServiceInventoryPkg struct {
 	Server *restapi.Server
 }
 
-func NewTmfServiceInventory(l *core.Logger, db *core.DatabaseNeo4j) *TmfServiceInventoryPkg {
+func NewTmfServiceInventory(l *core.Logger, db *core.DatabaseNeo4j, apiCore *core.API) *TmfServiceInventoryPkg {
 	defer l.GetCore().Info("Initializing TMF SERVICE INVENTORY module")
 
 	// Initialize Swagger
@@ -25,14 +26,21 @@ func NewTmfServiceInventory(l *core.Logger, db *core.DatabaseNeo4j) *TmfServiceI
 	}
 
 	api := operations.NewTmfServiceInventoryV42API(swaggerSpec)
-	server := restapi.NewServer(api)
 
 	repo := service_inventory_repository.Neo4JServiceInventoryRepository{Db: db}
 	serviceInventoryHandler := service_inventory_handler_v42.NewServiceInventoryHandler(&repo)
 
 	// Register Handlers
 	api.ServiceCreateServiceHandler = service.CreateServiceHandlerFunc(serviceInventoryHandler.CreateServiceHandler)
-	server.GetHandler()
+	api.ServiceRetrieveServiceHandler = service.RetrieveServiceHandlerFunc(serviceInventoryHandler.RetrieveServiceHandler)
+
+	server := restapi.NewServer(api)
+	defer server.Shutdown()
+	server.ConfigureAPI()
+
+	// Register handlers in apiCore
+	apiCore.GetRouter().Handle("/tmf-api/serviceInventory/v4/", http.StripPrefix("", server.GetHandler()))
+
 	return &TmfServiceInventoryPkg{
 		Server: server,
 	}

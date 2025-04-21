@@ -14,9 +14,8 @@ func (app *app) initCore() {
 	db := core.NewDatabaseNeo4j(logger)
 	app.DB = db
 
-	//api := core.NewApi(logger)
-	//middleware.InitAPIMiddleware(api, slogfiber.New(logger.GetCore()))
-	//app.API = api
+	api := core.NewApi(logger)
+	app.API = api
 
 	//pubSub := core.NewPubSub(logger)
 	//middleware.InitPubSubMiddleware(pubSub)
@@ -30,13 +29,13 @@ func (app *app) initCore() {
 // packages should be initialized.
 func (app *app) initPackages() {
 	var (
-		db = app.DB
-		//api    = app.API
+		db  = app.DB
+		api = app.API
 		//pubSub = app.PubSub
 		logger = app.Logger
 	)
 
-	app.TmfServiceInventoryPkg = tmf_service_inventory.NewTmfServiceInventory(logger, db)
+	app.TmfServiceInventoryPkg = tmf_service_inventory.NewTmfServiceInventory(logger, db, api)
 
 	defer logger.GetCore().Info("Initialize packages done!")
 }

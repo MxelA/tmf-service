@@ -1,14 +1,14 @@
 package app
 
 import (
-	//"context"
+	"context"
 	"fmt"
 	"github.com/MxelA/tmf-service/internal/core"
 	tmf_service_inventory "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory"
-	"log"
 	"net/http"
-	//"os"
-	//"os/signal"
+	"os"
+	"os/signal"
+	"syscall"
 	//"syscall"
 )
 
@@ -19,8 +19,8 @@ type App interface {
 // app contain all the core dependency and should
 // be implement at application startup.
 type app struct {
-	Addr string
-
+	Addr                   string
+	API                    *core.API
 	DB                     *core.DatabaseNeo4j
 	Logger                 *core.Logger
 	TmfServiceInventoryPkg *tmf_service_inventory.TmfServiceInventoryPkg
@@ -32,25 +32,42 @@ func (app *app) Serve() {
 	logger := app.Logger.GetCore()
 	//pubSub := app.PubSub.GetCore()
 
-	logger.Info("App running", "address", app.Addr)
+	//mux := http.NewServeMux()
 
-	if app.TmfServiceInventoryPkg != nil {
-		http.Handle("/tmf-api/serviceInventory/v4/", http.StripPrefix("/tmf-api/serviceInventory/v4", app.TmfServiceInventoryPkg.Server.GetHandler()))
+	//if app.TmfServiceInventoryPkg != nil {
+	//	mux.Handle("/tmf-api/serviceInventory/v4/", http.StripPrefix("/tmf-api/serviceInventory/v4", app.TmfServiceInventoryPkg.Server.GetHandler()))
+	//}
+
+	mux := app.API.GetRouter()
+
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "Hello, world!")
+	})
+	server := &http.Server{
+		Addr:    app.Addr,
+		Handler: app.API.GetRouter(),
 	}
 
-	log.Fatal(http.ListenAndServe(":8081", nil))
+	go func() {
+		logger.Info("App running", "address", app.Addr)
+		if err := server.ListenAndServe(); err != http.ErrServerClosed {
+			// Unexpected error, log and exit
+			fmt.Printf("ListenAndServe error: %v\n", err)
+			os.Exit(1)
+		}
+	}()
 
-	//go func() { _ = api.Listen(app.Addr) }()
+	var sig os.Signal
+	c := make(chan os.Signal, 1)                    // Create channel to signify a signal being sent
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM) // When an interrupt or termination signal is sent, notify the channel
+	sig = <-c                                       // This blocks the main thread until an interrupt is received
 
-	//var sig os.Signal
-	//c := make(chan os.Signal, 1)                    // Create channel to signify a signal being sent
-	//signal.Notify(c, os.Interrupt, syscall.SIGTERM) // When an interrupt or termination signal is sent, notify the channel
-	//sig = <-c                                       // This blocks the main thread until an interrupt is received
-	//
-	//logger.Info("Signal received", "signal", sig.String())
-	//logger.Info("Shutting down app, waiting background process to finish")
-	//defer logger.Info("App shutdown")
-	//
+	logger.Info("Signal received", "signal", sig.String())
+	logger.Info("Shutting down app, waiting background process to finish")
+
+	defer logger.Info("App shutdown")
+
+	server.Shutdown(context.Background())
 	//_ = api.ShutdownWithContext(context.Background())
 	//_ = pubSub.Close()
 }
