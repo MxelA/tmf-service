@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"github.com/MxelA/tmf-service/internal/core"
 	tmf_service_inventory "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory"
+	"log"
+	"net/http"
 	//"os"
 	//"os/signal"
 	//"syscall"
@@ -19,9 +21,9 @@ type App interface {
 type app struct {
 	Addr string
 
-	DB                  *core.DatabaseNeo4j
-	TmfServiceInventory *tmf_service_inventory.TmfServiceInventory
-	Logger              *core.Logger
+	DB                     *core.DatabaseNeo4j
+	Logger                 *core.Logger
+	TmfServiceInventoryPkg *tmf_service_inventory.TmfServiceInventoryPkg
 	//PubSub *core.PubSub
 }
 
@@ -31,7 +33,13 @@ func (app *app) Serve() {
 	//pubSub := app.PubSub.GetCore()
 
 	logger.Info("App running", "address", app.Addr)
-	
+
+	if app.TmfServiceInventoryPkg != nil {
+		http.Handle("/tmf-api/serviceInventory/v4/", http.StripPrefix("/tmf-api/serviceInventory/v4", app.TmfServiceInventoryPkg.Server.GetHandler()))
+	}
+
+	log.Fatal(http.ListenAndServe(":8081", nil))
+
 	//go func() { _ = api.Listen(app.Addr) }()
 
 	//var sig os.Signal

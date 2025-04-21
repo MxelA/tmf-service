@@ -11,13 +11,12 @@ import (
 	"log"
 )
 
-type TmfServiceInventory struct {
-	API    *operations.TmfServiceInventoryV42API
+type TmfServiceInventoryPkg struct {
 	Server *restapi.Server
 }
 
-func NewTmfServiceInventory(l *core.Logger, db *core.DatabaseNeo4j) *TmfServiceInventory {
-	defer l.GetCore().Info("Initializing TMF SERVICE INVENTORY")
+func NewTmfServiceInventory(l *core.Logger, db *core.DatabaseNeo4j) *TmfServiceInventoryPkg {
+	defer l.GetCore().Info("Initializing TMF SERVICE INVENTORY module")
 
 	// Initialize Swagger
 	swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "")
@@ -26,20 +25,19 @@ func NewTmfServiceInventory(l *core.Logger, db *core.DatabaseNeo4j) *TmfServiceI
 	}
 
 	api := operations.NewTmfServiceInventoryV42API(swaggerSpec)
+	server := restapi.NewServer(api)
 
 	repo := service_inventory_repository.Neo4JServiceInventoryRepository{Db: db}
 	serviceInventoryHandler := service_inventory_handler_v42.NewServiceInventoryHandler(&repo)
 
+	// Register Handlers
 	api.ServiceCreateServiceHandler = service.CreateServiceHandlerFunc(serviceInventoryHandler.CreateServiceHandler)
-
-	server := restapi.NewServer(api)
-
-	return &TmfServiceInventory{
-		API:    api,
+	server.GetHandler()
+	return &TmfServiceInventoryPkg{
 		Server: server,
 	}
 }
 
-func (tsi *TmfServiceInventory) GetTmfServiceInventory() *TmfServiceInventory {
+func (tsi *TmfServiceInventoryPkg) GetTmfServiceInventory() *TmfServiceInventoryPkg {
 	return tsi
 }

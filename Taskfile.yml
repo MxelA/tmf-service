@@ -41,6 +41,11 @@ tasks:
     cmds:
       - GOFLAGS=-mod=mod go generate github.com/MxelA/tmf-service github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2
 
+  swagger.doc.tmf638.v4_2:
+    desc: "Swagger Documentation for TMF638 v4.2 "
+    cmds:
+      - docker run -i yousan/swagger-yaml-to-html < internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/TMF638_Service_Inventory_Management_API_v4.2.0_beta_swagger.json > internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/doc/index.html
+
   oapi-codegen.gen.v5:
     desc: Generate Go code
     cmds:

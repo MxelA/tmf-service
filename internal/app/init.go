@@ -36,7 +36,7 @@ func (app *app) initPackages() {
 		logger = app.Logger
 	)
 
-	app.TmfServiceInventory = tmf_service_inventory.NewTmfServiceInventory(logger, db)
+	app.TmfServiceInventoryPkg = tmf_service_inventory.NewTmfServiceInventory(logger, db)
 
 	defer logger.GetCore().Info("Initialize packages done!")
 }
