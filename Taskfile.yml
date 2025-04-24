@@ -29,17 +29,23 @@ tasks:
   run:
     desc: Run the app
     cmds:
-#      - GOFLAGS=-mod=mod go build -o bin/tmf-service-inventory src/main.go
-      - GOFLAGS=-mod=mod go run src/main.go
+      - GOFLAGS=-mod=mod go build -o bin/tmf-service main.go
+      - GOFLAGS=-mod=mod go run main.go
 
   swagger.validate.tmf638.v4_2:
     desc: Validate swagger
     cmds:
-      - swagger validate internal/tmf-service-inventory/swagger/tmf638v4_2/TMF638_Service_Inventory_Management_API_v4.2.0_beta_swagger.json
+      - swagger validate internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/TMF638_Service_Inventory_Management_API_v4.2.0_beta_swagger.json
   swagger.gen.tmf638.v4_2:
     desc: Generate Go code
     cmds:
-      - GOFLAGS=-mod=mod go generate github.com/MxelA/tmf-service github.com/MxelA/tmf-service/internal/tmf-service-inventory/swagger/tmf638v4_2
+      - GOFLAGS=-mod=mod go generate github.com/MxelA/tmf-service github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2
+
+  swagger.doc.tmf638.v4_2:
+    desc: "Swagger Documentation for TMF638 v4.2 "
+    cmds:
+      - docker run -i yousan/swagger-yaml-to-html < internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/TMF638_Service_Inventory_Management_API_v4.2.0_beta_swagger.json > internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/doc/index.html
+
   oapi-codegen.gen.v5:
     desc: Generate Go code
     cmds:
