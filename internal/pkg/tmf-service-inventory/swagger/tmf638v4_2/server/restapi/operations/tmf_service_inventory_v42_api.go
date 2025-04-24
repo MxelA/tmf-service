@@ -7,9 +7,6 @@ package operations
 
 import (
 	"fmt"
-	events_subscription2 "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations/events_subscription"
-	notification_listeners_client_side2 "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations/notification_listeners_client_side"
-	service2 "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations/service"
 	"net/http"
 	"strings"
 
@@ -21,6 +18,10 @@ import (
 	"github.com/go-openapi/spec"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations/events_subscription"
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations/notification_listeners_client_side"
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations/service"
 )
 
 // NewTmfServiceInventoryV42API creates a new TmfServiceInventoryV42 instance
@@ -45,40 +46,40 @@ func NewTmfServiceInventoryV42API(spec *loads.Document) *TmfServiceInventoryV42A
 
 		JSONProducer: runtime.JSONProducer(),
 
-		ServiceCreateServiceHandler: service2.CreateServiceHandlerFunc(func(params service2.CreateServiceParams) middleware.Responder {
+		ServiceCreateServiceHandler: service.CreateServiceHandlerFunc(func(params service.CreateServiceParams) middleware.Responder {
 			return middleware.NotImplemented("operation service.CreateService has not yet been implemented")
 		}),
-		ServiceDeleteServiceHandler: service2.DeleteServiceHandlerFunc(func(params service2.DeleteServiceParams) middleware.Responder {
+		ServiceDeleteServiceHandler: service.DeleteServiceHandlerFunc(func(params service.DeleteServiceParams) middleware.Responder {
 			return middleware.NotImplemented("operation service.DeleteService has not yet been implemented")
 		}),
-		ServiceListServiceHandler: service2.ListServiceHandlerFunc(func(params service2.ListServiceParams) middleware.Responder {
+		ServiceListServiceHandler: service.ListServiceHandlerFunc(func(params service.ListServiceParams) middleware.Responder {
 			return middleware.NotImplemented("operation service.ListService has not yet been implemented")
 		}),
-		NotificationListenersClientSideListenToServiceAttributeValueChangeEventHandler: notification_listeners_client_side2.ListenToServiceAttributeValueChangeEventHandlerFunc(func(params notification_listeners_client_side2.ListenToServiceAttributeValueChangeEventParams) middleware.Responder {
+		NotificationListenersClientSideListenToServiceAttributeValueChangeEventHandler: notification_listeners_client_side.ListenToServiceAttributeValueChangeEventHandlerFunc(func(params notification_listeners_client_side.ListenToServiceAttributeValueChangeEventParams) middleware.Responder {
 			return middleware.NotImplemented("operation notification_listeners_client_side.ListenToServiceAttributeValueChangeEvent has not yet been implemented")
 		}),
-		NotificationListenersClientSideListenToServiceCreateEventHandler: notification_listeners_client_side2.ListenToServiceCreateEventHandlerFunc(func(params notification_listeners_client_side2.ListenToServiceCreateEventParams) middleware.Responder {
+		NotificationListenersClientSideListenToServiceCreateEventHandler: notification_listeners_client_side.ListenToServiceCreateEventHandlerFunc(func(params notification_listeners_client_side.ListenToServiceCreateEventParams) middleware.Responder {
 			return middleware.NotImplemented("operation notification_listeners_client_side.ListenToServiceCreateEvent has not yet been implemented")
 		}),
-		NotificationListenersClientSideListenToServiceDeleteEventHandler: notification_listeners_client_side2.ListenToServiceDeleteEventHandlerFunc(func(params notification_listeners_client_side2.ListenToServiceDeleteEventParams) middleware.Responder {
+		NotificationListenersClientSideListenToServiceDeleteEventHandler: notification_listeners_client_side.ListenToServiceDeleteEventHandlerFunc(func(params notification_listeners_client_side.ListenToServiceDeleteEventParams) middleware.Responder {
 			return middleware.NotImplemented("operation notification_listeners_client_side.ListenToServiceDeleteEvent has not yet been implemented")
 		}),
-		NotificationListenersClientSideListenToServiceOperatingStatusChangeEventHandler: notification_listeners_client_side2.ListenToServiceOperatingStatusChangeEventHandlerFunc(func(params notification_listeners_client_side2.ListenToServiceOperatingStatusChangeEventParams) middleware.Responder {
+		NotificationListenersClientSideListenToServiceOperatingStatusChangeEventHandler: notification_listeners_client_side.ListenToServiceOperatingStatusChangeEventHandlerFunc(func(params notification_listeners_client_side.ListenToServiceOperatingStatusChangeEventParams) middleware.Responder {
 			return middleware.NotImplemented("operation notification_listeners_client_side.ListenToServiceOperatingStatusChangeEvent has not yet been implemented")
 		}),
-		NotificationListenersClientSideListenToServiceStateChangeEventHandler: notification_listeners_client_side2.ListenToServiceStateChangeEventHandlerFunc(func(params notification_listeners_client_side2.ListenToServiceStateChangeEventParams) middleware.Responder {
+		NotificationListenersClientSideListenToServiceStateChangeEventHandler: notification_listeners_client_side.ListenToServiceStateChangeEventHandlerFunc(func(params notification_listeners_client_side.ListenToServiceStateChangeEventParams) middleware.Responder {
 			return middleware.NotImplemented("operation notification_listeners_client_side.ListenToServiceStateChangeEvent has not yet been implemented")
 		}),
-		ServicePatchServiceHandler: service2.PatchServiceHandlerFunc(func(params service2.PatchServiceParams) middleware.Responder {
+		ServicePatchServiceHandler: service.PatchServiceHandlerFunc(func(params service.PatchServiceParams) middleware.Responder {
 			return middleware.NotImplemented("operation service.PatchService has not yet been implemented")
 		}),
-		EventsSubscriptionRegisterListenerHandler: events_subscription2.RegisterListenerHandlerFunc(func(params events_subscription2.RegisterListenerParams) middleware.Responder {
+		EventsSubscriptionRegisterListenerHandler: events_subscription.RegisterListenerHandlerFunc(func(params events_subscription.RegisterListenerParams) middleware.Responder {
 			return middleware.NotImplemented("operation events_subscription.RegisterListener has not yet been implemented")
 		}),
-		ServiceRetrieveServiceHandler: service2.RetrieveServiceHandlerFunc(func(params service2.RetrieveServiceParams) middleware.Responder {
+		ServiceRetrieveServiceHandler: service.RetrieveServiceHandlerFunc(func(params service.RetrieveServiceParams) middleware.Responder {
 			return middleware.NotImplemented("operation service.RetrieveService has not yet been implemented")
 		}),
-		EventsSubscriptionUnregisterListenerHandler: events_subscription2.UnregisterListenerHandlerFunc(func(params events_subscription2.UnregisterListenerParams) middleware.Responder {
+		EventsSubscriptionUnregisterListenerHandler: events_subscription.UnregisterListenerHandlerFunc(func(params events_subscription.UnregisterListenerParams) middleware.Responder {
 			return middleware.NotImplemented("operation events_subscription.UnregisterListener has not yet been implemented")
 		}),
 	}
@@ -141,29 +142,29 @@ type TmfServiceInventoryV42API struct {
 	JSONProducer runtime.Producer
 
 	// ServiceCreateServiceHandler sets the operation handler for the create service operation
-	ServiceCreateServiceHandler service2.CreateServiceHandler
+	ServiceCreateServiceHandler service.CreateServiceHandler
 	// ServiceDeleteServiceHandler sets the operation handler for the delete service operation
-	ServiceDeleteServiceHandler service2.DeleteServiceHandler
+	ServiceDeleteServiceHandler service.DeleteServiceHandler
 	// ServiceListServiceHandler sets the operation handler for the list service operation
-	ServiceListServiceHandler service2.ListServiceHandler
+	ServiceListServiceHandler service.ListServiceHandler
 	// NotificationListenersClientSideListenToServiceAttributeValueChangeEventHandler sets the operation handler for the listen to service attribute value change event operation
-	NotificationListenersClientSideListenToServiceAttributeValueChangeEventHandler notification_listeners_client_side2.ListenToServiceAttributeValueChangeEventHandler
+	NotificationListenersClientSideListenToServiceAttributeValueChangeEventHandler notification_listeners_client_side.ListenToServiceAttributeValueChangeEventHandler
 	// NotificationListenersClientSideListenToServiceCreateEventHandler sets the operation handler for the listen to service create event operation
-	NotificationListenersClientSideListenToServiceCreateEventHandler notification_listeners_client_side2.ListenToServiceCreateEventHandler
+	NotificationListenersClientSideListenToServiceCreateEventHandler notification_listeners_client_side.ListenToServiceCreateEventHandler
 	// NotificationListenersClientSideListenToServiceDeleteEventHandler sets the operation handler for the listen to service delete event operation
-	NotificationListenersClientSideListenToServiceDeleteEventHandler notification_listeners_client_side2.ListenToServiceDeleteEventHandler
+	NotificationListenersClientSideListenToServiceDeleteEventHandler notification_listeners_client_side.ListenToServiceDeleteEventHandler
 	// NotificationListenersClientSideListenToServiceOperatingStatusChangeEventHandler sets the operation handler for the listen to service operating status change event operation
-	NotificationListenersClientSideListenToServiceOperatingStatusChangeEventHandler notification_listeners_client_side2.ListenToServiceOperatingStatusChangeEventHandler
+	NotificationListenersClientSideListenToServiceOperatingStatusChangeEventHandler notification_listeners_client_side.ListenToServiceOperatingStatusChangeEventHandler
 	// NotificationListenersClientSideListenToServiceStateChangeEventHandler sets the operation handler for the listen to service state change event operation
-	NotificationListenersClientSideListenToServiceStateChangeEventHandler notification_listeners_client_side2.ListenToServiceStateChangeEventHandler
+	NotificationListenersClientSideListenToServiceStateChangeEventHandler notification_listeners_client_side.ListenToServiceStateChangeEventHandler
 	// ServicePatchServiceHandler sets the operation handler for the patch service operation
-	ServicePatchServiceHandler service2.PatchServiceHandler
+	ServicePatchServiceHandler service.PatchServiceHandler
 	// EventsSubscriptionRegisterListenerHandler sets the operation handler for the register listener operation
-	EventsSubscriptionRegisterListenerHandler events_subscription2.RegisterListenerHandler
+	EventsSubscriptionRegisterListenerHandler events_subscription.RegisterListenerHandler
 	// ServiceRetrieveServiceHandler sets the operation handler for the retrieve service operation
-	ServiceRetrieveServiceHandler service2.RetrieveServiceHandler
+	ServiceRetrieveServiceHandler service.RetrieveServiceHandler
 	// EventsSubscriptionUnregisterListenerHandler sets the operation handler for the unregister listener operation
-	EventsSubscriptionUnregisterListenerHandler events_subscription2.UnregisterListenerHandler
+	EventsSubscriptionUnregisterListenerHandler events_subscription.UnregisterListenerHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -368,51 +369,51 @@ func (o *TmfServiceInventoryV42API) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/service"] = service2.NewCreateService(o.context, o.ServiceCreateServiceHandler)
+	o.handlers["POST"]["/service"] = service.NewCreateService(o.context, o.ServiceCreateServiceHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/service/{id}"] = service2.NewDeleteService(o.context, o.ServiceDeleteServiceHandler)
+	o.handlers["DELETE"]["/service/{id}"] = service.NewDeleteService(o.context, o.ServiceDeleteServiceHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/service"] = service2.NewListService(o.context, o.ServiceListServiceHandler)
+	o.handlers["GET"]["/service"] = service.NewListService(o.context, o.ServiceListServiceHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/listener/serviceAttributeValueChangeEvent"] = notification_listeners_client_side2.NewListenToServiceAttributeValueChangeEvent(o.context, o.NotificationListenersClientSideListenToServiceAttributeValueChangeEventHandler)
+	o.handlers["POST"]["/listener/serviceAttributeValueChangeEvent"] = notification_listeners_client_side.NewListenToServiceAttributeValueChangeEvent(o.context, o.NotificationListenersClientSideListenToServiceAttributeValueChangeEventHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/listener/serviceCreateEvent"] = notification_listeners_client_side2.NewListenToServiceCreateEvent(o.context, o.NotificationListenersClientSideListenToServiceCreateEventHandler)
+	o.handlers["POST"]["/listener/serviceCreateEvent"] = notification_listeners_client_side.NewListenToServiceCreateEvent(o.context, o.NotificationListenersClientSideListenToServiceCreateEventHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/listener/serviceDeleteEvent"] = notification_listeners_client_side2.NewListenToServiceDeleteEvent(o.context, o.NotificationListenersClientSideListenToServiceDeleteEventHandler)
+	o.handlers["POST"]["/listener/serviceDeleteEvent"] = notification_listeners_client_side.NewListenToServiceDeleteEvent(o.context, o.NotificationListenersClientSideListenToServiceDeleteEventHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/listener/serviceOperatingStatusChangeEvent"] = notification_listeners_client_side2.NewListenToServiceOperatingStatusChangeEvent(o.context, o.NotificationListenersClientSideListenToServiceOperatingStatusChangeEventHandler)
+	o.handlers["POST"]["/listener/serviceOperatingStatusChangeEvent"] = notification_listeners_client_side.NewListenToServiceOperatingStatusChangeEvent(o.context, o.NotificationListenersClientSideListenToServiceOperatingStatusChangeEventHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/listener/serviceStateChangeEvent"] = notification_listeners_client_side2.NewListenToServiceStateChangeEvent(o.context, o.NotificationListenersClientSideListenToServiceStateChangeEventHandler)
+	o.handlers["POST"]["/listener/serviceStateChangeEvent"] = notification_listeners_client_side.NewListenToServiceStateChangeEvent(o.context, o.NotificationListenersClientSideListenToServiceStateChangeEventHandler)
 	if o.handlers["PATCH"] == nil {
 		o.handlers["PATCH"] = make(map[string]http.Handler)
 	}
-	o.handlers["PATCH"]["/service/{id}"] = service2.NewPatchService(o.context, o.ServicePatchServiceHandler)
+	o.handlers["PATCH"]["/service/{id}"] = service.NewPatchService(o.context, o.ServicePatchServiceHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/hub"] = events_subscription2.NewRegisterListener(o.context, o.EventsSubscriptionRegisterListenerHandler)
+	o.handlers["POST"]["/hub"] = events_subscription.NewRegisterListener(o.context, o.EventsSubscriptionRegisterListenerHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/service/{id}"] = service2.NewRetrieveService(o.context, o.ServiceRetrieveServiceHandler)
+	o.handlers["GET"]["/service/{id}"] = service.NewRetrieveService(o.context, o.ServiceRetrieveServiceHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/hub/{id}"] = events_subscription2.NewUnregisterListener(o.context, o.EventsSubscriptionUnregisterListenerHandler)
+	o.handlers["DELETE"]["/hub/{id}"] = events_subscription.NewUnregisterListener(o.context, o.EventsSubscriptionUnregisterListenerHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

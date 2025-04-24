@@ -31,10 +31,10 @@ type Entity struct {
 
 	// Hyperlink reference
 	// Format: uri
-	Href strfmt.URI `json:"href,omitempty"`
+	Href *strfmt.URI `json:"href,omitempty" bson:"href,omitempty"`
 
 	// unique identifier
-	ID string `json:"id,omitempty"`
+	ID *string `json:"id,omitempty" bson:"id,omitempty"`
 }
 
 // Validate validates this entity

@@ -6,10 +6,11 @@ package service
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 )
 
 // Alex Server response

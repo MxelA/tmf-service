@@ -6,10 +6,11 @@ package service
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	models2 "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 )
 
 // Alex Server response
@@ -26,7 +27,7 @@ type RetrieveServiceOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Service `json:"body,omitempty"`
+	Payload *models.Service `json:"body,omitempty"`
 }
 
 type RetrieveServiceOKRaw struct {
@@ -50,7 +51,7 @@ func NewRetrieveServiceOKRaw() *RetrieveServiceOKRaw {
 }
 
 // WithPayload adds the payload to the retrieve service o k response
-func (o *RetrieveServiceOK) WithPayload(payload *models2.Service) *RetrieveServiceOK {
+func (o *RetrieveServiceOK) WithPayload(payload *models.Service) *RetrieveServiceOK {
 	o.Payload = payload
 	return o
 }
@@ -62,7 +63,7 @@ func (o *RetrieveServiceOKRaw) WithPayload(payload interface{}) *RetrieveService
 }
 
 // SetPayload sets the payload to the retrieve service o k response
-func (o *RetrieveServiceOK) SetPayload(payload *models2.Service) {
+func (o *RetrieveServiceOK) SetPayload(payload *models.Service) {
 	o.Payload = payload
 }
 
@@ -104,7 +105,7 @@ type RetrieveServiceBadRequest struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type RetrieveServiceBadRequestRaw struct {
@@ -128,7 +129,7 @@ func NewRetrieveServiceBadRequestRaw() *RetrieveServiceBadRequestRaw {
 }
 
 // WithPayload adds the payload to the retrieve service bad request response
-func (o *RetrieveServiceBadRequest) WithPayload(payload *models2.Error) *RetrieveServiceBadRequest {
+func (o *RetrieveServiceBadRequest) WithPayload(payload *models.Error) *RetrieveServiceBadRequest {
 	o.Payload = payload
 	return o
 }
@@ -140,7 +141,7 @@ func (o *RetrieveServiceBadRequestRaw) WithPayload(payload interface{}) *Retriev
 }
 
 // SetPayload sets the payload to the retrieve service bad request response
-func (o *RetrieveServiceBadRequest) SetPayload(payload *models2.Error) {
+func (o *RetrieveServiceBadRequest) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -182,7 +183,7 @@ type RetrieveServiceUnauthorized struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type RetrieveServiceUnauthorizedRaw struct {
@@ -206,7 +207,7 @@ func NewRetrieveServiceUnauthorizedRaw() *RetrieveServiceUnauthorizedRaw {
 }
 
 // WithPayload adds the payload to the retrieve service unauthorized response
-func (o *RetrieveServiceUnauthorized) WithPayload(payload *models2.Error) *RetrieveServiceUnauthorized {
+func (o *RetrieveServiceUnauthorized) WithPayload(payload *models.Error) *RetrieveServiceUnauthorized {
 	o.Payload = payload
 	return o
 }
@@ -218,7 +219,7 @@ func (o *RetrieveServiceUnauthorizedRaw) WithPayload(payload interface{}) *Retri
 }
 
 // SetPayload sets the payload to the retrieve service unauthorized response
-func (o *RetrieveServiceUnauthorized) SetPayload(payload *models2.Error) {
+func (o *RetrieveServiceUnauthorized) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -260,7 +261,7 @@ type RetrieveServiceForbidden struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type RetrieveServiceForbiddenRaw struct {
@@ -284,7 +285,7 @@ func NewRetrieveServiceForbiddenRaw() *RetrieveServiceForbiddenRaw {
 }
 
 // WithPayload adds the payload to the retrieve service forbidden response
-func (o *RetrieveServiceForbidden) WithPayload(payload *models2.Error) *RetrieveServiceForbidden {
+func (o *RetrieveServiceForbidden) WithPayload(payload *models.Error) *RetrieveServiceForbidden {
 	o.Payload = payload
 	return o
 }
@@ -296,7 +297,7 @@ func (o *RetrieveServiceForbiddenRaw) WithPayload(payload interface{}) *Retrieve
 }
 
 // SetPayload sets the payload to the retrieve service forbidden response
-func (o *RetrieveServiceForbidden) SetPayload(payload *models2.Error) {
+func (o *RetrieveServiceForbidden) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -338,7 +339,7 @@ type RetrieveServiceNotFound struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type RetrieveServiceNotFoundRaw struct {
@@ -362,7 +363,7 @@ func NewRetrieveServiceNotFoundRaw() *RetrieveServiceNotFoundRaw {
 }
 
 // WithPayload adds the payload to the retrieve service not found response
-func (o *RetrieveServiceNotFound) WithPayload(payload *models2.Error) *RetrieveServiceNotFound {
+func (o *RetrieveServiceNotFound) WithPayload(payload *models.Error) *RetrieveServiceNotFound {
 	o.Payload = payload
 	return o
 }
@@ -374,7 +375,7 @@ func (o *RetrieveServiceNotFoundRaw) WithPayload(payload interface{}) *RetrieveS
 }
 
 // SetPayload sets the payload to the retrieve service not found response
-func (o *RetrieveServiceNotFound) SetPayload(payload *models2.Error) {
+func (o *RetrieveServiceNotFound) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -416,7 +417,7 @@ type RetrieveServiceMethodNotAllowed struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type RetrieveServiceMethodNotAllowedRaw struct {
@@ -440,7 +441,7 @@ func NewRetrieveServiceMethodNotAllowedRaw() *RetrieveServiceMethodNotAllowedRaw
 }
 
 // WithPayload adds the payload to the retrieve service method not allowed response
-func (o *RetrieveServiceMethodNotAllowed) WithPayload(payload *models2.Error) *RetrieveServiceMethodNotAllowed {
+func (o *RetrieveServiceMethodNotAllowed) WithPayload(payload *models.Error) *RetrieveServiceMethodNotAllowed {
 	o.Payload = payload
 	return o
 }
@@ -452,7 +453,7 @@ func (o *RetrieveServiceMethodNotAllowedRaw) WithPayload(payload interface{}) *R
 }
 
 // SetPayload sets the payload to the retrieve service method not allowed response
-func (o *RetrieveServiceMethodNotAllowed) SetPayload(payload *models2.Error) {
+func (o *RetrieveServiceMethodNotAllowed) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -494,7 +495,7 @@ type RetrieveServiceConflict struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type RetrieveServiceConflictRaw struct {
@@ -518,7 +519,7 @@ func NewRetrieveServiceConflictRaw() *RetrieveServiceConflictRaw {
 }
 
 // WithPayload adds the payload to the retrieve service conflict response
-func (o *RetrieveServiceConflict) WithPayload(payload *models2.Error) *RetrieveServiceConflict {
+func (o *RetrieveServiceConflict) WithPayload(payload *models.Error) *RetrieveServiceConflict {
 	o.Payload = payload
 	return o
 }
@@ -530,7 +531,7 @@ func (o *RetrieveServiceConflictRaw) WithPayload(payload interface{}) *RetrieveS
 }
 
 // SetPayload sets the payload to the retrieve service conflict response
-func (o *RetrieveServiceConflict) SetPayload(payload *models2.Error) {
+func (o *RetrieveServiceConflict) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -572,7 +573,7 @@ type RetrieveServiceInternalServerError struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type RetrieveServiceInternalServerErrorRaw struct {
@@ -596,7 +597,7 @@ func NewRetrieveServiceInternalServerErrorRaw() *RetrieveServiceInternalServerEr
 }
 
 // WithPayload adds the payload to the retrieve service internal server error response
-func (o *RetrieveServiceInternalServerError) WithPayload(payload *models2.Error) *RetrieveServiceInternalServerError {
+func (o *RetrieveServiceInternalServerError) WithPayload(payload *models.Error) *RetrieveServiceInternalServerError {
 	o.Payload = payload
 	return o
 }
@@ -608,7 +609,7 @@ func (o *RetrieveServiceInternalServerErrorRaw) WithPayload(payload interface{})
 }
 
 // SetPayload sets the payload to the retrieve service internal server error response
-func (o *RetrieveServiceInternalServerError) SetPayload(payload *models2.Error) {
+func (o *RetrieveServiceInternalServerError) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 

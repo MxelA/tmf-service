@@ -6,7 +6,6 @@ package service
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 	"io"
 	"net/http"
 
@@ -15,6 +14,8 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/validate"
+
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 )
 
 // NewPatchServiceParams creates a new PatchServiceParams object

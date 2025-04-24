@@ -6,10 +6,11 @@ package service
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	models2 "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 )
 
 // Alex Server response
@@ -26,7 +27,7 @@ type CreateServiceCreated struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Service `json:"body,omitempty"`
+	Payload *models.Service `json:"body,omitempty"`
 }
 
 type CreateServiceCreatedRaw struct {
@@ -50,7 +51,7 @@ func NewCreateServiceCreatedRaw() *CreateServiceCreatedRaw {
 }
 
 // WithPayload adds the payload to the create service created response
-func (o *CreateServiceCreated) WithPayload(payload *models2.Service) *CreateServiceCreated {
+func (o *CreateServiceCreated) WithPayload(payload *models.Service) *CreateServiceCreated {
 	o.Payload = payload
 	return o
 }
@@ -62,7 +63,7 @@ func (o *CreateServiceCreatedRaw) WithPayload(payload interface{}) *CreateServic
 }
 
 // SetPayload sets the payload to the create service created response
-func (o *CreateServiceCreated) SetPayload(payload *models2.Service) {
+func (o *CreateServiceCreated) SetPayload(payload *models.Service) {
 	o.Payload = payload
 }
 
@@ -104,7 +105,7 @@ type CreateServiceBadRequest struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type CreateServiceBadRequestRaw struct {
@@ -128,7 +129,7 @@ func NewCreateServiceBadRequestRaw() *CreateServiceBadRequestRaw {
 }
 
 // WithPayload adds the payload to the create service bad request response
-func (o *CreateServiceBadRequest) WithPayload(payload *models2.Error) *CreateServiceBadRequest {
+func (o *CreateServiceBadRequest) WithPayload(payload *models.Error) *CreateServiceBadRequest {
 	o.Payload = payload
 	return o
 }
@@ -140,7 +141,7 @@ func (o *CreateServiceBadRequestRaw) WithPayload(payload interface{}) *CreateSer
 }
 
 // SetPayload sets the payload to the create service bad request response
-func (o *CreateServiceBadRequest) SetPayload(payload *models2.Error) {
+func (o *CreateServiceBadRequest) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -182,7 +183,7 @@ type CreateServiceUnauthorized struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type CreateServiceUnauthorizedRaw struct {
@@ -206,7 +207,7 @@ func NewCreateServiceUnauthorizedRaw() *CreateServiceUnauthorizedRaw {
 }
 
 // WithPayload adds the payload to the create service unauthorized response
-func (o *CreateServiceUnauthorized) WithPayload(payload *models2.Error) *CreateServiceUnauthorized {
+func (o *CreateServiceUnauthorized) WithPayload(payload *models.Error) *CreateServiceUnauthorized {
 	o.Payload = payload
 	return o
 }
@@ -218,7 +219,7 @@ func (o *CreateServiceUnauthorizedRaw) WithPayload(payload interface{}) *CreateS
 }
 
 // SetPayload sets the payload to the create service unauthorized response
-func (o *CreateServiceUnauthorized) SetPayload(payload *models2.Error) {
+func (o *CreateServiceUnauthorized) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -260,7 +261,7 @@ type CreateServiceForbidden struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type CreateServiceForbiddenRaw struct {
@@ -284,7 +285,7 @@ func NewCreateServiceForbiddenRaw() *CreateServiceForbiddenRaw {
 }
 
 // WithPayload adds the payload to the create service forbidden response
-func (o *CreateServiceForbidden) WithPayload(payload *models2.Error) *CreateServiceForbidden {
+func (o *CreateServiceForbidden) WithPayload(payload *models.Error) *CreateServiceForbidden {
 	o.Payload = payload
 	return o
 }
@@ -296,7 +297,7 @@ func (o *CreateServiceForbiddenRaw) WithPayload(payload interface{}) *CreateServ
 }
 
 // SetPayload sets the payload to the create service forbidden response
-func (o *CreateServiceForbidden) SetPayload(payload *models2.Error) {
+func (o *CreateServiceForbidden) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -338,7 +339,7 @@ type CreateServiceMethodNotAllowed struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type CreateServiceMethodNotAllowedRaw struct {
@@ -362,7 +363,7 @@ func NewCreateServiceMethodNotAllowedRaw() *CreateServiceMethodNotAllowedRaw {
 }
 
 // WithPayload adds the payload to the create service method not allowed response
-func (o *CreateServiceMethodNotAllowed) WithPayload(payload *models2.Error) *CreateServiceMethodNotAllowed {
+func (o *CreateServiceMethodNotAllowed) WithPayload(payload *models.Error) *CreateServiceMethodNotAllowed {
 	o.Payload = payload
 	return o
 }
@@ -374,7 +375,7 @@ func (o *CreateServiceMethodNotAllowedRaw) WithPayload(payload interface{}) *Cre
 }
 
 // SetPayload sets the payload to the create service method not allowed response
-func (o *CreateServiceMethodNotAllowed) SetPayload(payload *models2.Error) {
+func (o *CreateServiceMethodNotAllowed) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -416,7 +417,7 @@ type CreateServiceConflict struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type CreateServiceConflictRaw struct {
@@ -440,7 +441,7 @@ func NewCreateServiceConflictRaw() *CreateServiceConflictRaw {
 }
 
 // WithPayload adds the payload to the create service conflict response
-func (o *CreateServiceConflict) WithPayload(payload *models2.Error) *CreateServiceConflict {
+func (o *CreateServiceConflict) WithPayload(payload *models.Error) *CreateServiceConflict {
 	o.Payload = payload
 	return o
 }
@@ -452,7 +453,7 @@ func (o *CreateServiceConflictRaw) WithPayload(payload interface{}) *CreateServi
 }
 
 // SetPayload sets the payload to the create service conflict response
-func (o *CreateServiceConflict) SetPayload(payload *models2.Error) {
+func (o *CreateServiceConflict) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -494,7 +495,7 @@ type CreateServiceInternalServerError struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type CreateServiceInternalServerErrorRaw struct {
@@ -518,7 +519,7 @@ func NewCreateServiceInternalServerErrorRaw() *CreateServiceInternalServerErrorR
 }
 
 // WithPayload adds the payload to the create service internal server error response
-func (o *CreateServiceInternalServerError) WithPayload(payload *models2.Error) *CreateServiceInternalServerError {
+func (o *CreateServiceInternalServerError) WithPayload(payload *models.Error) *CreateServiceInternalServerError {
 	o.Payload = payload
 	return o
 }
@@ -530,7 +531,7 @@ func (o *CreateServiceInternalServerErrorRaw) WithPayload(payload interface{}) *
 }
 
 // SetPayload sets the payload to the create service internal server error response
-func (o *CreateServiceInternalServerError) SetPayload(payload *models2.Error) {
+func (o *CreateServiceInternalServerError) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 

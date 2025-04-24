@@ -6,10 +6,11 @@ package notification_listeners_client_side
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	models2 "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 )
 
 // Alex Server response
@@ -26,7 +27,7 @@ type ListenToServiceAttributeValueChangeEventCreated struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.EventSubscription `json:"body,omitempty"`
+	Payload *models.EventSubscription `json:"body,omitempty"`
 }
 
 type ListenToServiceAttributeValueChangeEventCreatedRaw struct {
@@ -50,7 +51,7 @@ func NewListenToServiceAttributeValueChangeEventCreatedRaw() *ListenToServiceAtt
 }
 
 // WithPayload adds the payload to the listen to service attribute value change event created response
-func (o *ListenToServiceAttributeValueChangeEventCreated) WithPayload(payload *models2.EventSubscription) *ListenToServiceAttributeValueChangeEventCreated {
+func (o *ListenToServiceAttributeValueChangeEventCreated) WithPayload(payload *models.EventSubscription) *ListenToServiceAttributeValueChangeEventCreated {
 	o.Payload = payload
 	return o
 }
@@ -62,7 +63,7 @@ func (o *ListenToServiceAttributeValueChangeEventCreatedRaw) WithPayload(payload
 }
 
 // SetPayload sets the payload to the listen to service attribute value change event created response
-func (o *ListenToServiceAttributeValueChangeEventCreated) SetPayload(payload *models2.EventSubscription) {
+func (o *ListenToServiceAttributeValueChangeEventCreated) SetPayload(payload *models.EventSubscription) {
 	o.Payload = payload
 }
 
@@ -104,7 +105,7 @@ type ListenToServiceAttributeValueChangeEventBadRequest struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceAttributeValueChangeEventBadRequestRaw struct {
@@ -128,7 +129,7 @@ func NewListenToServiceAttributeValueChangeEventBadRequestRaw() *ListenToService
 }
 
 // WithPayload adds the payload to the listen to service attribute value change event bad request response
-func (o *ListenToServiceAttributeValueChangeEventBadRequest) WithPayload(payload *models2.Error) *ListenToServiceAttributeValueChangeEventBadRequest {
+func (o *ListenToServiceAttributeValueChangeEventBadRequest) WithPayload(payload *models.Error) *ListenToServiceAttributeValueChangeEventBadRequest {
 	o.Payload = payload
 	return o
 }
@@ -140,7 +141,7 @@ func (o *ListenToServiceAttributeValueChangeEventBadRequestRaw) WithPayload(payl
 }
 
 // SetPayload sets the payload to the listen to service attribute value change event bad request response
-func (o *ListenToServiceAttributeValueChangeEventBadRequest) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceAttributeValueChangeEventBadRequest) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -182,7 +183,7 @@ type ListenToServiceAttributeValueChangeEventUnauthorized struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceAttributeValueChangeEventUnauthorizedRaw struct {
@@ -206,7 +207,7 @@ func NewListenToServiceAttributeValueChangeEventUnauthorizedRaw() *ListenToServi
 }
 
 // WithPayload adds the payload to the listen to service attribute value change event unauthorized response
-func (o *ListenToServiceAttributeValueChangeEventUnauthorized) WithPayload(payload *models2.Error) *ListenToServiceAttributeValueChangeEventUnauthorized {
+func (o *ListenToServiceAttributeValueChangeEventUnauthorized) WithPayload(payload *models.Error) *ListenToServiceAttributeValueChangeEventUnauthorized {
 	o.Payload = payload
 	return o
 }
@@ -218,7 +219,7 @@ func (o *ListenToServiceAttributeValueChangeEventUnauthorizedRaw) WithPayload(pa
 }
 
 // SetPayload sets the payload to the listen to service attribute value change event unauthorized response
-func (o *ListenToServiceAttributeValueChangeEventUnauthorized) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceAttributeValueChangeEventUnauthorized) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -260,7 +261,7 @@ type ListenToServiceAttributeValueChangeEventForbidden struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceAttributeValueChangeEventForbiddenRaw struct {
@@ -284,7 +285,7 @@ func NewListenToServiceAttributeValueChangeEventForbiddenRaw() *ListenToServiceA
 }
 
 // WithPayload adds the payload to the listen to service attribute value change event forbidden response
-func (o *ListenToServiceAttributeValueChangeEventForbidden) WithPayload(payload *models2.Error) *ListenToServiceAttributeValueChangeEventForbidden {
+func (o *ListenToServiceAttributeValueChangeEventForbidden) WithPayload(payload *models.Error) *ListenToServiceAttributeValueChangeEventForbidden {
 	o.Payload = payload
 	return o
 }
@@ -296,7 +297,7 @@ func (o *ListenToServiceAttributeValueChangeEventForbiddenRaw) WithPayload(paylo
 }
 
 // SetPayload sets the payload to the listen to service attribute value change event forbidden response
-func (o *ListenToServiceAttributeValueChangeEventForbidden) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceAttributeValueChangeEventForbidden) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -338,7 +339,7 @@ type ListenToServiceAttributeValueChangeEventNotFound struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceAttributeValueChangeEventNotFoundRaw struct {
@@ -362,7 +363,7 @@ func NewListenToServiceAttributeValueChangeEventNotFoundRaw() *ListenToServiceAt
 }
 
 // WithPayload adds the payload to the listen to service attribute value change event not found response
-func (o *ListenToServiceAttributeValueChangeEventNotFound) WithPayload(payload *models2.Error) *ListenToServiceAttributeValueChangeEventNotFound {
+func (o *ListenToServiceAttributeValueChangeEventNotFound) WithPayload(payload *models.Error) *ListenToServiceAttributeValueChangeEventNotFound {
 	o.Payload = payload
 	return o
 }
@@ -374,7 +375,7 @@ func (o *ListenToServiceAttributeValueChangeEventNotFoundRaw) WithPayload(payloa
 }
 
 // SetPayload sets the payload to the listen to service attribute value change event not found response
-func (o *ListenToServiceAttributeValueChangeEventNotFound) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceAttributeValueChangeEventNotFound) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -416,7 +417,7 @@ type ListenToServiceAttributeValueChangeEventMethodNotAllowed struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceAttributeValueChangeEventMethodNotAllowedRaw struct {
@@ -440,7 +441,7 @@ func NewListenToServiceAttributeValueChangeEventMethodNotAllowedRaw() *ListenToS
 }
 
 // WithPayload adds the payload to the listen to service attribute value change event method not allowed response
-func (o *ListenToServiceAttributeValueChangeEventMethodNotAllowed) WithPayload(payload *models2.Error) *ListenToServiceAttributeValueChangeEventMethodNotAllowed {
+func (o *ListenToServiceAttributeValueChangeEventMethodNotAllowed) WithPayload(payload *models.Error) *ListenToServiceAttributeValueChangeEventMethodNotAllowed {
 	o.Payload = payload
 	return o
 }
@@ -452,7 +453,7 @@ func (o *ListenToServiceAttributeValueChangeEventMethodNotAllowedRaw) WithPayloa
 }
 
 // SetPayload sets the payload to the listen to service attribute value change event method not allowed response
-func (o *ListenToServiceAttributeValueChangeEventMethodNotAllowed) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceAttributeValueChangeEventMethodNotAllowed) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -494,7 +495,7 @@ type ListenToServiceAttributeValueChangeEventConflict struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceAttributeValueChangeEventConflictRaw struct {
@@ -518,7 +519,7 @@ func NewListenToServiceAttributeValueChangeEventConflictRaw() *ListenToServiceAt
 }
 
 // WithPayload adds the payload to the listen to service attribute value change event conflict response
-func (o *ListenToServiceAttributeValueChangeEventConflict) WithPayload(payload *models2.Error) *ListenToServiceAttributeValueChangeEventConflict {
+func (o *ListenToServiceAttributeValueChangeEventConflict) WithPayload(payload *models.Error) *ListenToServiceAttributeValueChangeEventConflict {
 	o.Payload = payload
 	return o
 }
@@ -530,7 +531,7 @@ func (o *ListenToServiceAttributeValueChangeEventConflictRaw) WithPayload(payloa
 }
 
 // SetPayload sets the payload to the listen to service attribute value change event conflict response
-func (o *ListenToServiceAttributeValueChangeEventConflict) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceAttributeValueChangeEventConflict) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -572,7 +573,7 @@ type ListenToServiceAttributeValueChangeEventInternalServerError struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceAttributeValueChangeEventInternalServerErrorRaw struct {
@@ -596,7 +597,7 @@ func NewListenToServiceAttributeValueChangeEventInternalServerErrorRaw() *Listen
 }
 
 // WithPayload adds the payload to the listen to service attribute value change event internal server error response
-func (o *ListenToServiceAttributeValueChangeEventInternalServerError) WithPayload(payload *models2.Error) *ListenToServiceAttributeValueChangeEventInternalServerError {
+func (o *ListenToServiceAttributeValueChangeEventInternalServerError) WithPayload(payload *models.Error) *ListenToServiceAttributeValueChangeEventInternalServerError {
 	o.Payload = payload
 	return o
 }
@@ -608,7 +609,7 @@ func (o *ListenToServiceAttributeValueChangeEventInternalServerErrorRaw) WithPay
 }
 
 // SetPayload sets the payload to the listen to service attribute value change event internal server error response
-func (o *ListenToServiceAttributeValueChangeEventInternalServerError) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceAttributeValueChangeEventInternalServerError) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 

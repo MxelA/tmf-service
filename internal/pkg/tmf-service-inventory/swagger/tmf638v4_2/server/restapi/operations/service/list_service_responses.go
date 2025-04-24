@@ -6,11 +6,12 @@ package service
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	models2 "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 	"net/http"
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/swag"
+
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 )
 
 // Alex Server response
@@ -35,7 +36,7 @@ type ListServiceOK struct {
 	/*
 	  In: Body
 	*/
-	Payload []*models2.Service `json:"body,omitempty"`
+	Payload []*models.Service `json:"body,omitempty"`
 }
 
 type ListServiceOKRaw struct {
@@ -89,7 +90,7 @@ func (o *ListServiceOK) SetXTotalCount(xTotalCount int64) {
 }
 
 // WithPayload adds the payload to the list service o k response
-func (o *ListServiceOK) WithPayload(payload []*models2.Service) *ListServiceOK {
+func (o *ListServiceOK) WithPayload(payload []*models.Service) *ListServiceOK {
 	o.Payload = payload
 	return o
 }
@@ -101,7 +102,7 @@ func (o *ListServiceOKRaw) WithPayload(payload interface{}) *ListServiceOKRaw {
 }
 
 // SetPayload sets the payload to the list service o k response
-func (o *ListServiceOK) SetPayload(payload []*models2.Service) {
+func (o *ListServiceOK) SetPayload(payload []*models.Service) {
 	o.Payload = payload
 }
 
@@ -126,7 +127,7 @@ func (o *ListServiceOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 	payload := o.Payload
 	if payload == nil {
 		// return empty array
-		payload = make([]*models2.Service, 0, 50)
+		payload = make([]*models.Service, 0, 50)
 	}
 
 	if err := producer.Produce(rw, payload); err != nil {
@@ -155,7 +156,7 @@ func (o *ListServiceOKRaw) WriteResponse(rw http.ResponseWriter, producer runtim
 	payload := o.Payload
 	if payload == nil {
 		// return empty array
-		payload = make([]*models2.Service, 0, 50)
+		payload = make([]*models.Service, 0, 50)
 	}
 
 	if err := producer.Produce(rw, payload); err != nil {
@@ -177,7 +178,7 @@ type ListServiceBadRequest struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListServiceBadRequestRaw struct {
@@ -201,7 +202,7 @@ func NewListServiceBadRequestRaw() *ListServiceBadRequestRaw {
 }
 
 // WithPayload adds the payload to the list service bad request response
-func (o *ListServiceBadRequest) WithPayload(payload *models2.Error) *ListServiceBadRequest {
+func (o *ListServiceBadRequest) WithPayload(payload *models.Error) *ListServiceBadRequest {
 	o.Payload = payload
 	return o
 }
@@ -213,7 +214,7 @@ func (o *ListServiceBadRequestRaw) WithPayload(payload interface{}) *ListService
 }
 
 // SetPayload sets the payload to the list service bad request response
-func (o *ListServiceBadRequest) SetPayload(payload *models2.Error) {
+func (o *ListServiceBadRequest) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -255,7 +256,7 @@ type ListServiceUnauthorized struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListServiceUnauthorizedRaw struct {
@@ -279,7 +280,7 @@ func NewListServiceUnauthorizedRaw() *ListServiceUnauthorizedRaw {
 }
 
 // WithPayload adds the payload to the list service unauthorized response
-func (o *ListServiceUnauthorized) WithPayload(payload *models2.Error) *ListServiceUnauthorized {
+func (o *ListServiceUnauthorized) WithPayload(payload *models.Error) *ListServiceUnauthorized {
 	o.Payload = payload
 	return o
 }
@@ -291,7 +292,7 @@ func (o *ListServiceUnauthorizedRaw) WithPayload(payload interface{}) *ListServi
 }
 
 // SetPayload sets the payload to the list service unauthorized response
-func (o *ListServiceUnauthorized) SetPayload(payload *models2.Error) {
+func (o *ListServiceUnauthorized) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -333,7 +334,7 @@ type ListServiceForbidden struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListServiceForbiddenRaw struct {
@@ -357,7 +358,7 @@ func NewListServiceForbiddenRaw() *ListServiceForbiddenRaw {
 }
 
 // WithPayload adds the payload to the list service forbidden response
-func (o *ListServiceForbidden) WithPayload(payload *models2.Error) *ListServiceForbidden {
+func (o *ListServiceForbidden) WithPayload(payload *models.Error) *ListServiceForbidden {
 	o.Payload = payload
 	return o
 }
@@ -369,7 +370,7 @@ func (o *ListServiceForbiddenRaw) WithPayload(payload interface{}) *ListServiceF
 }
 
 // SetPayload sets the payload to the list service forbidden response
-func (o *ListServiceForbidden) SetPayload(payload *models2.Error) {
+func (o *ListServiceForbidden) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -411,7 +412,7 @@ type ListServiceNotFound struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListServiceNotFoundRaw struct {
@@ -435,7 +436,7 @@ func NewListServiceNotFoundRaw() *ListServiceNotFoundRaw {
 }
 
 // WithPayload adds the payload to the list service not found response
-func (o *ListServiceNotFound) WithPayload(payload *models2.Error) *ListServiceNotFound {
+func (o *ListServiceNotFound) WithPayload(payload *models.Error) *ListServiceNotFound {
 	o.Payload = payload
 	return o
 }
@@ -447,7 +448,7 @@ func (o *ListServiceNotFoundRaw) WithPayload(payload interface{}) *ListServiceNo
 }
 
 // SetPayload sets the payload to the list service not found response
-func (o *ListServiceNotFound) SetPayload(payload *models2.Error) {
+func (o *ListServiceNotFound) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -489,7 +490,7 @@ type ListServiceMethodNotAllowed struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListServiceMethodNotAllowedRaw struct {
@@ -513,7 +514,7 @@ func NewListServiceMethodNotAllowedRaw() *ListServiceMethodNotAllowedRaw {
 }
 
 // WithPayload adds the payload to the list service method not allowed response
-func (o *ListServiceMethodNotAllowed) WithPayload(payload *models2.Error) *ListServiceMethodNotAllowed {
+func (o *ListServiceMethodNotAllowed) WithPayload(payload *models.Error) *ListServiceMethodNotAllowed {
 	o.Payload = payload
 	return o
 }
@@ -525,7 +526,7 @@ func (o *ListServiceMethodNotAllowedRaw) WithPayload(payload interface{}) *ListS
 }
 
 // SetPayload sets the payload to the list service method not allowed response
-func (o *ListServiceMethodNotAllowed) SetPayload(payload *models2.Error) {
+func (o *ListServiceMethodNotAllowed) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -567,7 +568,7 @@ type ListServiceConflict struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListServiceConflictRaw struct {
@@ -591,7 +592,7 @@ func NewListServiceConflictRaw() *ListServiceConflictRaw {
 }
 
 // WithPayload adds the payload to the list service conflict response
-func (o *ListServiceConflict) WithPayload(payload *models2.Error) *ListServiceConflict {
+func (o *ListServiceConflict) WithPayload(payload *models.Error) *ListServiceConflict {
 	o.Payload = payload
 	return o
 }
@@ -603,7 +604,7 @@ func (o *ListServiceConflictRaw) WithPayload(payload interface{}) *ListServiceCo
 }
 
 // SetPayload sets the payload to the list service conflict response
-func (o *ListServiceConflict) SetPayload(payload *models2.Error) {
+func (o *ListServiceConflict) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -645,7 +646,7 @@ type ListServiceInternalServerError struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListServiceInternalServerErrorRaw struct {
@@ -669,7 +670,7 @@ func NewListServiceInternalServerErrorRaw() *ListServiceInternalServerErrorRaw {
 }
 
 // WithPayload adds the payload to the list service internal server error response
-func (o *ListServiceInternalServerError) WithPayload(payload *models2.Error) *ListServiceInternalServerError {
+func (o *ListServiceInternalServerError) WithPayload(payload *models.Error) *ListServiceInternalServerError {
 	o.Payload = payload
 	return o
 }
@@ -681,7 +682,7 @@ func (o *ListServiceInternalServerErrorRaw) WithPayload(payload interface{}) *Li
 }
 
 // SetPayload sets the payload to the list service internal server error response
-func (o *ListServiceInternalServerError) SetPayload(payload *models2.Error) {
+func (o *ListServiceInternalServerError) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 

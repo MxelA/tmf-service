@@ -6,10 +6,11 @@ package events_subscription
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	models2 "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 )
 
 // Alex Server response
@@ -26,7 +27,7 @@ type RegisterListenerCreated struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.EventSubscription `json:"body,omitempty"`
+	Payload *models.EventSubscription `json:"body,omitempty"`
 }
 
 type RegisterListenerCreatedRaw struct {
@@ -50,7 +51,7 @@ func NewRegisterListenerCreatedRaw() *RegisterListenerCreatedRaw {
 }
 
 // WithPayload adds the payload to the register listener created response
-func (o *RegisterListenerCreated) WithPayload(payload *models2.EventSubscription) *RegisterListenerCreated {
+func (o *RegisterListenerCreated) WithPayload(payload *models.EventSubscription) *RegisterListenerCreated {
 	o.Payload = payload
 	return o
 }
@@ -62,7 +63,7 @@ func (o *RegisterListenerCreatedRaw) WithPayload(payload interface{}) *RegisterL
 }
 
 // SetPayload sets the payload to the register listener created response
-func (o *RegisterListenerCreated) SetPayload(payload *models2.EventSubscription) {
+func (o *RegisterListenerCreated) SetPayload(payload *models.EventSubscription) {
 	o.Payload = payload
 }
 
@@ -104,7 +105,7 @@ type RegisterListenerBadRequest struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type RegisterListenerBadRequestRaw struct {
@@ -128,7 +129,7 @@ func NewRegisterListenerBadRequestRaw() *RegisterListenerBadRequestRaw {
 }
 
 // WithPayload adds the payload to the register listener bad request response
-func (o *RegisterListenerBadRequest) WithPayload(payload *models2.Error) *RegisterListenerBadRequest {
+func (o *RegisterListenerBadRequest) WithPayload(payload *models.Error) *RegisterListenerBadRequest {
 	o.Payload = payload
 	return o
 }
@@ -140,7 +141,7 @@ func (o *RegisterListenerBadRequestRaw) WithPayload(payload interface{}) *Regist
 }
 
 // SetPayload sets the payload to the register listener bad request response
-func (o *RegisterListenerBadRequest) SetPayload(payload *models2.Error) {
+func (o *RegisterListenerBadRequest) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -182,7 +183,7 @@ type RegisterListenerUnauthorized struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type RegisterListenerUnauthorizedRaw struct {
@@ -206,7 +207,7 @@ func NewRegisterListenerUnauthorizedRaw() *RegisterListenerUnauthorizedRaw {
 }
 
 // WithPayload adds the payload to the register listener unauthorized response
-func (o *RegisterListenerUnauthorized) WithPayload(payload *models2.Error) *RegisterListenerUnauthorized {
+func (o *RegisterListenerUnauthorized) WithPayload(payload *models.Error) *RegisterListenerUnauthorized {
 	o.Payload = payload
 	return o
 }
@@ -218,7 +219,7 @@ func (o *RegisterListenerUnauthorizedRaw) WithPayload(payload interface{}) *Regi
 }
 
 // SetPayload sets the payload to the register listener unauthorized response
-func (o *RegisterListenerUnauthorized) SetPayload(payload *models2.Error) {
+func (o *RegisterListenerUnauthorized) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -260,7 +261,7 @@ type RegisterListenerForbidden struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type RegisterListenerForbiddenRaw struct {
@@ -284,7 +285,7 @@ func NewRegisterListenerForbiddenRaw() *RegisterListenerForbiddenRaw {
 }
 
 // WithPayload adds the payload to the register listener forbidden response
-func (o *RegisterListenerForbidden) WithPayload(payload *models2.Error) *RegisterListenerForbidden {
+func (o *RegisterListenerForbidden) WithPayload(payload *models.Error) *RegisterListenerForbidden {
 	o.Payload = payload
 	return o
 }
@@ -296,7 +297,7 @@ func (o *RegisterListenerForbiddenRaw) WithPayload(payload interface{}) *Registe
 }
 
 // SetPayload sets the payload to the register listener forbidden response
-func (o *RegisterListenerForbidden) SetPayload(payload *models2.Error) {
+func (o *RegisterListenerForbidden) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -338,7 +339,7 @@ type RegisterListenerNotFound struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type RegisterListenerNotFoundRaw struct {
@@ -362,7 +363,7 @@ func NewRegisterListenerNotFoundRaw() *RegisterListenerNotFoundRaw {
 }
 
 // WithPayload adds the payload to the register listener not found response
-func (o *RegisterListenerNotFound) WithPayload(payload *models2.Error) *RegisterListenerNotFound {
+func (o *RegisterListenerNotFound) WithPayload(payload *models.Error) *RegisterListenerNotFound {
 	o.Payload = payload
 	return o
 }
@@ -374,7 +375,7 @@ func (o *RegisterListenerNotFoundRaw) WithPayload(payload interface{}) *Register
 }
 
 // SetPayload sets the payload to the register listener not found response
-func (o *RegisterListenerNotFound) SetPayload(payload *models2.Error) {
+func (o *RegisterListenerNotFound) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -416,7 +417,7 @@ type RegisterListenerMethodNotAllowed struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type RegisterListenerMethodNotAllowedRaw struct {
@@ -440,7 +441,7 @@ func NewRegisterListenerMethodNotAllowedRaw() *RegisterListenerMethodNotAllowedR
 }
 
 // WithPayload adds the payload to the register listener method not allowed response
-func (o *RegisterListenerMethodNotAllowed) WithPayload(payload *models2.Error) *RegisterListenerMethodNotAllowed {
+func (o *RegisterListenerMethodNotAllowed) WithPayload(payload *models.Error) *RegisterListenerMethodNotAllowed {
 	o.Payload = payload
 	return o
 }
@@ -452,7 +453,7 @@ func (o *RegisterListenerMethodNotAllowedRaw) WithPayload(payload interface{}) *
 }
 
 // SetPayload sets the payload to the register listener method not allowed response
-func (o *RegisterListenerMethodNotAllowed) SetPayload(payload *models2.Error) {
+func (o *RegisterListenerMethodNotAllowed) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -494,7 +495,7 @@ type RegisterListenerConflict struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type RegisterListenerConflictRaw struct {
@@ -518,7 +519,7 @@ func NewRegisterListenerConflictRaw() *RegisterListenerConflictRaw {
 }
 
 // WithPayload adds the payload to the register listener conflict response
-func (o *RegisterListenerConflict) WithPayload(payload *models2.Error) *RegisterListenerConflict {
+func (o *RegisterListenerConflict) WithPayload(payload *models.Error) *RegisterListenerConflict {
 	o.Payload = payload
 	return o
 }
@@ -530,7 +531,7 @@ func (o *RegisterListenerConflictRaw) WithPayload(payload interface{}) *Register
 }
 
 // SetPayload sets the payload to the register listener conflict response
-func (o *RegisterListenerConflict) SetPayload(payload *models2.Error) {
+func (o *RegisterListenerConflict) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -572,7 +573,7 @@ type RegisterListenerInternalServerError struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type RegisterListenerInternalServerErrorRaw struct {
@@ -596,7 +597,7 @@ func NewRegisterListenerInternalServerErrorRaw() *RegisterListenerInternalServer
 }
 
 // WithPayload adds the payload to the register listener internal server error response
-func (o *RegisterListenerInternalServerError) WithPayload(payload *models2.Error) *RegisterListenerInternalServerError {
+func (o *RegisterListenerInternalServerError) WithPayload(payload *models.Error) *RegisterListenerInternalServerError {
 	o.Payload = payload
 	return o
 }
@@ -608,7 +609,7 @@ func (o *RegisterListenerInternalServerErrorRaw) WithPayload(payload interface{}
 }
 
 // SetPayload sets the payload to the register listener internal server error response
-func (o *RegisterListenerInternalServerError) SetPayload(payload *models2.Error) {
+func (o *RegisterListenerInternalServerError) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 

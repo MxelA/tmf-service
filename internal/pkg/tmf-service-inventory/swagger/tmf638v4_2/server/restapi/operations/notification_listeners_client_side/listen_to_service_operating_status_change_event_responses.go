@@ -6,10 +6,11 @@ package notification_listeners_client_side
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	models2 "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 )
 
 // Alex Server response
@@ -26,7 +27,7 @@ type ListenToServiceOperatingStatusChangeEventCreated struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.EventSubscription `json:"body,omitempty"`
+	Payload *models.EventSubscription `json:"body,omitempty"`
 }
 
 type ListenToServiceOperatingStatusChangeEventCreatedRaw struct {
@@ -50,7 +51,7 @@ func NewListenToServiceOperatingStatusChangeEventCreatedRaw() *ListenToServiceOp
 }
 
 // WithPayload adds the payload to the listen to service operating status change event created response
-func (o *ListenToServiceOperatingStatusChangeEventCreated) WithPayload(payload *models2.EventSubscription) *ListenToServiceOperatingStatusChangeEventCreated {
+func (o *ListenToServiceOperatingStatusChangeEventCreated) WithPayload(payload *models.EventSubscription) *ListenToServiceOperatingStatusChangeEventCreated {
 	o.Payload = payload
 	return o
 }
@@ -62,7 +63,7 @@ func (o *ListenToServiceOperatingStatusChangeEventCreatedRaw) WithPayload(payloa
 }
 
 // SetPayload sets the payload to the listen to service operating status change event created response
-func (o *ListenToServiceOperatingStatusChangeEventCreated) SetPayload(payload *models2.EventSubscription) {
+func (o *ListenToServiceOperatingStatusChangeEventCreated) SetPayload(payload *models.EventSubscription) {
 	o.Payload = payload
 }
 
@@ -104,7 +105,7 @@ type ListenToServiceOperatingStatusChangeEventBadRequest struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceOperatingStatusChangeEventBadRequestRaw struct {
@@ -128,7 +129,7 @@ func NewListenToServiceOperatingStatusChangeEventBadRequestRaw() *ListenToServic
 }
 
 // WithPayload adds the payload to the listen to service operating status change event bad request response
-func (o *ListenToServiceOperatingStatusChangeEventBadRequest) WithPayload(payload *models2.Error) *ListenToServiceOperatingStatusChangeEventBadRequest {
+func (o *ListenToServiceOperatingStatusChangeEventBadRequest) WithPayload(payload *models.Error) *ListenToServiceOperatingStatusChangeEventBadRequest {
 	o.Payload = payload
 	return o
 }
@@ -140,7 +141,7 @@ func (o *ListenToServiceOperatingStatusChangeEventBadRequestRaw) WithPayload(pay
 }
 
 // SetPayload sets the payload to the listen to service operating status change event bad request response
-func (o *ListenToServiceOperatingStatusChangeEventBadRequest) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceOperatingStatusChangeEventBadRequest) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -182,7 +183,7 @@ type ListenToServiceOperatingStatusChangeEventUnauthorized struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceOperatingStatusChangeEventUnauthorizedRaw struct {
@@ -206,7 +207,7 @@ func NewListenToServiceOperatingStatusChangeEventUnauthorizedRaw() *ListenToServ
 }
 
 // WithPayload adds the payload to the listen to service operating status change event unauthorized response
-func (o *ListenToServiceOperatingStatusChangeEventUnauthorized) WithPayload(payload *models2.Error) *ListenToServiceOperatingStatusChangeEventUnauthorized {
+func (o *ListenToServiceOperatingStatusChangeEventUnauthorized) WithPayload(payload *models.Error) *ListenToServiceOperatingStatusChangeEventUnauthorized {
 	o.Payload = payload
 	return o
 }
@@ -218,7 +219,7 @@ func (o *ListenToServiceOperatingStatusChangeEventUnauthorizedRaw) WithPayload(p
 }
 
 // SetPayload sets the payload to the listen to service operating status change event unauthorized response
-func (o *ListenToServiceOperatingStatusChangeEventUnauthorized) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceOperatingStatusChangeEventUnauthorized) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -260,7 +261,7 @@ type ListenToServiceOperatingStatusChangeEventForbidden struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceOperatingStatusChangeEventForbiddenRaw struct {
@@ -284,7 +285,7 @@ func NewListenToServiceOperatingStatusChangeEventForbiddenRaw() *ListenToService
 }
 
 // WithPayload adds the payload to the listen to service operating status change event forbidden response
-func (o *ListenToServiceOperatingStatusChangeEventForbidden) WithPayload(payload *models2.Error) *ListenToServiceOperatingStatusChangeEventForbidden {
+func (o *ListenToServiceOperatingStatusChangeEventForbidden) WithPayload(payload *models.Error) *ListenToServiceOperatingStatusChangeEventForbidden {
 	o.Payload = payload
 	return o
 }
@@ -296,7 +297,7 @@ func (o *ListenToServiceOperatingStatusChangeEventForbiddenRaw) WithPayload(payl
 }
 
 // SetPayload sets the payload to the listen to service operating status change event forbidden response
-func (o *ListenToServiceOperatingStatusChangeEventForbidden) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceOperatingStatusChangeEventForbidden) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -338,7 +339,7 @@ type ListenToServiceOperatingStatusChangeEventNotFound struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceOperatingStatusChangeEventNotFoundRaw struct {
@@ -362,7 +363,7 @@ func NewListenToServiceOperatingStatusChangeEventNotFoundRaw() *ListenToServiceO
 }
 
 // WithPayload adds the payload to the listen to service operating status change event not found response
-func (o *ListenToServiceOperatingStatusChangeEventNotFound) WithPayload(payload *models2.Error) *ListenToServiceOperatingStatusChangeEventNotFound {
+func (o *ListenToServiceOperatingStatusChangeEventNotFound) WithPayload(payload *models.Error) *ListenToServiceOperatingStatusChangeEventNotFound {
 	o.Payload = payload
 	return o
 }
@@ -374,7 +375,7 @@ func (o *ListenToServiceOperatingStatusChangeEventNotFoundRaw) WithPayload(paylo
 }
 
 // SetPayload sets the payload to the listen to service operating status change event not found response
-func (o *ListenToServiceOperatingStatusChangeEventNotFound) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceOperatingStatusChangeEventNotFound) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -416,7 +417,7 @@ type ListenToServiceOperatingStatusChangeEventMethodNotAllowed struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceOperatingStatusChangeEventMethodNotAllowedRaw struct {
@@ -440,7 +441,7 @@ func NewListenToServiceOperatingStatusChangeEventMethodNotAllowedRaw() *ListenTo
 }
 
 // WithPayload adds the payload to the listen to service operating status change event method not allowed response
-func (o *ListenToServiceOperatingStatusChangeEventMethodNotAllowed) WithPayload(payload *models2.Error) *ListenToServiceOperatingStatusChangeEventMethodNotAllowed {
+func (o *ListenToServiceOperatingStatusChangeEventMethodNotAllowed) WithPayload(payload *models.Error) *ListenToServiceOperatingStatusChangeEventMethodNotAllowed {
 	o.Payload = payload
 	return o
 }
@@ -452,7 +453,7 @@ func (o *ListenToServiceOperatingStatusChangeEventMethodNotAllowedRaw) WithPaylo
 }
 
 // SetPayload sets the payload to the listen to service operating status change event method not allowed response
-func (o *ListenToServiceOperatingStatusChangeEventMethodNotAllowed) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceOperatingStatusChangeEventMethodNotAllowed) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -494,7 +495,7 @@ type ListenToServiceOperatingStatusChangeEventConflict struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceOperatingStatusChangeEventConflictRaw struct {
@@ -518,7 +519,7 @@ func NewListenToServiceOperatingStatusChangeEventConflictRaw() *ListenToServiceO
 }
 
 // WithPayload adds the payload to the listen to service operating status change event conflict response
-func (o *ListenToServiceOperatingStatusChangeEventConflict) WithPayload(payload *models2.Error) *ListenToServiceOperatingStatusChangeEventConflict {
+func (o *ListenToServiceOperatingStatusChangeEventConflict) WithPayload(payload *models.Error) *ListenToServiceOperatingStatusChangeEventConflict {
 	o.Payload = payload
 	return o
 }
@@ -530,7 +531,7 @@ func (o *ListenToServiceOperatingStatusChangeEventConflictRaw) WithPayload(paylo
 }
 
 // SetPayload sets the payload to the listen to service operating status change event conflict response
-func (o *ListenToServiceOperatingStatusChangeEventConflict) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceOperatingStatusChangeEventConflict) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -572,7 +573,7 @@ type ListenToServiceOperatingStatusChangeEventInternalServerError struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceOperatingStatusChangeEventInternalServerErrorRaw struct {
@@ -596,7 +597,7 @@ func NewListenToServiceOperatingStatusChangeEventInternalServerErrorRaw() *Liste
 }
 
 // WithPayload adds the payload to the listen to service operating status change event internal server error response
-func (o *ListenToServiceOperatingStatusChangeEventInternalServerError) WithPayload(payload *models2.Error) *ListenToServiceOperatingStatusChangeEventInternalServerError {
+func (o *ListenToServiceOperatingStatusChangeEventInternalServerError) WithPayload(payload *models.Error) *ListenToServiceOperatingStatusChangeEventInternalServerError {
 	o.Payload = payload
 	return o
 }
@@ -608,7 +609,7 @@ func (o *ListenToServiceOperatingStatusChangeEventInternalServerErrorRaw) WithPa
 }
 
 // SetPayload sets the payload to the listen to service operating status change event internal server error response
-func (o *ListenToServiceOperatingStatusChangeEventInternalServerError) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceOperatingStatusChangeEventInternalServerError) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 

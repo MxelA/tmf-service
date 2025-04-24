@@ -6,10 +6,11 @@ package service
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	models2 "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 )
 
 // Alex Server response
@@ -26,7 +27,7 @@ type PatchServiceOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Service `json:"body,omitempty"`
+	Payload *models.Service `json:"body,omitempty"`
 }
 
 type PatchServiceOKRaw struct {
@@ -50,7 +51,7 @@ func NewPatchServiceOKRaw() *PatchServiceOKRaw {
 }
 
 // WithPayload adds the payload to the patch service o k response
-func (o *PatchServiceOK) WithPayload(payload *models2.Service) *PatchServiceOK {
+func (o *PatchServiceOK) WithPayload(payload *models.Service) *PatchServiceOK {
 	o.Payload = payload
 	return o
 }
@@ -62,7 +63,7 @@ func (o *PatchServiceOKRaw) WithPayload(payload interface{}) *PatchServiceOKRaw 
 }
 
 // SetPayload sets the payload to the patch service o k response
-func (o *PatchServiceOK) SetPayload(payload *models2.Service) {
+func (o *PatchServiceOK) SetPayload(payload *models.Service) {
 	o.Payload = payload
 }
 
@@ -104,7 +105,7 @@ type PatchServiceBadRequest struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type PatchServiceBadRequestRaw struct {
@@ -128,7 +129,7 @@ func NewPatchServiceBadRequestRaw() *PatchServiceBadRequestRaw {
 }
 
 // WithPayload adds the payload to the patch service bad request response
-func (o *PatchServiceBadRequest) WithPayload(payload *models2.Error) *PatchServiceBadRequest {
+func (o *PatchServiceBadRequest) WithPayload(payload *models.Error) *PatchServiceBadRequest {
 	o.Payload = payload
 	return o
 }
@@ -140,7 +141,7 @@ func (o *PatchServiceBadRequestRaw) WithPayload(payload interface{}) *PatchServi
 }
 
 // SetPayload sets the payload to the patch service bad request response
-func (o *PatchServiceBadRequest) SetPayload(payload *models2.Error) {
+func (o *PatchServiceBadRequest) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -182,7 +183,7 @@ type PatchServiceUnauthorized struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type PatchServiceUnauthorizedRaw struct {
@@ -206,7 +207,7 @@ func NewPatchServiceUnauthorizedRaw() *PatchServiceUnauthorizedRaw {
 }
 
 // WithPayload adds the payload to the patch service unauthorized response
-func (o *PatchServiceUnauthorized) WithPayload(payload *models2.Error) *PatchServiceUnauthorized {
+func (o *PatchServiceUnauthorized) WithPayload(payload *models.Error) *PatchServiceUnauthorized {
 	o.Payload = payload
 	return o
 }
@@ -218,7 +219,7 @@ func (o *PatchServiceUnauthorizedRaw) WithPayload(payload interface{}) *PatchSer
 }
 
 // SetPayload sets the payload to the patch service unauthorized response
-func (o *PatchServiceUnauthorized) SetPayload(payload *models2.Error) {
+func (o *PatchServiceUnauthorized) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -260,7 +261,7 @@ type PatchServiceForbidden struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type PatchServiceForbiddenRaw struct {
@@ -284,7 +285,7 @@ func NewPatchServiceForbiddenRaw() *PatchServiceForbiddenRaw {
 }
 
 // WithPayload adds the payload to the patch service forbidden response
-func (o *PatchServiceForbidden) WithPayload(payload *models2.Error) *PatchServiceForbidden {
+func (o *PatchServiceForbidden) WithPayload(payload *models.Error) *PatchServiceForbidden {
 	o.Payload = payload
 	return o
 }
@@ -296,7 +297,7 @@ func (o *PatchServiceForbiddenRaw) WithPayload(payload interface{}) *PatchServic
 }
 
 // SetPayload sets the payload to the patch service forbidden response
-func (o *PatchServiceForbidden) SetPayload(payload *models2.Error) {
+func (o *PatchServiceForbidden) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -338,7 +339,7 @@ type PatchServiceNotFound struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type PatchServiceNotFoundRaw struct {
@@ -362,7 +363,7 @@ func NewPatchServiceNotFoundRaw() *PatchServiceNotFoundRaw {
 }
 
 // WithPayload adds the payload to the patch service not found response
-func (o *PatchServiceNotFound) WithPayload(payload *models2.Error) *PatchServiceNotFound {
+func (o *PatchServiceNotFound) WithPayload(payload *models.Error) *PatchServiceNotFound {
 	o.Payload = payload
 	return o
 }
@@ -374,7 +375,7 @@ func (o *PatchServiceNotFoundRaw) WithPayload(payload interface{}) *PatchService
 }
 
 // SetPayload sets the payload to the patch service not found response
-func (o *PatchServiceNotFound) SetPayload(payload *models2.Error) {
+func (o *PatchServiceNotFound) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -416,7 +417,7 @@ type PatchServiceMethodNotAllowed struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type PatchServiceMethodNotAllowedRaw struct {
@@ -440,7 +441,7 @@ func NewPatchServiceMethodNotAllowedRaw() *PatchServiceMethodNotAllowedRaw {
 }
 
 // WithPayload adds the payload to the patch service method not allowed response
-func (o *PatchServiceMethodNotAllowed) WithPayload(payload *models2.Error) *PatchServiceMethodNotAllowed {
+func (o *PatchServiceMethodNotAllowed) WithPayload(payload *models.Error) *PatchServiceMethodNotAllowed {
 	o.Payload = payload
 	return o
 }
@@ -452,7 +453,7 @@ func (o *PatchServiceMethodNotAllowedRaw) WithPayload(payload interface{}) *Patc
 }
 
 // SetPayload sets the payload to the patch service method not allowed response
-func (o *PatchServiceMethodNotAllowed) SetPayload(payload *models2.Error) {
+func (o *PatchServiceMethodNotAllowed) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -494,7 +495,7 @@ type PatchServiceConflict struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type PatchServiceConflictRaw struct {
@@ -518,7 +519,7 @@ func NewPatchServiceConflictRaw() *PatchServiceConflictRaw {
 }
 
 // WithPayload adds the payload to the patch service conflict response
-func (o *PatchServiceConflict) WithPayload(payload *models2.Error) *PatchServiceConflict {
+func (o *PatchServiceConflict) WithPayload(payload *models.Error) *PatchServiceConflict {
 	o.Payload = payload
 	return o
 }
@@ -530,7 +531,7 @@ func (o *PatchServiceConflictRaw) WithPayload(payload interface{}) *PatchService
 }
 
 // SetPayload sets the payload to the patch service conflict response
-func (o *PatchServiceConflict) SetPayload(payload *models2.Error) {
+func (o *PatchServiceConflict) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -572,7 +573,7 @@ type PatchServiceInternalServerError struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type PatchServiceInternalServerErrorRaw struct {
@@ -596,7 +597,7 @@ func NewPatchServiceInternalServerErrorRaw() *PatchServiceInternalServerErrorRaw
 }
 
 // WithPayload adds the payload to the patch service internal server error response
-func (o *PatchServiceInternalServerError) WithPayload(payload *models2.Error) *PatchServiceInternalServerError {
+func (o *PatchServiceInternalServerError) WithPayload(payload *models.Error) *PatchServiceInternalServerError {
 	o.Payload = payload
 	return o
 }
@@ -608,7 +609,7 @@ func (o *PatchServiceInternalServerErrorRaw) WithPayload(payload interface{}) *P
 }
 
 // SetPayload sets the payload to the patch service internal server error response
-func (o *PatchServiceInternalServerError) SetPayload(payload *models2.Error) {
+func (o *PatchServiceInternalServerError) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 

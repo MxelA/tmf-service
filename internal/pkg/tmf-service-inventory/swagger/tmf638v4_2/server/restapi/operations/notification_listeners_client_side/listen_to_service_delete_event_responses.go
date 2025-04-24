@@ -6,10 +6,11 @@ package notification_listeners_client_side
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	models2 "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 )
 
 // Alex Server response
@@ -26,7 +27,7 @@ type ListenToServiceDeleteEventCreated struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.EventSubscription `json:"body,omitempty"`
+	Payload *models.EventSubscription `json:"body,omitempty"`
 }
 
 type ListenToServiceDeleteEventCreatedRaw struct {
@@ -50,7 +51,7 @@ func NewListenToServiceDeleteEventCreatedRaw() *ListenToServiceDeleteEventCreate
 }
 
 // WithPayload adds the payload to the listen to service delete event created response
-func (o *ListenToServiceDeleteEventCreated) WithPayload(payload *models2.EventSubscription) *ListenToServiceDeleteEventCreated {
+func (o *ListenToServiceDeleteEventCreated) WithPayload(payload *models.EventSubscription) *ListenToServiceDeleteEventCreated {
 	o.Payload = payload
 	return o
 }
@@ -62,7 +63,7 @@ func (o *ListenToServiceDeleteEventCreatedRaw) WithPayload(payload interface{}) 
 }
 
 // SetPayload sets the payload to the listen to service delete event created response
-func (o *ListenToServiceDeleteEventCreated) SetPayload(payload *models2.EventSubscription) {
+func (o *ListenToServiceDeleteEventCreated) SetPayload(payload *models.EventSubscription) {
 	o.Payload = payload
 }
 
@@ -104,7 +105,7 @@ type ListenToServiceDeleteEventBadRequest struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceDeleteEventBadRequestRaw struct {
@@ -128,7 +129,7 @@ func NewListenToServiceDeleteEventBadRequestRaw() *ListenToServiceDeleteEventBad
 }
 
 // WithPayload adds the payload to the listen to service delete event bad request response
-func (o *ListenToServiceDeleteEventBadRequest) WithPayload(payload *models2.Error) *ListenToServiceDeleteEventBadRequest {
+func (o *ListenToServiceDeleteEventBadRequest) WithPayload(payload *models.Error) *ListenToServiceDeleteEventBadRequest {
 	o.Payload = payload
 	return o
 }
@@ -140,7 +141,7 @@ func (o *ListenToServiceDeleteEventBadRequestRaw) WithPayload(payload interface{
 }
 
 // SetPayload sets the payload to the listen to service delete event bad request response
-func (o *ListenToServiceDeleteEventBadRequest) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceDeleteEventBadRequest) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -182,7 +183,7 @@ type ListenToServiceDeleteEventUnauthorized struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceDeleteEventUnauthorizedRaw struct {
@@ -206,7 +207,7 @@ func NewListenToServiceDeleteEventUnauthorizedRaw() *ListenToServiceDeleteEventU
 }
 
 // WithPayload adds the payload to the listen to service delete event unauthorized response
-func (o *ListenToServiceDeleteEventUnauthorized) WithPayload(payload *models2.Error) *ListenToServiceDeleteEventUnauthorized {
+func (o *ListenToServiceDeleteEventUnauthorized) WithPayload(payload *models.Error) *ListenToServiceDeleteEventUnauthorized {
 	o.Payload = payload
 	return o
 }
@@ -218,7 +219,7 @@ func (o *ListenToServiceDeleteEventUnauthorizedRaw) WithPayload(payload interfac
 }
 
 // SetPayload sets the payload to the listen to service delete event unauthorized response
-func (o *ListenToServiceDeleteEventUnauthorized) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceDeleteEventUnauthorized) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -260,7 +261,7 @@ type ListenToServiceDeleteEventForbidden struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceDeleteEventForbiddenRaw struct {
@@ -284,7 +285,7 @@ func NewListenToServiceDeleteEventForbiddenRaw() *ListenToServiceDeleteEventForb
 }
 
 // WithPayload adds the payload to the listen to service delete event forbidden response
-func (o *ListenToServiceDeleteEventForbidden) WithPayload(payload *models2.Error) *ListenToServiceDeleteEventForbidden {
+func (o *ListenToServiceDeleteEventForbidden) WithPayload(payload *models.Error) *ListenToServiceDeleteEventForbidden {
 	o.Payload = payload
 	return o
 }
@@ -296,7 +297,7 @@ func (o *ListenToServiceDeleteEventForbiddenRaw) WithPayload(payload interface{}
 }
 
 // SetPayload sets the payload to the listen to service delete event forbidden response
-func (o *ListenToServiceDeleteEventForbidden) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceDeleteEventForbidden) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -338,7 +339,7 @@ type ListenToServiceDeleteEventNotFound struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceDeleteEventNotFoundRaw struct {
@@ -362,7 +363,7 @@ func NewListenToServiceDeleteEventNotFoundRaw() *ListenToServiceDeleteEventNotFo
 }
 
 // WithPayload adds the payload to the listen to service delete event not found response
-func (o *ListenToServiceDeleteEventNotFound) WithPayload(payload *models2.Error) *ListenToServiceDeleteEventNotFound {
+func (o *ListenToServiceDeleteEventNotFound) WithPayload(payload *models.Error) *ListenToServiceDeleteEventNotFound {
 	o.Payload = payload
 	return o
 }
@@ -374,7 +375,7 @@ func (o *ListenToServiceDeleteEventNotFoundRaw) WithPayload(payload interface{})
 }
 
 // SetPayload sets the payload to the listen to service delete event not found response
-func (o *ListenToServiceDeleteEventNotFound) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceDeleteEventNotFound) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -416,7 +417,7 @@ type ListenToServiceDeleteEventMethodNotAllowed struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceDeleteEventMethodNotAllowedRaw struct {
@@ -440,7 +441,7 @@ func NewListenToServiceDeleteEventMethodNotAllowedRaw() *ListenToServiceDeleteEv
 }
 
 // WithPayload adds the payload to the listen to service delete event method not allowed response
-func (o *ListenToServiceDeleteEventMethodNotAllowed) WithPayload(payload *models2.Error) *ListenToServiceDeleteEventMethodNotAllowed {
+func (o *ListenToServiceDeleteEventMethodNotAllowed) WithPayload(payload *models.Error) *ListenToServiceDeleteEventMethodNotAllowed {
 	o.Payload = payload
 	return o
 }
@@ -452,7 +453,7 @@ func (o *ListenToServiceDeleteEventMethodNotAllowedRaw) WithPayload(payload inte
 }
 
 // SetPayload sets the payload to the listen to service delete event method not allowed response
-func (o *ListenToServiceDeleteEventMethodNotAllowed) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceDeleteEventMethodNotAllowed) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -494,7 +495,7 @@ type ListenToServiceDeleteEventConflict struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceDeleteEventConflictRaw struct {
@@ -518,7 +519,7 @@ func NewListenToServiceDeleteEventConflictRaw() *ListenToServiceDeleteEventConfl
 }
 
 // WithPayload adds the payload to the listen to service delete event conflict response
-func (o *ListenToServiceDeleteEventConflict) WithPayload(payload *models2.Error) *ListenToServiceDeleteEventConflict {
+func (o *ListenToServiceDeleteEventConflict) WithPayload(payload *models.Error) *ListenToServiceDeleteEventConflict {
 	o.Payload = payload
 	return o
 }
@@ -530,7 +531,7 @@ func (o *ListenToServiceDeleteEventConflictRaw) WithPayload(payload interface{})
 }
 
 // SetPayload sets the payload to the listen to service delete event conflict response
-func (o *ListenToServiceDeleteEventConflict) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceDeleteEventConflict) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 
@@ -572,7 +573,7 @@ type ListenToServiceDeleteEventInternalServerError struct {
 	/*
 	  In: Body
 	*/
-	Payload *models2.Error `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 type ListenToServiceDeleteEventInternalServerErrorRaw struct {
@@ -596,7 +597,7 @@ func NewListenToServiceDeleteEventInternalServerErrorRaw() *ListenToServiceDelet
 }
 
 // WithPayload adds the payload to the listen to service delete event internal server error response
-func (o *ListenToServiceDeleteEventInternalServerError) WithPayload(payload *models2.Error) *ListenToServiceDeleteEventInternalServerError {
+func (o *ListenToServiceDeleteEventInternalServerError) WithPayload(payload *models.Error) *ListenToServiceDeleteEventInternalServerError {
 	o.Payload = payload
 	return o
 }
@@ -608,7 +609,7 @@ func (o *ListenToServiceDeleteEventInternalServerErrorRaw) WithPayload(payload i
 }
 
 // SetPayload sets the payload to the listen to service delete event internal server error response
-func (o *ListenToServiceDeleteEventInternalServerError) SetPayload(payload *models2.Error) {
+func (o *ListenToServiceDeleteEventInternalServerError) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 

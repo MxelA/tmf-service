@@ -1,3 +1,6 @@
+# TMF Service application
+- This application is develop in golang and use [modular monolith architecture](https://github.com/ArkjuniorK/gomomo) by ArkjuniorK
+
 ## Setup notes
 ### Install Task
 - Install task in your local machine, in order to do that you can follow [installation instructions](https://taskfile.dev/#/installation)\

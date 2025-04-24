@@ -1078,43 +1078,59 @@ func init() {
       "properties": {
         "@baseType": {
           "description": "When sub-classing, this defines the super-class",
-          "type": "string"
+          "type": "string",
+          "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
+          "x-nullable": true
         },
         "@schemaLocation": {
           "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
           "type": "string",
-          "format": "uri"
+          "format": "uri",
+          "x-go-custom-tag": "bson:\"@schemaLocation,omitempty\"",
+          "x-nullable": true
         },
         "@type": {
           "description": "When sub-classing, this defines the sub-class Extensible name",
-          "type": "string"
+          "type": "string",
+          "x-go-custom-tag": "bson:\"@type,omitempty\"",
+          "x-nullable": true
         },
         "id": {
           "description": "Identifier of the context update",
-          "type": "string"
+          "type": "string",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-nullable": true
         },
         "lastUpdate": {
           "description": "The date and time the status/state last changed.",
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-go-custom-tag": "bson:\"lastUpdate,omitempty\"",
+          "x-nullable": true
         },
         "reason": {
           "description": "The reason/context for the current value of the status/state.",
-          "type": "string"
+          "type": "string",
+          "x-go-custom-tag": "bson:\"reason,omitempty\"",
+          "x-nullable": true
         },
         "relatedEntity": {
           "description": "A list of entities that represent observations, anomalies or managing entities etc associated to the current status/state value.",
           "type": "array",
           "items": {
             "$ref": "#/definitions/EntityRef"
-          }
+          },
+          "x-go-custom-tag": "bson:\"relatedEntity,omitempty\"",
+          "x-nullable": true
         },
         "relatedParty": {
           "description": "List of parties associated to the current status/state value.",
           "type": "array",
           "items": {
             "$ref": "#/definitions/RelatedParty"
-          }
+          },
+          "x-go-custom-tag": "bson:\"relatedParty,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -1138,11 +1154,15 @@ func init() {
         "href": {
           "description": "Hyperlink reference",
           "type": "string",
-          "format": "uri"
+          "format": "uri",
+          "x-go-custom-tag": "bson:\"href,omitempty\"",
+          "x-nullable": true
         },
         "id": {
           "description": "unique identifier",
-          "type": "string"
+          "type": "string",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -3987,43 +4007,59 @@ func init() {
       "properties": {
         "@baseType": {
           "description": "When sub-classing, this defines the super-class",
-          "type": "string"
+          "type": "string",
+          "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
+          "x-nullable": true
         },
         "@schemaLocation": {
           "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
           "type": "string",
-          "format": "uri"
+          "format": "uri",
+          "x-go-custom-tag": "bson:\"@schemaLocation,omitempty\"",
+          "x-nullable": true
         },
         "@type": {
           "description": "When sub-classing, this defines the sub-class Extensible name",
-          "type": "string"
+          "type": "string",
+          "x-go-custom-tag": "bson:\"@type,omitempty\"",
+          "x-nullable": true
         },
         "id": {
           "description": "Identifier of the context update",
-          "type": "string"
+          "type": "string",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-nullable": true
         },
         "lastUpdate": {
           "description": "The date and time the status/state last changed.",
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-go-custom-tag": "bson:\"lastUpdate,omitempty\"",
+          "x-nullable": true
         },
         "reason": {
           "description": "The reason/context for the current value of the status/state.",
-          "type": "string"
+          "type": "string",
+          "x-go-custom-tag": "bson:\"reason,omitempty\"",
+          "x-nullable": true
         },
         "relatedEntity": {
           "description": "A list of entities that represent observations, anomalies or managing entities etc associated to the current status/state value.",
           "type": "array",
           "items": {
             "$ref": "#/definitions/EntityRef"
-          }
+          },
+          "x-go-custom-tag": "bson:\"relatedEntity,omitempty\"",
+          "x-nullable": true
         },
         "relatedParty": {
           "description": "List of parties associated to the current status/state value.",
           "type": "array",
           "items": {
             "$ref": "#/definitions/RelatedParty"
-          }
+          },
+          "x-go-custom-tag": "bson:\"relatedParty,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -4047,11 +4083,15 @@ func init() {
         "href": {
           "description": "Hyperlink reference",
           "type": "string",
-          "format": "uri"
+          "format": "uri",
+          "x-go-custom-tag": "bson:\"href,omitempty\"",
+          "x-nullable": true
         },
         "id": {
           "description": "unique identifier",
-          "type": "string"
+          "type": "string",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-nullable": true
         }
       }
     },

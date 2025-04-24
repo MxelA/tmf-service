@@ -4,15 +4,16 @@ package restapi
 
 import (
 	"crypto/tls"
-	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations"
-	events_subscription2 "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations/events_subscription"
-	notification_listeners_client_side2 "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations/notification_listeners_client_side"
-	service2 "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations/service"
 	"net/http"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
+
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations"
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations/events_subscription"
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations/notification_listeners_client_side"
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations/service"
 )
 
 //go:generate swagger generate server --target ../../server --name TmfServiceInventoryV42 --spec ../../TMF638_Service_Inventory_Management_API_v4.2.0_beta_swagger.json --template-dir ./templates --principal interface{} --exclude-main
@@ -40,62 +41,62 @@ func configureAPI(api *operations.TmfServiceInventoryV42API) http.Handler {
 	api.JSONProducer = runtime.JSONProducer()
 
 	if api.ServiceCreateServiceHandler == nil {
-		api.ServiceCreateServiceHandler = service2.CreateServiceHandlerFunc(func(params service2.CreateServiceParams) middleware.Responder {
+		api.ServiceCreateServiceHandler = service.CreateServiceHandlerFunc(func(params service.CreateServiceParams) middleware.Responder {
 			return middleware.NotImplemented("operation service.CreateService has not yet been implemented")
 		})
 	}
 	if api.ServiceDeleteServiceHandler == nil {
-		api.ServiceDeleteServiceHandler = service2.DeleteServiceHandlerFunc(func(params service2.DeleteServiceParams) middleware.Responder {
+		api.ServiceDeleteServiceHandler = service.DeleteServiceHandlerFunc(func(params service.DeleteServiceParams) middleware.Responder {
 			return middleware.NotImplemented("operation service.DeleteService has not yet been implemented")
 		})
 	}
 	if api.ServiceListServiceHandler == nil {
-		api.ServiceListServiceHandler = service2.ListServiceHandlerFunc(func(params service2.ListServiceParams) middleware.Responder {
+		api.ServiceListServiceHandler = service.ListServiceHandlerFunc(func(params service.ListServiceParams) middleware.Responder {
 			return middleware.NotImplemented("operation service.ListService has not yet been implemented")
 		})
 	}
 	if api.NotificationListenersClientSideListenToServiceAttributeValueChangeEventHandler == nil {
-		api.NotificationListenersClientSideListenToServiceAttributeValueChangeEventHandler = notification_listeners_client_side2.ListenToServiceAttributeValueChangeEventHandlerFunc(func(params notification_listeners_client_side2.ListenToServiceAttributeValueChangeEventParams) middleware.Responder {
+		api.NotificationListenersClientSideListenToServiceAttributeValueChangeEventHandler = notification_listeners_client_side.ListenToServiceAttributeValueChangeEventHandlerFunc(func(params notification_listeners_client_side.ListenToServiceAttributeValueChangeEventParams) middleware.Responder {
 			return middleware.NotImplemented("operation notification_listeners_client_side.ListenToServiceAttributeValueChangeEvent has not yet been implemented")
 		})
 	}
 	if api.NotificationListenersClientSideListenToServiceCreateEventHandler == nil {
-		api.NotificationListenersClientSideListenToServiceCreateEventHandler = notification_listeners_client_side2.ListenToServiceCreateEventHandlerFunc(func(params notification_listeners_client_side2.ListenToServiceCreateEventParams) middleware.Responder {
+		api.NotificationListenersClientSideListenToServiceCreateEventHandler = notification_listeners_client_side.ListenToServiceCreateEventHandlerFunc(func(params notification_listeners_client_side.ListenToServiceCreateEventParams) middleware.Responder {
 			return middleware.NotImplemented("operation notification_listeners_client_side.ListenToServiceCreateEvent has not yet been implemented")
 		})
 	}
 	if api.NotificationListenersClientSideListenToServiceDeleteEventHandler == nil {
-		api.NotificationListenersClientSideListenToServiceDeleteEventHandler = notification_listeners_client_side2.ListenToServiceDeleteEventHandlerFunc(func(params notification_listeners_client_side2.ListenToServiceDeleteEventParams) middleware.Responder {
+		api.NotificationListenersClientSideListenToServiceDeleteEventHandler = notification_listeners_client_side.ListenToServiceDeleteEventHandlerFunc(func(params notification_listeners_client_side.ListenToServiceDeleteEventParams) middleware.Responder {
 			return middleware.NotImplemented("operation notification_listeners_client_side.ListenToServiceDeleteEvent has not yet been implemented")
 		})
 	}
 	if api.NotificationListenersClientSideListenToServiceOperatingStatusChangeEventHandler == nil {
-		api.NotificationListenersClientSideListenToServiceOperatingStatusChangeEventHandler = notification_listeners_client_side2.ListenToServiceOperatingStatusChangeEventHandlerFunc(func(params notification_listeners_client_side2.ListenToServiceOperatingStatusChangeEventParams) middleware.Responder {
+		api.NotificationListenersClientSideListenToServiceOperatingStatusChangeEventHandler = notification_listeners_client_side.ListenToServiceOperatingStatusChangeEventHandlerFunc(func(params notification_listeners_client_side.ListenToServiceOperatingStatusChangeEventParams) middleware.Responder {
 			return middleware.NotImplemented("operation notification_listeners_client_side.ListenToServiceOperatingStatusChangeEvent has not yet been implemented")
 		})
 	}
 	if api.NotificationListenersClientSideListenToServiceStateChangeEventHandler == nil {
-		api.NotificationListenersClientSideListenToServiceStateChangeEventHandler = notification_listeners_client_side2.ListenToServiceStateChangeEventHandlerFunc(func(params notification_listeners_client_side2.ListenToServiceStateChangeEventParams) middleware.Responder {
+		api.NotificationListenersClientSideListenToServiceStateChangeEventHandler = notification_listeners_client_side.ListenToServiceStateChangeEventHandlerFunc(func(params notification_listeners_client_side.ListenToServiceStateChangeEventParams) middleware.Responder {
 			return middleware.NotImplemented("operation notification_listeners_client_side.ListenToServiceStateChangeEvent has not yet been implemented")
 		})
 	}
 	if api.ServicePatchServiceHandler == nil {
-		api.ServicePatchServiceHandler = service2.PatchServiceHandlerFunc(func(params service2.PatchServiceParams) middleware.Responder {
+		api.ServicePatchServiceHandler = service.PatchServiceHandlerFunc(func(params service.PatchServiceParams) middleware.Responder {
 			return middleware.NotImplemented("operation service.PatchService has not yet been implemented")
 		})
 	}
 	if api.EventsSubscriptionRegisterListenerHandler == nil {
-		api.EventsSubscriptionRegisterListenerHandler = events_subscription2.RegisterListenerHandlerFunc(func(params events_subscription2.RegisterListenerParams) middleware.Responder {
+		api.EventsSubscriptionRegisterListenerHandler = events_subscription.RegisterListenerHandlerFunc(func(params events_subscription.RegisterListenerParams) middleware.Responder {
 			return middleware.NotImplemented("operation events_subscription.RegisterListener has not yet been implemented")
 		})
 	}
 	if api.ServiceRetrieveServiceHandler == nil {
-		api.ServiceRetrieveServiceHandler = service2.RetrieveServiceHandlerFunc(func(params service2.RetrieveServiceParams) middleware.Responder {
+		api.ServiceRetrieveServiceHandler = service.RetrieveServiceHandlerFunc(func(params service.RetrieveServiceParams) middleware.Responder {
 			return middleware.NotImplemented("operation service.RetrieveService has not yet been implemented")
 		})
 	}
 	if api.EventsSubscriptionUnregisterListenerHandler == nil {
-		api.EventsSubscriptionUnregisterListenerHandler = events_subscription2.UnregisterListenerHandlerFunc(func(params events_subscription2.UnregisterListenerParams) middleware.Responder {
+		api.EventsSubscriptionUnregisterListenerHandler = events_subscription.UnregisterListenerHandlerFunc(func(params events_subscription.UnregisterListenerParams) middleware.Responder {
 			return middleware.NotImplemented("operation events_subscription.UnregisterListener has not yet been implemented")
 		})
 	}
