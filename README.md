@@ -1,5 +1,5 @@
 # TMF Service application
-- This application is develop in golang and use [modular monolith architecture](https://github.com/ArkjuniorK/gomomo) by ArkjuniorK
+- This application will contain TMF641, TMF638 and TMF633 specification is develop in golang and use [modular monolith architecture](https://github.com/ArkjuniorK/gomomo) by ArkjuniorK
 
 ## Setup notes
 ### Install Task
