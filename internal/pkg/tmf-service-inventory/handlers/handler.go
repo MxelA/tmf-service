@@ -1,13 +1,13 @@
-package service_inventory_handler_v42
+package handler
 
 import (
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/repositories"
 )
 
 type ServiceInventoryHandler struct {
-	repo service_inventory_repository.ServiceInventoryRepository
+	repo repository.ServiceInventoryRepository
 }
 
-func NewServiceInventoryHandler(repo service_inventory_repository.ServiceInventoryRepository) *ServiceInventoryHandler {
+func NewServiceInventoryHandler(repo repository.ServiceInventoryRepository) *ServiceInventoryHandler {
 	return &ServiceInventoryHandler{repo: repo}
 }

@@ -4,9 +4,9 @@ import (
 	"github.com/MxelA/tmf-service/internal/core"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/handlers"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/repositories"
-	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi"
-	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations"
-	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations/service"
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_0/server/restapi"
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_0/server/restapi/operations"
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_0/server/restapi/operations/service"
 	"github.com/go-openapi/loads"
 	"log"
 )
@@ -23,10 +23,10 @@ func NewTmfServiceInventory(l *core.Logger, db *core.DatabaseNeo4j) *TmfServiceI
 		log.Fatalln(err)
 	}
 
-	api := operations.NewTmfServiceInventoryV42API(swaggerSpec)
+	api := operations.NewTmfServiceInventoryV40API(swaggerSpec)
 
-	repo := service_inventory_repository.Neo4JServiceInventoryRepository{Db: db}
-	serviceInventoryHandler := service_inventory_handler_v42.NewServiceInventoryHandler(&repo)
+	repo := repository.Neo4JServiceInventoryRepository{Db: db, Logger: l}
+	serviceInventoryHandler := handler.NewServiceInventoryHandler(&repo)
 
 	// Register Handlers
 	api.ServiceCreateServiceHandler = service.CreateServiceHandlerFunc(serviceInventoryHandler.CreateServiceHandler)
