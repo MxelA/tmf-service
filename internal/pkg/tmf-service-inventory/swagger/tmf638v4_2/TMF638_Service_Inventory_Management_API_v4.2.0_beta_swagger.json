@@ -1150,16 +1150,22 @@
         },
         "@baseType": {
           "type": "string",
-          "description": "When sub-classing, this defines the super-class"
+          "description": "When sub-classing, this defines the super-class",
+          "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
+          "x-nullable": true
         },
         "@schemaLocation": {
           "type": "string",
           "format": "uri",
-          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
+          "x-go-custom-tag": "bson:\"@schemaLocation,omitempty\"",
+          "x-nullable": true
         },
         "@type": {
           "type": "string",
-          "description": "When sub-classing, this defines the sub-class Extensible name"
+          "description": "When sub-classing, this defines the sub-class Extensible name",
+          "x-go-custom-tag": "bson:\"@type,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -1169,33 +1175,47 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "unique identifier"
+          "description": "unique identifier",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-nullable": false
         },
         "href": {
           "type": "string",
           "format": "uri",
-          "description": "Hyperlink reference"
+          "description": "Hyperlink reference",
+          "x-go-custom-tag": "bson:\"href,omitempty\"",
+          "x-nullable": true
         },
         "name": {
           "type": "string",
-          "description": "Name of the related entity."
+          "description": "Name of the related entity.",
+          "x-go-custom-tag": "bson:\"name,omitempty\"",
+          "x-nullable": true
         },
         "@baseType": {
           "type": "string",
-          "description": "When sub-classing, this defines the super-class"
+          "description": "When sub-classing, this defines the super-class",
+          "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
+          "x-nullable": true
         },
         "@schemaLocation": {
           "type": "string",
           "format": "uri",
-          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
+          "x-go-custom-tag": "bson:\"@schemaLocation,omitempty\"",
+          "x-nullable": true
         },
         "@type": {
           "type": "string",
-          "description": "When sub-classing, this defines the sub-class Extensible name"
+          "description": "When sub-classing, this defines the sub-class Extensible name",
+          "x-go-custom-tag": "bson:\"@type,omitempty\"",
+          "x-nullable": true
         },
         "@referredType": {
           "type": "string",
-          "description": "The actual type of the target instance when needed for disambiguation."
+          "description": "The actual type of the target instance when needed for disambiguation.",
+          "x-go-custom-tag": "bson:\"@referredType,omitempty\"",
+          "x-nullable": true
         }
       },
       "required": [
@@ -1208,24 +1228,34 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier of a related entity."
+          "description": "Unique identifier of a related entity.",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-nullable": true
         },
         "href": {
           "type": "string",
-          "description": "Reference of the related entity."
+          "description": "Reference of the related entity.",
+          "x-go-custom-tag": "bson:\"href,omitempty\"",
+          "x-nullable": true
         },
         "@baseType": {
           "type": "string",
-          "description": "When sub-classing, this defines the super-class"
+          "description": "When sub-classing, this defines the super-class",
+          "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
+          "x-nullable": true
         },
         "@schemaLocation": {
           "type": "string",
           "format": "uri",
-          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
+          "x-go-custom-tag": "bson:\"@schemaLocation,omitempty\"",
+          "x-nullable": true
         },
         "@type": {
           "type": "string",
-          "description": "When sub-classing, this defines the sub-class Extensible name"
+          "description": "When sub-classing, this defines the sub-class Extensible name",
+          "x-go-custom-tag": "bson:\"@type,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -1235,16 +1265,22 @@
       "properties": {
         "@baseType": {
           "type": "string",
-          "description": "When sub-classing, this defines the super-class"
+          "description": "When sub-classing, this defines the super-class",
+          "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
+          "x-nullable": true
         },
         "@schemaLocation": {
           "type": "string",
           "format": "uri",
-          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
+          "x-go-custom-tag": "bson:\"@schemaLocation,omitempty\"",
+          "x-nullable": true
         },
         "@type": {
           "type": "string",
-          "description": "When sub-classing, this defines the sub-class Extensible name"
+          "description": "When sub-classing, this defines the sub-class Extensible name",
+          "x-go-custom-tag": "bson:\"@type,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -1258,35 +1294,49 @@
         "id": {
           "example": "MC2255771199555",
           "type": "string",
-          "description": "identification of the entity within the external system."
+          "description": "identification of the entity within the external system.",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-nullable": false
         },
         "href": {
           "type": "string",
           "format": "uri",
-          "description": "Hyperlink reference"
+          "description": "Hyperlink reference",
+          "x-go-custom-tag": "bson:\"href,omitempty\"",
+          "x-nullable": true
         },
         "externalIdentifierType": {
           "example": "ProductOrder",
           "type": "string",
-          "description": "Type of the identification, typically would be the type of the entity within the external system"
+          "description": "Type of the identification, typically would be the type of the entity within the external system",
+          "x-go-custom-tag": "bson:\"externalIdentifierType,omitempty\"",
+          "x-nullable": true
         },
         "owner": {
           "example": "MagentoCommerce",
           "type": "string",
-          "description": "Name of the external system that owns the entity."
+          "description": "Name of the external system that owns the entity.",
+          "x-go-custom-tag": "bson:\"owner,omitempty\"",
+          "x-nullable": true
         },
         "@baseType": {
           "type": "string",
-          "description": "When sub-classing, this defines the super-class"
+          "description": "When sub-classing, this defines the super-class",
+          "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
+          "x-nullable": true
         },
         "@schemaLocation": {
           "type": "string",
           "format": "uri",
-          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
+          "x-go-custom-tag": "bson:\"@schemaLocation,omitempty\"",
+          "x-nullable": true
         },
         "@type": {
           "type": "string",
-          "description": "When sub-classing, this defines the sub-class Extensible name"
+          "description": "When sub-classing, this defines the sub-class Extensible name",
+          "x-go-custom-tag": "bson:\"@type,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -1300,19 +1350,27 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier of the feature."
+          "description": "Unique identifier of the feature.",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-nullable": true
         },
         "isBundle": {
           "type": "boolean",
-          "description": "True if this is a feature group. Default is false."
+          "description": "True if this is a feature group. Default is false.",
+          "x-go-custom-tag": "bson:\"isBundle,omitempty\"",
+          "x-nullable": true
         },
         "isEnabled": {
           "type": "boolean",
-          "description": "True if this feature is enabled. Default is true."
+          "description": "True if this feature is enabled. Default is true.",
+          "x-go-custom-tag": "bson:\"isEnabled,omitempty\"",
+          "x-nullable": true
         },
         "name": {
           "type": "string",
-          "description": "This is the name for the feature."
+          "description": "This is the name for the feature.",
+          "x-go-custom-tag": "bson:\"name,omitempty\"",
+          "x-nullable": true
         },
         "constraint": {
           "type": "array",
@@ -1326,26 +1384,36 @@
           "items": {
             "$ref": "#/definitions/Characteristic"
           },
-          "description": "This is a list of Characteristics for a particular feature."
+          "description": "This is a list of Characteristics for a particular feature.",
+          "x-go-custom-tag": "bson:\"featureCharacteristic,omitempty\"",
+          "x-nullable": true
         },
         "featureRelationship": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/FeatureRelationship"
-          }
+          },
+          "x-go-custom-tag": "bson:\"featureRelationship,omitempty\"",
+          "x-nullable": true
         },
         "@baseType": {
           "type": "string",
-          "description": "When sub-classing, this defines the super-class"
+          "description": "When sub-classing, this defines the super-class",
+          "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
+          "x-nullable": true
         },
         "@schemaLocation": {
           "type": "string",
           "format": "uri",
-          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
+          "x-go-custom-tag": "bson:\"@schemaLocation,omitempty\"",
+          "x-nullable": true
         },
         "@type": {
           "type": "string",
-          "description": "When sub-classing, this defines the sub-class Extensible name"
+          "description": "When sub-classing, this defines the sub-class Extensible name",
+          "x-go-custom-tag": "bson:\"@type,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -1359,32 +1427,46 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier of the target feature."
+          "description": "Unique identifier of the target feature.",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-nullable": false
         },
         "name": {
           "type": "string",
-          "description": "This is the name of the target feature."
+          "description": "This is the name of the target feature.",
+          "x-go-custom-tag": "bson:\"name,omitempty\"",
+          "x-nullable": true
         },
         "relationshipType": {
           "type": "string",
-          "description": "This is the type of the feature relationship."
+          "description": "This is the type of the feature relationship.",
+          "x-go-custom-tag": "bson:\"relationshipType,omitempty\"",
+          "x-nullable": true
         },
         "validFor": {
           "$ref": "#/definitions/TimePeriod",
-          "description": "The period for which this feature relationship is valid."
+          "description": "The period for which this feature relationship is valid.",
+          "x-go-custom-tag": "bson:\"validFor,omitempty\"",
+          "x-nullable": true
         },
         "@baseType": {
           "type": "string",
-          "description": "When sub-classing, this defines the super-class"
+          "description": "When sub-classing, this defines the super-class",
+          "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
+          "x-nullable": true
         },
         "@schemaLocation": {
           "type": "string",
           "format": "uri",
-          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
+          "x-go-custom-tag": "bson:\"@schemaLocation,omitempty\"",
+          "x-nullable": true
         },
         "@type": {
           "type": "string",
-          "description": "When sub-classing, this defines the sub-class Extensible name"
+          "description": "When sub-classing, this defines the sub-class Extensible name",
+          "x-go-custom-tag": "bson:\"@type,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -1400,14 +1482,18 @@
             "afa9-3d90aaa8da0f"
           ],
           "type": "string",
-          "description": "Identifier of the note within its containing entity"
+          "description": "Identifier of the note within its containing entity",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-nullable": true
         },
         "author": {
           "example": [
             "Mr. N. Bene"
           ],
           "type": "string",
-          "description": "Author of the note"
+          "description": "Author of the note",
+          "x-go-custom-tag": "bson:\"author,omitempty\"",
+          "x-nullable": true
         },
         "date": {
           "example": [
@@ -1415,27 +1501,37 @@
           ],
           "type": "string",
           "format": "date-time",
-          "description": "Date of the note"
+          "description": "Date of the note",
+          "x-go-custom-tag": "bson:\"date,omitempty\"",
+          "x-nullable": true
         },
         "text": {
           "example": [
             "This is important"
           ],
           "type": "string",
-          "description": "Text of the note"
+          "description": "Text of the note",
+          "x-go-custom-tag": "bson:\"text,omitempty\"",
+          "x-nullable": false
         },
         "@baseType": {
           "type": "string",
-          "description": "When sub-classing, this defines the super-class"
+          "description": "When sub-classing, this defines the super-class",
+          "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
+          "x-nullable": true
         },
         "@schemaLocation": {
           "type": "string",
           "format": "uri",
-          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
+          "x-go-custom-tag": "bson:\"@schemaLocation,omitempty\"",
+          "x-nullable": true
         },
         "@type": {
           "type": "string",
-          "description": "When sub-classing, this defines the sub-class Extensible name"
+          "description": "When sub-classing, this defines the sub-class Extensible name",
+          "x-go-custom-tag": "bson:\"@type,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -1455,28 +1551,40 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier of the place"
+          "description": "Unique identifier of the place",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-nullable": true
         },
         "href": {
           "type": "string",
-          "description": "Unique reference of the place"
+          "description": "Unique reference of the place",
+          "x-go-custom-tag": "bson:\"href,omitempty\"",
+          "x-nullable": true
         },
         "name": {
           "type": "string",
-          "description": "A user-friendly name for the place, such as [Paris Store], [London Store], [Main Home]"
+          "description": "A user-friendly name for the place, such as [Paris Store], [London Store], [Main Home]",
+          "x-go-custom-tag": "bson:\"name,omitempty\"",
+          "x-nullable": true
         },
         "@baseType": {
           "type": "string",
-          "description": "When sub-classing, this defines the super-class"
+          "description": "When sub-classing, this defines the super-class",
+          "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
+          "x-nullable": true
         },
         "@schemaLocation": {
           "type": "string",
           "format": "uri",
-          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
+          "x-go-custom-tag": "bson:\"@schemaLocation,omitempty\"",
+          "x-nullable": true
         },
         "@type": {
           "type": "string",
-          "description": "When sub-classing, this defines the sub-class Extensible name"
+          "description": "When sub-classing, this defines the sub-class Extensible name",
+          "x-go-custom-tag": "bson:\"@type,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -1486,33 +1594,47 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "unique identifier"
+          "description": "unique identifier",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-nullable": false
         },
         "href": {
           "type": "string",
           "format": "uri",
-          "description": "Hyperlink reference"
+          "description": "Hyperlink reference",
+          "x-go-custom-tag": "bson:\"href,omitempty\"",
+          "x-nullable": true
         },
         "name": {
           "type": "string",
-          "description": "Name of the related entity."
+          "description": "Name of the related entity.",
+          "x-go-custom-tag": "bson:\"name,omitempty\"",
+          "x-nullable": true
         },
         "@baseType": {
           "type": "string",
-          "description": "When sub-classing, this defines the super-class"
+          "description": "When sub-classing, this defines the super-class",
+          "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
+          "x-nullable": true
         },
         "@schemaLocation": {
           "type": "string",
           "format": "uri",
-          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
+          "x-go-custom-tag": "bson:\"@schemaLocation,omitempty\"",
+          "x-nullable": true
         },
         "@type": {
           "type": "string",
-          "description": "When sub-classing, this defines the sub-class Extensible name"
+          "description": "When sub-classing, this defines the sub-class Extensible name",
+          "x-go-custom-tag": "bson:\"@type,omitempty\"",
+          "x-nullable": true
         },
         "@referredType": {
           "type": "string",
-          "description": "The actual type of the target instance when needed for disambiguation."
+          "description": "The actual type of the target instance when needed for disambiguation.",
+          "x-go-custom-tag": "bson:\"@referredType,omitempty\"",
+          "x-nullable": true
         }
       },
       "required": [
@@ -1528,35 +1650,51 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier of a related entity."
+          "description": "Unique identifier of a related entity.",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-nullable": true
         },
         "href": {
           "type": "string",
-          "description": "Reference of the related entity."
+          "description": "Reference of the related entity.",
+          "x-go-custom-tag": "bson:\"href,omitempty\"",
+          "x-nullable": true
         },
         "name": {
           "type": "string",
-          "description": "Name of the related entity."
+          "description": "Name of the related entity.",
+          "x-go-custom-tag": "bson:\"name,omitempty\"",
+          "x-nullable": true
         },
         "role": {
-          "type": "string"
+          "type": "string",
+          "x-go-custom-tag": "bson:\"role,omitempty\"",
+          "x-nullable": false
         },
         "@baseType": {
           "type": "string",
-          "description": "When sub-classing, this defines the super-class"
+          "description": "When sub-classing, this defines the super-class",
+          "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
+          "x-nullable": true
         },
         "@schemaLocation": {
           "type": "string",
           "format": "uri",
-          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
+          "x-go-custom-tag": "bson:\"@schemaLocation,omitempty\"",
+          "x-nullable": true
         },
         "@type": {
           "type": "string",
-          "description": "When sub-classing, this defines the sub-class Extensible name"
+          "description": "When sub-classing, this defines the sub-class Extensible name",
+          "x-go-custom-tag": "bson:\"@type,omitempty\"",
+          "x-nullable": true
         },
         "@referredType": {
           "type": "string",
-          "description": "The actual type of the target instance when needed for disambiguation."
+          "description": "The actual type of the target instance when needed for disambiguation.",
+          "x-go-custom-tag": "bson:\"@referredType,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -1570,37 +1708,53 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "unique identifier"
+          "description": "unique identifier",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-nullable": false
         },
         "href": {
           "type": "string",
           "format": "uri",
-          "description": "Hyperlink reference"
+          "description": "Hyperlink reference",
+          "x-go-custom-tag": "bson:\"href,omitempty\"",
+          "x-nullable": true
         },
         "name": {
           "type": "string",
-          "description": "Name of the related entity."
+          "description": "Name of the related entity.",
+          "x-go-custom-tag": "bson:\"name,omitempty\"",
+          "x-nullable": true
         },
         "role": {
           "type": "string",
-          "description": "Role played by the related party"
+          "description": "Role played by the related party",
+          "x-go-custom-tag": "bson:\"role,omitempty\"",
+          "x-nullable": true
         },
         "@baseType": {
           "type": "string",
-          "description": "When sub-classing, this defines the super-class"
+          "description": "When sub-classing, this defines the super-class",
+          "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
+          "x-nullable": true
         },
         "@schemaLocation": {
           "type": "string",
           "format": "uri",
-          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
+          "x-go-custom-tag": "bson:\"@schemaLocation,omitempty\"",
+          "x-nullable": true
         },
         "@type": {
           "type": "string",
-          "description": "When sub-classing, this defines the sub-class Extensible name"
+          "description": "When sub-classing, this defines the sub-class Extensible name",
+          "x-go-custom-tag": "bson:\"@type,omitempty\"",
+          "x-nullable": true
         },
         "@referredType": {
           "type": "string",
-          "description": "The actual type of the target instance when needed for disambiguation."
+          "description": "The actual type of the target instance when needed for disambiguation.",
+          "x-go-custom-tag": "bson:\"@referredType,omitempty\"",
+          "x-nullable": false
         }
       }
     },
@@ -1613,35 +1767,51 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier of the place"
+          "description": "Unique identifier of the place",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-nullable": true
         },
         "href": {
           "type": "string",
-          "description": "Unique reference of the place"
+          "description": "Unique reference of the place",
+          "x-go-custom-tag": "bson:\"href,omitempty\"",
+          "x-nullable": true
         },
         "name": {
           "type": "string",
-          "description": "A user-friendly name for the place, such as [Paris Store], [London Store], [Main Home]"
+          "description": "A user-friendly name for the place, such as [Paris Store], [London Store], [Main Home]",
+          "x-go-custom-tag": "bson:\"name,omitempty\"",
+          "x-nullable": true
         },
         "role": {
-          "type": "string"
+          "type": "string",
+          "x-go-custom-tag": "bson:\"role,omitempty\"",
+          "x-nullable": false
         },
         "@baseType": {
           "type": "string",
-          "description": "When sub-classing, this defines the super-class"
+          "description": "When sub-classing, this defines the super-class",
+          "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
+          "x-nullable": true
         },
         "@schemaLocation": {
           "type": "string",
           "format": "uri",
-          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
+          "x-go-custom-tag": "bson:\"@schemaLocation,omitempty\"",
+          "x-nullable": true
         },
         "@type": {
           "type": "string",
-          "description": "When sub-classing, this defines the sub-class Extensible name"
+          "description": "When sub-classing, this defines the sub-class Extensible name",
+          "x-go-custom-tag": "bson:\"@type,omitempty\"",
+          "x-nullable": true
         },
         "@referredType": {
           "type": "string",
-          "description": "The actual type of the target instance when needed for disambiguation."
+          "description": "The actual type of the target instance when needed for disambiguation.",
+          "x-go-custom-tag": "bson:\"@referredType,omitempty\"",
+          "x-nullable": true
         }
       }
     },
