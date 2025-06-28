@@ -2914,29 +2914,41 @@
       ],
       "properties": {
         "relationshipType": {
-          "type": "string"
+          "type": "string",
+          "x-go-custom-tag": "bson:\"relationshipType,omitempty\"",
+          "x-nullable": false
         },
         "service": {
-          "$ref": "#/definitions/ServiceRefOrValue"
+          "$ref": "#/definitions/ServiceRefOrValue",
+          "x-go-custom-tag": "bson:\"service,omitempty\"",
+          "x-nullable": false
         },
         "serviceRelationshipCharacteristic": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Characteristic"
+            "$ref": "#/definitions/Characteristic",
+            "x-go-custom-tag": "bson:\"serviceRelationshipCharacteristic,omitempty\"",
+            "x-nullable": true
           }
         },
         "@baseType": {
           "type": "string",
-          "description": "When sub-classing, this defines the super-class"
+          "description": "When sub-classing, this defines the super-class",
+          "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
+          "x-nullable": true
         },
         "@schemaLocation": {
           "type": "string",
           "format": "uri",
-          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
+          "x-go-custom-tag": "bson:\"@schemaLocation,omitempty\"",
+          "x-nullable": true
         },
         "@type": {
           "type": "string",
-          "description": "When sub-classing, this defines the sub-class Extensible name"
+          "description": "When sub-classing, this defines the sub-class Extensible name",
+          "x-go-custom-tag": "bson:\"@type,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -2949,37 +2961,53 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "unique identifier"
+          "description": "unique identifier",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-nullable": false
         },
         "href": {
           "type": "string",
           "format": "uri",
-          "description": "Hyperlink reference"
+          "description": "Hyperlink reference",
+          "x-go-custom-tag": "bson:\"href,omitempty\"",
+          "x-nullable": true
         },
         "name": {
           "type": "string",
-          "description": "Name of the related entity."
+          "description": "Name of the related entity.",
+          "x-go-custom-tag": "bson:\"name,omitempty\"",
+          "x-nullable": true
         },
         "version": {
           "type": "string",
-          "description": "Service specification version"
+          "description": "Service specification version",
+          "x-go-custom-tag": "bson:\"version,omitempty\"",
+          "x-nullable": true
         },
         "@baseType": {
           "type": "string",
-          "description": "When sub-classing, this defines the super-class"
+          "description": "When sub-classing, this defines the super-class",
+          "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
+          "x-nullable": true
         },
         "@schemaLocation": {
           "type": "string",
           "format": "uri",
-          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
+          "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
+          "x-go-custom-tag": "bson:\"@schemaLocation,omitempty\"",
+          "x-nullable": true
         },
         "@type": {
           "type": "string",
-          "description": "When sub-classing, this defines the sub-class Extensible name"
+          "description": "When sub-classing, this defines the sub-class Extensible name",
+          "x-go-custom-tag": "bson:\"@type,omitempty\"",
+          "x-nullable": true
         },
         "@referredType": {
           "type": "string",
-          "description": "The actual type of the target instance when needed for disambiguation."
+          "description": "The actual type of the target instance when needed for disambiguation.",
+          "x-go-custom-tag": "bson:\"@referredType,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -3024,15 +3052,21 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Id of the listener"
+          "description": "Id of the listener",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-nullable": false
         },
         "callback": {
           "type": "string",
-          "description": "The callback being registered."
+          "description": "The callback being registered.",
+          "x-go-custom-tag": "bson:\"callback,omitempty\"",
+          "x-nullable": false
         },
         "query": {
           "type": "string",
-          "description": "additional data to be passed"
+          "description": "additional data to be passed",
+          "x-go-custom-tag": "bson:\"query,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -3045,11 +3079,15 @@
       "properties": {
         "callback": {
           "type": "string",
-          "description": "The callback being registered."
+          "description": "The callback being registered.",
+          "x-go-custom-tag": "bson:\"callback,omitempty\"",
+          "x-nullable": false
         },
         "query": {
           "type": "string",
-          "description": "additional data to be passed"
+          "description": "additional data to be passed",
+          "x-go-custom-tag": "bson:\"query,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -3059,45 +3097,65 @@
       "properties": {
         "event": {
           "description": "The event payload linked to the involved resource object",
-          "$ref": "#/definitions/ServiceCreateEventPayload"
+          "$ref": "#/definitions/ServiceCreateEventPayload",
+          "x-go-custom-tag": "bson:\"event,omitempty\"",
+          "x-nullable": false
         },
         "eventId": {
           "type": "string",
-          "description": "The identifier of the notification."
+          "description": "The identifier of the notification.",
+          "x-go-custom-tag": "bson:\"eventId,omitempty\"",
+          "x-nullable": false
         },
         "eventTime": {
           "type": "string",
           "format": "date-time",
-          "description": "Time of the event occurrence."
+          "description": "Time of the event occurrence.",
+          "x-go-custom-tag": "bson:\"eventTime,omitempty\"",
+          "x-nullable": false
         },
         "eventType": {
           "type": "string",
-          "description": "The type of the notification."
+          "description": "The type of the notification.",
+          "x-go-custom-tag": "bson:\"eventType,omitempty\"",
+          "x-nullable": false
         },
         "correlationId": {
           "type": "string",
-          "description": "The correlation id for this event."
+          "description": "The correlation id for this event.",
+          "x-go-custom-tag": "bson:\"correlationId,omitempty\"",
+          "x-nullable": true
         },
         "domain": {
           "type": "string",
-          "description": "The domain of the event."
+          "description": "The domain of the event.",
+          "x-go-custom-tag": "bson:\"domain,omitempty\"",
+          "x-nullable": true
         },
         "title": {
           "type": "string",
-          "description": "The title of the event."
+          "description": "The title of the event.",
+          "x-go-custom-tag": "bson:\"title,omitempty\"",
+          "x-nullable": true
         },
         "description": {
           "type": "string",
-          "description": "An explnatory of the event."
+          "description": "An explnatory of the event.",
+          "x-go-custom-tag": "bson:\"description,omitempty\"",
+          "x-nullable": true
         },
         "priority": {
           "type": "string",
-          "description": "A priority."
+          "description": "A priority.",
+          "x-go-custom-tag": "bson:\"priority,omitempty\"",
+          "x-nullable": true
         },
         "timeOcurred": {
           "type": "string",
           "format": "date-time",
-          "description": "The time the event occured."
+          "description": "The time the event occured.",
+          "x-go-custom-tag": "bson:\"timeOcurred,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -3107,7 +3165,9 @@
       "properties": {
         "service": {
           "description": "The involved resource data for the event",
-          "$ref": "#/definitions/Service"
+          "$ref": "#/definitions/Service",
+          "x-go-custom-tag": "bson:\"service,omitempty\"",
+          "x-nullable": false
         }
       }
     },
@@ -3117,49 +3177,71 @@
       "properties": {
         "eventId": {
           "type": "string",
-          "description": "The identifier of the notification."
+          "description": "The identifier of the notification.",
+          "x-go-custom-tag": "bson:\"eventId,omitempty\"",
+          "x-nullable": false
         },
         "eventTime": {
           "type": "string",
           "format": "date-time",
-          "description": "Time of the event occurrence."
+          "description": "Time of the event occurrence.",
+          "x-go-custom-tag": "bson:\"eventTime,omitempty\"",
+          "x-nullable": false
         },
         "eventType": {
           "type": "string",
-          "description": "The type of the notification."
+          "description": "The type of the notification.",
+          "x-go-custom-tag": "bson:\"eventType,omitempty\"",
+          "x-nullable": false
         },
         "correlationId": {
           "type": "string",
-          "description": "The correlation id for this event."
+          "description": "The correlation id for this event.",
+          "x-go-custom-tag": "bson:\"correlationId,omitempty\"",
+          "x-nullable": true
         },
         "domain": {
           "type": "string",
-          "description": "The domain of the event."
+          "description": "The domain of the event.",
+          "x-go-custom-tag": "bson:\"domain,omitempty\"",
+          "x-nullable": true
         },
         "title": {
           "type": "string",
-          "description": "The title of the event."
+          "description": "The title of the event.",
+          "x-go-custom-tag": "bson:\"title,omitempty\"",
+          "x-nullable": true
         },
         "description": {
           "type": "string",
-          "description": "An explnatory of the event."
+          "description": "An explnatory of the event.",
+          "x-go-custom-tag": "bson:\"description,omitempty\"",
+          "x-nullable": true
         },
         "priority": {
           "type": "string",
-          "description": "A priority."
+          "description": "A priority.",
+          "x-go-custom-tag": "bson:\"priority,omitempty\"",
+          "x-nullable": true
         },
         "timeOcurred": {
           "type": "string",
           "format": "date-time",
-          "description": "The time the event occured."
+          "description": "The time the event occured.",
+          "x-go-custom-tag": "bson:\"timeOcurred,omitempty\"",
+          "x-nullable": true
         },
         "fieldPath": {
           "type": "string",
-          "description": "The path identifying the object field concerned by this notification."
+          "description": "The path identifying the object field concerned by this notification.",
+          "x-go-custom-tag": "bson:\"fieldPath,omitempty\"",
+          "x-nullable": false
         },
         "event": {
           "description": "The event payload linked to the involved resource object",
-          "$ref": "#/definitions/ServiceAttributeValueChangeEventPayload"
+          "$ref": "#/definitions/ServiceAttributeValueChangeEventPayload",
+          "x-go-custom-tag": "bson:\"event,omitempty\"",
+          "x-nullable": false
         }
       }
     },
@@ -3169,7 +3251,9 @@
       "properties": {
         "service": {
           "description": "The involved resource data for the event",
-          "$ref": "#/definitions/Service"
+          "$ref": "#/definitions/Service",
+          "x-go-custom-tag": "bson:\"service,omitempty\"",
+          "x-nullable": false
         }
       }
     },
@@ -3179,45 +3263,65 @@
       "properties": {
         "event": {
           "description": "The event payload linked to the involved resource object",
-          "$ref": "#/definitions/ServiceStateChangeEventPayload"
+          "$ref": "#/definitions/ServiceStateChangeEventPayload",
+          "x-go-custom-tag": "bson:\"event,omitempty\"",
+          "x-nullable": false
         },
         "eventId": {
           "type": "string",
-          "description": "The identifier of the notification."
+          "description": "The identifier of the notification.",
+          "x-go-custom-tag": "bson:\"eventId,omitempty\"",
+          "x-nullable": false
         },
         "eventTime": {
           "type": "string",
           "format": "date-time",
-          "description": "Time of the event occurrence."
+          "description": "Time of the event occurrence.",
+          "x-go-custom-tag": "bson:\"eventTime,omitempty\"",
+          "x-nullable": false
         },
         "eventType": {
           "type": "string",
-          "description": "The type of the notification."
+          "description": "The type of the notification.",
+          "x-go-custom-tag": "bson:\"eventType,omitempty\"",
+          "x-nullable": false
         },
         "correlationId": {
           "type": "string",
-          "description": "The correlation id for this event."
+          "description": "The correlation id for this event.",
+          "x-go-custom-tag": "bson:\"correlationId,omitempty\"",
+          "x-nullable": true
         },
         "domain": {
           "type": "string",
-          "description": "The domain of the event."
+          "description": "The domain of the event.",
+          "x-go-custom-tag": "bson:\"domain,omitempty\"",
+          "x-nullable": true
         },
         "title": {
           "type": "string",
-          "description": "The title of the event."
+          "description": "The title of the event.",
+          "x-go-custom-tag": "bson:\"title,omitempty\"",
+          "x-nullable": true
         },
         "description": {
           "type": "string",
-          "description": "An explnatory of the event."
+          "description": "An explnatory of the event.",
+          "x-go-custom-tag": "bson:\"description,omitempty\"",
+          "x-nullable": true
         },
         "priority": {
           "type": "string",
-          "description": "A priority."
+          "description": "A priority.",
+          "x-go-custom-tag": "bson:\"priority,omitempty\"",
+          "x-nullable": true
         },
         "timeOcurred": {
           "type": "string",
           "format": "date-time",
-          "description": "The time the event occured."
+          "description": "The time the event occured.",
+          "x-go-custom-tag": "bson:\"timeOcurred,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -3227,7 +3331,9 @@
       "properties": {
         "service": {
           "description": "The involved resource data for the event",
-          "$ref": "#/definitions/Service"
+          "$ref": "#/definitions/Service",
+          "x-go-custom-tag": "bson:\"service,omitempty\"",
+          "x-nullable": false
         }
       }
     },
@@ -3237,45 +3343,65 @@
       "properties": {
         "event": {
           "description": "The event payload linked to the involved resource object",
-          "$ref": "#/definitions/ServiceDeleteEventPayload"
+          "$ref": "#/definitions/ServiceDeleteEventPayload",
+          "x-go-custom-tag": "bson:\"event,omitempty\"",
+          "x-nullable": false
         },
         "eventId": {
           "type": "string",
-          "description": "The identifier of the notification."
+          "description": "The identifier of the notification.",
+          "x-go-custom-tag": "bson:\"eventId,omitempty\"",
+          "x-nullable": false
         },
         "eventTime": {
           "type": "string",
           "format": "date-time",
-          "description": "Time of the event occurrence."
+          "description": "Time of the event occurrence.",
+          "x-go-custom-tag": "bson:\"eventTime,omitempty\"",
+          "x-nullable": false
         },
         "eventType": {
           "type": "string",
-          "description": "The type of the notification."
+          "description": "The type of the notification.",
+          "x-go-custom-tag": "bson:\"eventType,omitempty\"",
+          "x-nullable": false
         },
         "correlationId": {
           "type": "string",
-          "description": "The correlation id for this event."
+          "description": "The correlation id for this event.",
+          "x-go-custom-tag": "bson:\"correlationId,omitempty\"",
+          "x-nullable": true
         },
         "domain": {
           "type": "string",
-          "description": "The domain of the event."
+          "description": "The domain of the event.",
+          "x-go-custom-tag": "bson:\"domain,omitempty\"",
+          "x-nullable": true
         },
         "title": {
           "type": "string",
-          "description": "The title of the event."
+          "description": "The title of the event.",
+          "x-go-custom-tag": "bson:\"title,omitempty\"",
+          "x-nullable": true
         },
         "description": {
           "type": "string",
-          "description": "An explnatory of the event."
+          "description": "An explnatory of the event.",
+          "x-go-custom-tag": "bson:\"description,omitempty\"",
+          "x-nullable": true
         },
         "priority": {
           "type": "string",
-          "description": "A priority."
+          "description": "A priority.",
+          "x-go-custom-tag": "bson:\"priority,omitempty\"",
+          "x-nullable": true
         },
         "timeOcurred": {
           "type": "string",
           "format": "date-time",
-          "description": "The time the event occured."
+          "description": "The time the event occured.",
+          "x-go-custom-tag": "bson:\"timeOcurred,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -3285,7 +3411,9 @@
       "properties": {
         "service": {
           "description": "The involved resource data for the event",
-          "$ref": "#/definitions/Service"
+          "$ref": "#/definitions/Service",
+          "x-go-custom-tag": "bson:\"service,omitempty\"",
+          "x-nullable": false
         }
       }
     },
@@ -3295,45 +3423,65 @@
       "properties": {
         "event": {
           "description": "The event payload linked to the involved resource object",
-          "$ref": "#/definitions/ServiceOperatingStatusChangeEventPayload"
+          "$ref": "#/definitions/ServiceOperatingStatusChangeEventPayload",
+          "x-go-custom-tag": "bson:\"event,omitempty\"",
+          "x-nullable": false
         },
         "eventId": {
           "type": "string",
-          "description": "The identifier of the notification."
+          "description": "The identifier of the notification.",
+          "x-go-custom-tag": "bson:\"eventId,omitempty\"",
+          "x-nullable": false
         },
         "eventTime": {
           "type": "string",
           "format": "date-time",
-          "description": "Time of the event occurrence."
+          "description": "Time of the event occurrence.",
+          "x-go-custom-tag": "bson:\"eventTime,omitempty\"",
+          "x-nullable": false
         },
         "eventType": {
           "type": "string",
-          "description": "The type of the notification."
+          "description": "The type of the notification.",
+          "x-go-custom-tag": "bson:\"eventType,omitempty\"",
+          "x-nullable": false
         },
         "correlationId": {
           "type": "string",
-          "description": "The correlation id for this event."
+          "description": "The correlation id for this event.",
+          "x-go-custom-tag": "bson:\"correlationId,omitempty\"",
+          "x-nullable": true
         },
         "domain": {
           "type": "string",
-          "description": "The domain of the event."
+          "description": "The domain of the event.",
+          "x-go-custom-tag": "bson:\"domain,omitempty\"",
+          "x-nullable": true
         },
         "title": {
           "type": "string",
-          "description": "The title of the event."
+          "description": "The title of the event.",
+          "x-go-custom-tag": "bson:\"title,omitempty\"",
+          "x-nullable": true
         },
         "description": {
           "type": "string",
-          "description": "An explnatory of the event."
+          "description": "An explnatory of the event.",
+          "x-go-custom-tag": "bson:\"description,omitempty\"",
+          "x-nullable": true
         },
         "priority": {
           "type": "string",
-          "description": "A priority."
+          "description": "A priority.",
+          "x-go-custom-tag": "bson:\"priority,omitempty\"",
+          "x-nullable": true
         },
         "timeOcurred": {
           "type": "string",
           "format": "date-time",
-          "description": "The time the event occured."
+          "description": "The time the event occured.",
+          "x-go-custom-tag": "bson:\"timeOcurred,omitempty\"",
+          "x-nullable": true
         }
       }
     },
@@ -3343,7 +3491,9 @@
       "properties": {
         "service": {
           "description": "The involved resource data for the event",
-          "$ref": "#/definitions/Service"
+          "$ref": "#/definitions/Service",
+          "x-go-custom-tag": "bson:\"service,omitempty\"",
+          "x-nullable": false
         }
       }
     },

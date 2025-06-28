@@ -21,10 +21,22 @@ type App interface {
 type app struct {
 	Addr                   string
 	API                    *core.API
-	DB                     *core.DatabaseNeo4j
+	DBMongo                *core.DatabaseMongo
 	Logger                 *core.Logger
 	TmfServiceInventoryPkg *tmf_service_inventory.TmfServiceInventoryPkg
 	//PubSub *core.PubSub
+}
+
+// // New would implement the App interface by
+// // initialize the app's core dependencies and packages.
+func New(host, port string) App {
+	var app = new(app)
+
+	app.Addr = fmt.Sprintf("%s:%s", host, port)
+	app.initCore()
+	app.initPackages()
+
+	return app
 }
 
 func (app *app) Serve() {
@@ -59,16 +71,4 @@ func (app *app) Serve() {
 	server.Shutdown(context.Background())
 	//_ = api.ShutdownWithContext(context.Background())
 	//_ = pubSub.Close()
-}
-
-// // New would implement the App interface by
-// // initialize the app's core dependencies and packages.
-func New(host, port string) App {
-	var app = new(app)
-
-	app.Addr = fmt.Sprintf("%s:%s", host, port)
-	app.initCore()
-	app.initPackages()
-
-	return app
 }

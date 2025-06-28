@@ -6,7 +6,7 @@ import (
 )
 
 var apiCmd = &cobra.Command{
-	Use:   "api",
+	Use:   "web-server",
 	Short: "Run the API server",
 	Run: func(cmd *cobra.Command, args []string) {
 		app.New(host, port).Serve()

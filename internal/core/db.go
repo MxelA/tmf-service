@@ -4,9 +4,83 @@ import (
 	"context"
 	"github.com/joho/godotenv"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
 	"os"
+	"time"
 )
+
+type DatabaseMongo struct {
+	Client *mongo.Client
+	Db     *mongo.Database
+}
+
+func NewDatabaseMongo(l *Logger) *DatabaseMongo {
+	_ = godotenv.Load()
+
+	host, ok := os.LookupEnv("MONGO_DB_HOST")
+	if !ok {
+		log.Fatalf(".env property MONGO_DB_HOST not found")
+	}
+
+	port, ok := os.LookupEnv("MONGO_DB_PORT")
+	if !ok {
+		log.Fatalf(".env property MONGO_DB_PORT not found")
+	}
+
+	dbName, ok := os.LookupEnv("MONGO_DB_DATABASE")
+	if !ok {
+		log.Fatalf(".env property MONGO_DB_DATABASE not found")
+	}
+
+	dbUser, ok := os.LookupEnv("MONGO_DB_USERNAME")
+	if !ok {
+		log.Fatalf(".env property MONGO_DB_USERNAME not found")
+	}
+
+	dbPassword, ok := os.LookupEnv("MONGO_DB_PASSWORD")
+	if !ok {
+		log.Fatalf(".env property MONGO_DB_PASSWORD not found")
+	}
+
+	var mongoURL = "mongodb://" + dbUser + ":" + dbPassword + "@" + host + ":" + port + "/" + dbName + "?authMechanism=SCRAM-SHA-256&authSource=admin"
+
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(mongoURL))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	db := client.Database(dbName)
+
+	// Check the connection
+	err = client.Ping(ctx, nil)
+	if err != nil {
+		log.Fatalf("Failed to ping MongoDB: %v", err)
+	}
+
+	l.GetCore().Info("Ping MongoDB success!")
+
+	// Check the connection
+	err = client.Ping(ctx, nil)
+	if err != nil {
+		log.Fatalf("Failed to ping MongoDB: %v", err)
+	}
+
+	l.GetCore().Info("Connected to MongoDB!", "host", host, "port", port, "database", dbName)
+
+	return &DatabaseMongo{
+		Client: client,
+		Db:     db,
+	}
+}
+
+func (db *DatabaseMongo) GetCore() *DatabaseMongo {
+	return db
+}
 
 type DatabaseNeo4j struct {
 	core *neo4j.DriverWithContext

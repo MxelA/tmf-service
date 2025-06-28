@@ -12,6 +12,28 @@ type ServiceInventoryRepository interface {
 	Create(context context.Context, serviceCreate *models.ServiceCreate) error
 }
 
+type MongoServiceInventoryRepository struct {
+	Db     *core.DatabaseMongo
+	Logger *core.Logger
+}
+
+func (repo *MongoServiceInventoryRepository) GetByID(context context.Context, id string) {
+
+}
+func (repo *MongoServiceInventoryRepository) Create(context context.Context, serviceCreate *models.ServiceCreate) error {
+	a, err := utils.ToSlice(serviceCreate)
+
+	utils.PrettyPrint(a)
+
+	if err != nil {
+		return err
+	}
+
+	repo.Db.GetCore()
+
+	return nil
+}
+
 type Neo4JServiceInventoryRepository struct {
 	Db     *core.DatabaseNeo4j
 	Logger *core.Logger

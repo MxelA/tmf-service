@@ -12,8 +12,8 @@ func (app *app) initCore() {
 	logger := core.NewLogger()
 	app.Logger = logger
 
-	db := core.NewDatabaseNeo4j(logger)
-	app.DB = db
+	db := core.NewDatabaseMongo(logger)
+	app.DBMongo = db
 
 	api := core.NewApi(logger)
 	app.API = api
@@ -30,7 +30,7 @@ func (app *app) initCore() {
 // packages should be initialized.
 func (app *app) initPackages() {
 	var (
-		db = app.DB
+		db = app.DBMongo
 		//api = app.API
 		//pubSub = app.PubSub
 		logger = app.Logger

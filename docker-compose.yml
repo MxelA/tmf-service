@@ -1,18 +1,18 @@
+version: "3.8"
+
 services:
-  neo4j:
-    container_name: neo4j
-    image: neo4j:latest
+  mongo:
+    image: mongo:7.0
+    container_name: my-mongo
+    restart: always
     ports:
-      - 7474:7474
-      - 7687:7687
+      - "${MONGO_DB_PORT}:27017"
     environment:
-      - NEO4J_AUTH=neo4j/${NEO4J_DB_PASSWORD}
-      - NEO4J_apoc_export_file_enabled=true
-      - NEO4J_apoc_import_file_enabled=true
-      - NEO4J_apoc_import_file_use__neo4j__config=true
-      - NEO4J_PLUGINS=["apoc", "graph-data-science"]
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DB_DATABASE}
     volumes:
-      - ./neo4j_db/data:/data
-      - ./neo4j_db/logs:/logs
-      - ./neo4j_db/import:/var/lib/neo4j/import
-      - ./neo4j_db/plugins:/plugins
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

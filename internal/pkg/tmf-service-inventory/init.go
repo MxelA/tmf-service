@@ -15,7 +15,7 @@ type TmfServiceInventoryPkg struct {
 	Server *restapi.Server
 }
 
-func NewTmfServiceInventory(l *core.Logger, db *core.DatabaseNeo4j) *TmfServiceInventoryPkg {
+func NewTmfServiceInventory(l *core.Logger, db *core.DatabaseMongo) *TmfServiceInventoryPkg {
 
 	// Initialize Swagger
 	swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "")
@@ -25,7 +25,7 @@ func NewTmfServiceInventory(l *core.Logger, db *core.DatabaseNeo4j) *TmfServiceI
 
 	api := operations.NewTmfServiceInventoryV40API(swaggerSpec)
 
-	repo := repository.Neo4JServiceInventoryRepository{Db: db, Logger: l}
+	repo := repository.MongoServiceInventoryRepository{Db: db, Logger: l}
 	serviceInventoryHandler := handler.NewServiceInventoryHandler(&repo)
 
 	// Register Handlers
