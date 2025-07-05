@@ -3,7 +3,7 @@ version: "3.8"
 services:
   mongo:
     image: mongo:7.0
-    container_name: my-mongo
+    container_name: db-mongo
     restart: always
     ports:
       - "${MONGO_DB_PORT}:27017"

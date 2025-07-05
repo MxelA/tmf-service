@@ -36,3 +36,8 @@ curl -1sLf 'https://dl.cloudsmith.io/public/go-swagger/go-swagger/config.deb.txt
 sudo apt update 
 sudo apt install swagger
 ```
+
+### Run tmf-service application
+```aiignore
+docker-compose -f docker-compose.yml -f docker-compose-dev.yml up -d
+```
