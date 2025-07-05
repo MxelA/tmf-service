@@ -53,7 +53,7 @@ type Service struct {
 	Href *string `json:"href,omitempty" bson:"href,omitempty"`
 
 	// Unique identifier of the service
-	ID *string `json:"id,omitempty" bson:"id,omitempty"`
+	ID *string `json:"id,omitempty" bson:"_id,omitempty"`
 
 	// If true, the service is a ServiceBundle which regroup a service hierachy. If false, the service is a 'atomic' service (hierachy leaf).
 	IsBundle *bool `json:"isBundle,omitempty" bson:"isBundle,omitempty"`
@@ -98,7 +98,7 @@ type Service struct {
 	ServiceRelationship []*ServiceRelationship `json:"serviceRelationship,omitempty" bson:"serviceRelationship,omitempty"`
 
 	// The specification from which this service was instantiated
-	ServiceSpecification *ServiceSpecificationRef `json:"serviceSpecification,omitempty"`
+	ServiceSpecification *ServiceSpecificationRef `json:"serviceSpecification,omitempty" bson:"serviceSpecification,omitempty"`
 
 	// Business type of the service
 	ServiceType *string `json:"serviceType,omitempty" bson:"serviceType,omitempty"`

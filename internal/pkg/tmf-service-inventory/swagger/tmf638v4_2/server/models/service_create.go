@@ -88,7 +88,7 @@ type ServiceCreate struct {
 
 	// The specification from which this service was instantiated
 	// Required: true
-	ServiceSpecification *ServiceSpecificationRef `json:"serviceSpecification"`
+	ServiceSpecification *ServiceSpecificationRef `json:"serviceSpecification,omitempty" bson:"serviceSpecification,omitempty"`
 
 	// Business type of the service
 	ServiceType *string `json:"serviceType,omitempty" bson:"serviceType,omitempty"`

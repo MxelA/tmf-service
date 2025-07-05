@@ -1950,7 +1950,7 @@
         "id": {
           "type": "string",
           "description": "Unique identifier of the service",
-          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-go-custom-tag": "bson:\"_id,omitempty\"",
           "x-nullable": true
         },
         "href": {
@@ -3029,32 +3029,37 @@
           "type": "string",
           "description": "unique identifier",
           "x-go-custom-tag": "bson:\"id,omitempty\"",
-          "x-nullable": false
+          "x-nullable": false,
+          "x-omitempty": true
         },
         "href": {
           "type": "string",
           "format": "uri",
           "description": "Hyperlink reference",
           "x-go-custom-tag": "bson:\"href,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "name": {
           "type": "string",
           "description": "Name of the related entity.",
           "x-go-custom-tag": "bson:\"name,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "version": {
           "type": "string",
           "description": "Service specification version",
           "x-go-custom-tag": "bson:\"version,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "@baseType": {
           "type": "string",
           "description": "When sub-classing, this defines the super-class",
           "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "@schemaLocation": {
           "type": "string",
@@ -3067,13 +3072,15 @@
           "type": "string",
           "description": "When sub-classing, this defines the sub-class Extensible name",
           "x-go-custom-tag": "bson:\"@type,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "@referredType": {
           "type": "string",
           "description": "The actual type of the target instance when needed for disambiguation.",
           "x-go-custom-tag": "bson:\"@referredType,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         }
       }
     },

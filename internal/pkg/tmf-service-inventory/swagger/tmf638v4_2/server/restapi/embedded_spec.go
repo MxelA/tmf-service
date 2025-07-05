@@ -2116,7 +2116,7 @@ func init() {
         "id": {
           "description": "Unique identifier of the service",
           "type": "string",
-          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-go-custom-tag": "bson:\"_id,omitempty\"",
           "x-nullable": true
         },
         "isBundle": {
@@ -2993,13 +2993,15 @@ func init() {
           "description": "When sub-classing, this defines the super-class",
           "type": "string",
           "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "@referredType": {
           "description": "The actual type of the target instance when needed for disambiguation.",
           "type": "string",
           "x-go-custom-tag": "bson:\"@referredType,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "@schemaLocation": {
           "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
@@ -3012,32 +3014,37 @@ func init() {
           "description": "When sub-classing, this defines the sub-class Extensible name",
           "type": "string",
           "x-go-custom-tag": "bson:\"@type,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "href": {
           "description": "Hyperlink reference",
           "type": "string",
           "format": "uri",
           "x-go-custom-tag": "bson:\"href,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "id": {
           "description": "unique identifier",
           "type": "string",
           "x-go-custom-tag": "bson:\"id,omitempty\"",
-          "x-nullable": false
+          "x-nullable": false,
+          "x-omitempty": true
         },
         "name": {
           "description": "Name of the related entity.",
           "type": "string",
           "x-go-custom-tag": "bson:\"name,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "version": {
           "description": "Service specification version",
           "type": "string",
           "x-go-custom-tag": "bson:\"version,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         }
       }
     },
@@ -5721,7 +5728,7 @@ func init() {
         "id": {
           "description": "Unique identifier of the service",
           "type": "string",
-          "x-go-custom-tag": "bson:\"id,omitempty\"",
+          "x-go-custom-tag": "bson:\"_id,omitempty\"",
           "x-nullable": true
         },
         "isBundle": {
@@ -6598,13 +6605,15 @@ func init() {
           "description": "When sub-classing, this defines the super-class",
           "type": "string",
           "x-go-custom-tag": "bson:\"@baseType,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "@referredType": {
           "description": "The actual type of the target instance when needed for disambiguation.",
           "type": "string",
           "x-go-custom-tag": "bson:\"@referredType,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "@schemaLocation": {
           "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
@@ -6617,32 +6626,37 @@ func init() {
           "description": "When sub-classing, this defines the sub-class Extensible name",
           "type": "string",
           "x-go-custom-tag": "bson:\"@type,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "href": {
           "description": "Hyperlink reference",
           "type": "string",
           "format": "uri",
           "x-go-custom-tag": "bson:\"href,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "id": {
           "description": "unique identifier",
           "type": "string",
           "x-go-custom-tag": "bson:\"id,omitempty\"",
-          "x-nullable": false
+          "x-nullable": false,
+          "x-omitempty": true
         },
         "name": {
           "description": "Name of the related entity.",
           "type": "string",
           "x-go-custom-tag": "bson:\"name,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "version": {
           "description": "Service specification version",
           "type": "string",
           "x-go-custom-tag": "bson:\"version,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         }
       }
     },

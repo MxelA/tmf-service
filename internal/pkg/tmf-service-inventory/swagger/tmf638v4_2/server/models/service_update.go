@@ -90,7 +90,7 @@ type ServiceUpdate struct {
 	ServiceRelationship []*ServiceRelationship `json:"serviceRelationship,omitempty" bson:"serviceRelationship,omitempty"`
 
 	// The specification from which this service was instantiated
-	ServiceSpecification *ServiceSpecificationRef `json:"serviceSpecification,omitempty"`
+	ServiceSpecification *ServiceSpecificationRef `json:"serviceSpecification,omitempty" bson:"serviceSpecification,omitempty"`
 
 	// Business type of the service
 	ServiceType *string `json:"serviceType,omitempty" bson:"serviceType,omitempty"`
