@@ -21,14 +21,14 @@ type EventSubscription struct {
 
 	// The callback being registered.
 	// Required: true
-	Callback *string `json:"callback"`
+	Callback string `json:"callback" bson:"callback,omitempty"`
 
 	// Id of the listener
 	// Required: true
-	ID *string `json:"id"`
+	ID string `json:"id" bson:"id,omitempty"`
 
 	// additional data to be passed
-	Query string `json:"query,omitempty"`
+	Query *string `json:"query,omitempty" bson:"query,omitempty"`
 }
 
 // Validate validates this event subscription
@@ -51,7 +51,7 @@ func (m *EventSubscription) Validate(formats strfmt.Registry) error {
 
 func (m *EventSubscription) validateCallback(formats strfmt.Registry) error {
 
-	if err := validate.Required("callback", "body", m.Callback); err != nil {
+	if err := validate.RequiredString("callback", "body", m.Callback); err != nil {
 		return err
 	}
 
@@ -60,7 +60,7 @@ func (m *EventSubscription) validateCallback(formats strfmt.Registry) error {
 
 func (m *EventSubscription) validateID(formats strfmt.Registry) error {
 
-	if err := validate.Required("id", "body", m.ID); err != nil {
+	if err := validate.RequiredString("id", "body", m.ID); err != nil {
 		return err
 	}
 

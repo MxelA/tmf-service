@@ -20,25 +20,25 @@ import (
 type FeatureRelationship struct {
 
 	// When sub-classing, this defines the super-class
-	AtBaseType string `json:"@baseType,omitempty"`
+	AtBaseType *string `json:"@baseType,omitempty" bson:"@baseType,omitempty"`
 
 	// A URI to a JSON-Schema file that defines additional attributes and relationships
 	// Format: uri
-	AtSchemaLocation strfmt.URI `json:"@schemaLocation,omitempty"`
+	AtSchemaLocation *strfmt.URI `json:"@schemaLocation,omitempty" bson:"@schemaLocation,omitempty"`
 
 	// When sub-classing, this defines the sub-class Extensible name
-	AtType string `json:"@type,omitempty"`
+	AtType *string `json:"@type,omitempty" bson:"@type,omitempty"`
 
 	// Unique identifier of the target feature.
-	ID string `json:"id,omitempty"`
+	ID string `json:"id,omitempty" bson:"id,omitempty"`
 
 	// This is the name of the target feature.
 	// Required: true
-	Name *string `json:"name"`
+	Name *string `json:"name" bson:"name,omitempty"`
 
 	// This is the type of the feature relationship.
 	// Required: true
-	RelationshipType *string `json:"relationshipType"`
+	RelationshipType *string `json:"relationshipType" bson:"relationshipType,omitempty"`
 
 	// The period for which this feature relationship is valid.
 	ValidFor *TimePeriod `json:"validFor,omitempty"`

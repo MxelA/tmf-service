@@ -42,7 +42,7 @@ type Characteristic struct {
 
 	// The value of the characteristic
 	// Required: true
-	Value Any `json:"value"`
+	Value interface{} `json:"value" bson:"value,omitempty"`
 
 	// Data type of the value of the characteristic
 	ValueType *string `json:"valueType,omitempty" bson:"valueType,omitempty"`

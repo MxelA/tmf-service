@@ -22,48 +22,48 @@ import (
 type ServiceUpdate struct {
 
 	// When sub-classing, this defines the super-class
-	AtBaseType string `json:"@baseType,omitempty"`
+	AtBaseType *string `json:"@baseType,omitempty" bson:"@baseType,omitempty"`
 
 	// A URI to a JSON-Schema file that defines additional attributes and relationships
 	// Format: uri
-	AtSchemaLocation strfmt.URI `json:"@schemaLocation,omitempty"`
+	AtSchemaLocation *strfmt.URI `json:"@schemaLocation,omitempty" bson:"@schemaLocation,omitempty"`
 
 	// When sub-classing, this defines the sub-class Extensible name
-	AtType string `json:"@type,omitempty"`
+	AtType *string `json:"@type,omitempty" bson:"@type,omitempty"`
 
 	// Is it a customer facing or resource facing service
-	Category string `json:"category,omitempty"`
+	Category *string `json:"category,omitempty" bson:"category,omitempty"`
 
 	// Free-text description of the service
-	Description string `json:"description,omitempty"`
+	Description *string `json:"description,omitempty" bson:"description,omitempty"`
 
 	// Date when the service ends
 	// Format: date-time
-	EndDate strfmt.DateTime `json:"endDate,omitempty"`
+	EndDate *strfmt.DateTime `json:"endDate,omitempty" bson:"endDate,omitempty"`
 
 	// A list of external identifiers assoicated with this service
-	ExternalIdentifier []*ExternalIdentifier `json:"externalIdentifier"`
+	ExternalIdentifier []*ExternalIdentifier `json:"externalIdentifier" bson:"externalIdentifier,omitempty"`
 
 	// A list of feature associated with this service
-	Feature []*Feature `json:"feature"`
+	Feature []*Feature `json:"feature" bson:"feature,omitempty"`
 
 	// If TRUE, this Service has already been started
-	HasStarted bool `json:"hasStarted,omitempty"`
+	HasStarted *bool `json:"hasStarted,omitempty" bson:"hasStarted,omitempty"`
 
 	// If true, the service is a ServiceBundle which regroup a service hierachy. If false, the service is a 'atomic' service (hierachy leaf).
-	IsBundle bool `json:"isBundle,omitempty"`
+	IsBundle *bool `json:"isBundle,omitempty" bson:"isBundle,omitempty"`
 
 	// If FALSE and hasStarted is FALSE, this particular Service has NOT been enabled for use - if FALSE and hasStarted is TRUE then the service has failed
-	IsServiceEnabled bool `json:"isServiceEnabled,omitempty"`
+	IsServiceEnabled *bool `json:"isServiceEnabled,omitempty" bson:"isServiceEnabled,omitempty"`
 
 	// If TRUE, this Service can be changed without affecting any other services
-	IsStateful bool `json:"isStateful,omitempty"`
+	IsStateful *bool `json:"isStateful,omitempty" bson:"isStateful,omitempty"`
 
 	// Name of the service
-	Name string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty" bson:"name,omitempty"`
 
 	// A list of notes made on this service
-	Note []*Note `json:"note"`
+	Note []*Note `json:"note" bson:"note,omitempty"`
 
 	// Indicates how a service is currently performing or operating. It is a logical representation of the service operating behaviour and is determined/managed by the service provider.
 	OperatingStatus ServiceOperatingStatusType `json:"operatingStatus,omitempty"`
@@ -72,44 +72,44 @@ type ServiceUpdate struct {
 	OperatingStatusContextUpdate *ContextUpdate `json:"operatingStatusContextUpdate,omitempty"`
 
 	// A list of places (Place [*]). Used to define a place useful for the service (for example a geographical place whre the service is installed)
-	Place []*RelatedPlaceRefOrValue `json:"place"`
+	Place []*RelatedPlaceRefOrValue `json:"place" bson:"place,omitempty"`
 
 	// A list of related  entity in relationship with this service
-	RelatedEntity []*RelatedEntityRefOrValue `json:"relatedEntity"`
+	RelatedEntity []*RelatedEntityRefOrValue `json:"relatedEntity" bson:"relatedEntity,omitempty"`
 
 	// A list of related party references (RelatedParty [*]). A related party defines party or party role linked to a specific entity
-	RelatedParty []*RelatedParty `json:"relatedParty"`
+	RelatedParty []*RelatedParty `json:"relatedParty" bson:"relatedParty,omitempty"`
 
 	// A list of characteristics that characterize this service (ServiceCharacteristic [*])
-	ServiceCharacteristic []*Characteristic `json:"serviceCharacteristic"`
+	ServiceCharacteristic []*Characteristic `json:"serviceCharacteristic" bson:"serviceCharacteristic,omitempty"`
 
 	// A list of service order items related to this service
-	ServiceOrderItem []*RelatedServiceOrderItem `json:"serviceOrderItem"`
+	ServiceOrderItem []*RelatedServiceOrderItem `json:"serviceOrderItem" bson:"serviceOrderItem,omitempty"`
 
 	// A list of service relationships (ServiceRelationship [*]). Describes links with other service(s) in the inventory.
-	ServiceRelationship []*ServiceRelationship `json:"serviceRelationship"`
+	ServiceRelationship []*ServiceRelationship `json:"serviceRelationship" bson:"serviceRelationship,omitempty"`
 
 	// The specification from which this service was instantiated
 	ServiceSpecification *ServiceSpecificationRef `json:"serviceSpecification,omitempty"`
 
 	// Business type of the service
-	ServiceType string `json:"serviceType,omitempty"`
+	ServiceType *string `json:"serviceType,omitempty" bson:"serviceType,omitempty"`
 
 	// Date when the service starts
 	// Format: date-time
-	StartDate strfmt.DateTime `json:"startDate,omitempty"`
+	StartDate *strfmt.DateTime `json:"startDate,omitempty" bson:"startDate,omitempty"`
 
 	// This attribute is an enumerated integer that indicates how the Service is started, such as: 0: Unknown; 1: Automatically by the managed environment; 2: Automatically by the owning device; 3: Manually by the Provider of the Service; 4: Manually by a Customer of the Provider; 5: Any of the above
-	StartMode string `json:"startMode,omitempty"`
+	StartMode *string `json:"startMode,omitempty" bson:"startMode,omitempty"`
 
 	// The life cycle state of the service, such as designed, reserved, active, etc...
 	State ServiceStateType `json:"state,omitempty"`
 
 	// A list of supporting resources (SupportingResource [*]).Note: only Service of type RFS can be associated with Resources
-	SupportingResource []*ResourceRef `json:"supportingResource"`
+	SupportingResource []*ResourceRef `json:"supportingResource" bson:"supportingResource,omitempty"`
 
 	// A list of supporting services (SupportingService [*]). A collection of services that support this service (bundling, link CFS to RFS)
-	SupportingService []*ServiceRefOrValue `json:"supportingService"`
+	SupportingService []*ServiceRefOrValue `json:"supportingService" bson:"supportingService,omitempty"`
 }
 
 // Validate validates this service update

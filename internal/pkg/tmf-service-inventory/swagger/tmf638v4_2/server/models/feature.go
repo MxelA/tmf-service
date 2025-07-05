@@ -21,37 +21,37 @@ import (
 type Feature struct {
 
 	// When sub-classing, this defines the super-class
-	AtBaseType string `json:"@baseType,omitempty"`
+	AtBaseType *string `json:"@baseType,omitempty" bson:"@baseType,omitempty"`
 
 	// A URI to a JSON-Schema file that defines additional attributes and relationships
 	// Format: uri
-	AtSchemaLocation strfmt.URI `json:"@schemaLocation,omitempty"`
+	AtSchemaLocation *strfmt.URI `json:"@schemaLocation,omitempty" bson:"@schemaLocation,omitempty"`
 
 	// When sub-classing, this defines the sub-class Extensible name
-	AtType string `json:"@type,omitempty"`
+	AtType *string `json:"@type,omitempty" bson:"@type,omitempty"`
 
 	// This is a list of feature constraints.
 	Constraint []*ConstraintRef `json:"constraint"`
 
 	// This is a list of Characteristics for a particular feature.
-	FeatureCharacteristic []*Characteristic `json:"featureCharacteristic"`
+	FeatureCharacteristic []*Characteristic `json:"featureCharacteristic" bson:"featureCharacteristic,omitempty"`
 
 	// feature relationship
-	FeatureRelationship []*FeatureRelationship `json:"featureRelationship"`
+	FeatureRelationship []*FeatureRelationship `json:"featureRelationship" bson:"featureRelationship,omitempty"`
 
 	// Unique identifier of the feature.
 	// Required: true
-	ID *string `json:"id"`
+	ID *string `json:"id" bson:"id,omitempty"`
 
 	// True if this is a feature group. Default is false.
-	IsBundle bool `json:"isBundle,omitempty"`
+	IsBundle *bool `json:"isBundle,omitempty" bson:"isBundle,omitempty"`
 
 	// True if this feature is enabled. Default is true.
-	IsEnabled bool `json:"isEnabled,omitempty"`
+	IsEnabled *bool `json:"isEnabled,omitempty" bson:"isEnabled,omitempty"`
 
 	// This is the name for the feature.
 	// Required: true
-	Name *string `json:"name"`
+	Name *string `json:"name" bson:"name,omitempty"`
 }
 
 // Validate validates this feature

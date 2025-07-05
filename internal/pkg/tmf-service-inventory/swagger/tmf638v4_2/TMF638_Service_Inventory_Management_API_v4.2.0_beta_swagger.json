@@ -946,8 +946,9 @@
           }
         },
         "value": {
-          "$ref": "#/definitions/Any",
+          "type": "object",
           "description": "The value of the characteristic",
+          "x-go-type": "interface{}",
           "x-go-custom-tag": "bson:\"value,omitempty\"",
           "x-nullable": false
         },
@@ -2046,7 +2047,7 @@
             "$ref": "#/definitions/Note"
           },
           "description": "A list of notes made on this service",
-          "x-go-custom-tag": "bson:\"note,omitempty\"",
+          "x-go-custom-tag": "json:\"note,omitempty\" bson:\"note,omitempty\"",
           "x-nullable": true
         },
         "operatingStatus": {

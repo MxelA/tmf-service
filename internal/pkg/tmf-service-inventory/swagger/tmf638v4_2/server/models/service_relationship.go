@@ -21,18 +21,18 @@ import (
 type ServiceRelationship struct {
 
 	// When sub-classing, this defines the super-class
-	AtBaseType string `json:"@baseType,omitempty"`
+	AtBaseType *string `json:"@baseType,omitempty" bson:"@baseType,omitempty"`
 
 	// A URI to a JSON-Schema file that defines additional attributes and relationships
 	// Format: uri
-	AtSchemaLocation strfmt.URI `json:"@schemaLocation,omitempty"`
+	AtSchemaLocation *strfmt.URI `json:"@schemaLocation,omitempty" bson:"@schemaLocation,omitempty"`
 
 	// When sub-classing, this defines the sub-class Extensible name
-	AtType string `json:"@type,omitempty"`
+	AtType *string `json:"@type,omitempty" bson:"@type,omitempty"`
 
 	// relationship type
 	// Required: true
-	RelationshipType *string `json:"relationshipType"`
+	RelationshipType string `json:"relationshipType" bson:"relationshipType,omitempty"`
 
 	// service
 	// Required: true
@@ -82,7 +82,7 @@ func (m *ServiceRelationship) validateAtSchemaLocation(formats strfmt.Registry) 
 
 func (m *ServiceRelationship) validateRelationshipType(formats strfmt.Registry) error {
 
-	if err := validate.Required("relationshipType", "body", m.RelationshipType); err != nil {
+	if err := validate.RequiredString("relationshipType", "body", m.RelationshipType); err != nil {
 		return err
 	}
 

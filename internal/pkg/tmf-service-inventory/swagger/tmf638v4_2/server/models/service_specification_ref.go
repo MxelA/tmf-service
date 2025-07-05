@@ -20,31 +20,31 @@ import (
 type ServiceSpecificationRef struct {
 
 	// When sub-classing, this defines the super-class
-	AtBaseType string `json:"@baseType,omitempty"`
+	AtBaseType *string `json:"@baseType,omitempty" bson:"@baseType,omitempty"`
 
 	// The actual type of the target instance when needed for disambiguation.
-	AtReferredType string `json:"@referredType,omitempty"`
+	AtReferredType *string `json:"@referredType,omitempty" bson:"@referredType,omitempty"`
 
 	// A URI to a JSON-Schema file that defines additional attributes and relationships
 	// Format: uri
-	AtSchemaLocation strfmt.URI `json:"@schemaLocation,omitempty"`
+	AtSchemaLocation *strfmt.URI `json:"@schemaLocation,omitempty" bson:"@schemaLocation,omitempty"`
 
 	// When sub-classing, this defines the sub-class Extensible name
-	AtType string `json:"@type,omitempty"`
+	AtType *string `json:"@type,omitempty" bson:"@type,omitempty"`
 
 	// Hyperlink reference
 	// Format: uri
-	Href strfmt.URI `json:"href,omitempty"`
+	Href *strfmt.URI `json:"href,omitempty" bson:"href,omitempty"`
 
 	// unique identifier
 	// Required: true
-	ID *string `json:"id"`
+	ID string `json:"id" bson:"id,omitempty"`
 
 	// Name of the related entity.
-	Name string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty" bson:"name,omitempty"`
 
 	// Service specification version
-	Version string `json:"version,omitempty"`
+	Version *string `json:"version,omitempty" bson:"version,omitempty"`
 }
 
 // Validate validates this service specification ref
@@ -95,7 +95,7 @@ func (m *ServiceSpecificationRef) validateHref(formats strfmt.Registry) error {
 
 func (m *ServiceSpecificationRef) validateID(formats strfmt.Registry) error {
 
-	if err := validate.Required("id", "body", m.ID); err != nil {
+	if err := validate.RequiredString("id", "body", m.ID); err != nil {
 		return err
 	}
 

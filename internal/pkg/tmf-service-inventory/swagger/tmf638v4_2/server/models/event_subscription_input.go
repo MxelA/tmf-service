@@ -21,10 +21,10 @@ type EventSubscriptionInput struct {
 
 	// The callback being registered.
 	// Required: true
-	Callback *string `json:"callback"`
+	Callback string `json:"callback" bson:"callback,omitempty"`
 
 	// additional data to be passed
-	Query string `json:"query,omitempty"`
+	Query *string `json:"query,omitempty" bson:"query,omitempty"`
 }
 
 // Validate validates this event subscription input
@@ -43,7 +43,7 @@ func (m *EventSubscriptionInput) Validate(formats strfmt.Registry) error {
 
 func (m *EventSubscriptionInput) validateCallback(formats strfmt.Registry) error {
 
-	if err := validate.Required("callback", "body", m.Callback); err != nil {
+	if err := validate.RequiredString("callback", "body", m.Callback); err != nil {
 		return err
 	}
 
