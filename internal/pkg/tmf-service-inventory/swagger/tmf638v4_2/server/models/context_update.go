@@ -41,10 +41,10 @@ type ContextUpdate struct {
 	Reason *string `json:"reason,omitempty" bson:"reason,omitempty"`
 
 	// A list of entities that represent observations, anomalies or managing entities etc associated to the current status/state value.
-	RelatedEntity []*EntityRef `json:"relatedEntity" bson:"relatedEntity,omitempty"`
+	RelatedEntity []*EntityRef `json:"relatedEntity,omitempty" bson:"relatedEntity,omitempty"`
 
 	// List of parties associated to the current status/state value.
-	RelatedParty []*RelatedParty `json:"relatedParty" bson:"relatedParty,omitempty"`
+	RelatedParty []*RelatedParty `json:"relatedParty,omitempty" bson:"relatedParty,omitempty"`
 }
 
 // Validate validates this context update

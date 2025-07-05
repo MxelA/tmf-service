@@ -939,11 +939,12 @@
         },
         "characteristicRelationship": {
           "type": "array",
-          "x-go-custom-tag": "bson:\"characteristicRelationship,omitempty\"",
-          "x-nullable": true,
           "items": {
             "$ref": "#/definitions/CharacteristicRelationship"
-          }
+          },
+          "x-go-custom-tag": "bson:\"characteristicRelationship,omitempty\"",
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "value": {
           "type": "object",
@@ -1100,7 +1101,8 @@
           },
           "description": "A list of entities that represent observations, anomalies or managing entities etc associated to the current status/state value.",
           "x-go-custom-tag": "bson:\"relatedEntity,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedParty": {
           "type": "array",
@@ -1109,7 +1111,8 @@
           },
           "description": "List of parties associated to the current status/state value.",
           "x-go-custom-tag": "bson:\"relatedParty,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "@baseType": {
           "type": "string",
@@ -1378,7 +1381,10 @@
           "items": {
             "$ref": "#/definitions/ConstraintRef"
           },
-          "description": "This is a list of feature constraints."
+          "description": "This is a list of feature constraints.",
+          "x-go-custom-tag": "bson:\"constraint,omitempty\"",
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "featureCharacteristic": {
           "type": "array",
@@ -1387,7 +1393,8 @@
           },
           "description": "This is a list of Characteristics for a particular feature.",
           "x-go-custom-tag": "bson:\"featureCharacteristic,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "featureRelationship": {
           "type": "array",
@@ -1395,7 +1402,8 @@
             "$ref": "#/definitions/FeatureRelationship"
           },
           "x-go-custom-tag": "bson:\"featureRelationship,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "@baseType": {
           "type": "string",
@@ -1448,7 +1456,8 @@
           "$ref": "#/definitions/TimePeriod",
           "description": "The period for which this feature relationship is valid.",
           "x-go-custom-tag": "bson:\"validFor,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "@baseType": {
           "type": "string",
@@ -1852,7 +1861,8 @@
           "$ref": "#/definitions/OrderItemActionType",
           "description": "Action of the order item for this service",
           "x-go-custom-tag": "bson:\"itemAction,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "@baseType": {
           "type": "string",
@@ -2030,7 +2040,8 @@
           },
           "description": "A list of external identifiers assoicated with this service",
           "x-go-custom-tag": "bson:\"externalIdentifier,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "feature": {
           "type": "array",
@@ -2039,7 +2050,8 @@
           },
           "description": "A list of feature associated with this service ",
           "x-go-custom-tag": "bson:\"feature,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "note": {
           "type": "array",
@@ -2047,20 +2059,23 @@
             "$ref": "#/definitions/Note"
           },
           "description": "A list of notes made on this service",
-          "x-go-custom-tag": "json:\"note,omitempty\" bson:\"note,omitempty\"",
-          "x-nullable": true
+          "x-go-custom-tag": "bson:\"note,omitempty\"",
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "operatingStatus": {
           "$ref": "#/definitions/ServiceOperatingStatusType",
           "description": "Indicates how a service is currently performing or operating. It is a logical representation of the service operating behaviour and is determined/managed by the service provider.",
           "x-go-custom-tag": "bson:\"operatingStatus,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "operatingStatusContextUpdate": {
           "$ref": "#/definitions/ContextUpdate",
           "description": "Additional information describing the context of operatingStatus and is determined/managed by the service provider.",
           "x-go-custom-tag": "bson:\"operatingStatusContextUpdate,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "place": {
           "type": "array",
@@ -2069,7 +2084,8 @@
           },
           "description": "A list of places (Place [*]). Used to define a place useful for the service (for example a geographical place whre the service is installed)",
           "x-go-custom-tag": "bson:\"place,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedEntity": {
           "type": "array",
@@ -2078,7 +2094,8 @@
           },
           "description": "A list of related  entity in relationship with this service ",
           "x-go-custom-tag": "bson:\"relatedEntity,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedParty": {
           "type": "array",
@@ -2087,7 +2104,8 @@
           },
           "description": "A list of related party references (RelatedParty [*]). A related party defines party or party role linked to a specific entity",
           "x-go-custom-tag": "bson:\"relatedParty,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceCharacteristic": {
           "type": "array",
@@ -2096,7 +2114,8 @@
           },
           "description": "A list of characteristics that characterize this service (ServiceCharacteristic [*]) ",
           "x-go-custom-tag": "bson:\"serviceCharacteristic,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceOrderItem": {
           "type": "array",
@@ -2105,7 +2124,8 @@
           },
           "description": "A list of service order items related to this service",
           "x-go-custom-tag": "bson:\"serviceOrderItem,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceRelationship": {
           "type": "array",
@@ -2114,19 +2134,22 @@
           },
           "description": "A list of service relationships (ServiceRelationship [*]). Describes links with other service(s) in the inventory.",
           "x-go-custom-tag": "bson:\"serviceRelationship,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceSpecification": {
           "$ref": "#/definitions/ServiceSpecificationRef",
           "description": "The specification from which this service was instantiated",
           "x-go-custom-tag": "bson:\"serviceSpecification,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "state": {
           "$ref": "#/definitions/ServiceStateType",
           "description": "The life cycle state of the service, such as designed, reserved, active, etc...",
           "x-go-custom-tag": "bson:\"state,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "supportingResource": {
           "type": "array",
@@ -2135,7 +2158,8 @@
           },
           "description": "A list of supporting resources (SupportingResource [*]).Note: only Service of type RFS can be associated with Resources",
           "x-go-custom-tag": "bson:\"supportingResource,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "supportingService": {
           "type": "array",
@@ -2144,7 +2168,8 @@
           },
           "description": "A list of supporting services (SupportingService [*]). A collection of services that support this service (bundling, link CFS to RFS)",
           "x-go-custom-tag": "bson:\"supportingService,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "@baseType": {
           "type": "string",
@@ -2256,7 +2281,8 @@
           },
           "description": "A list of external identifiers assoicated with this service",
           "x-go-custom-tag": "bson:\"externalIdentifier,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "feature": {
           "type": "array",
@@ -2265,7 +2291,8 @@
           },
           "description": "A list of feature associated with this service ",
           "x-go-custom-tag": "bson:\"feature,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "note": {
           "type": "array",
@@ -2274,7 +2301,8 @@
           },
           "description": "A list of notes made on this service",
           "x-go-custom-tag": "bson:\"note,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "place": {
           "type": "array",
@@ -2283,7 +2311,8 @@
           },
           "description": "A list of places (Place [*]). Used to define a place useful for the service (for example a geographical place whre the service is installed)",
           "x-go-custom-tag": "bson:\"place,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedEntity": {
           "type": "array",
@@ -2292,7 +2321,8 @@
           },
           "description": "A list of related  entity in relationship with this service ",
           "x-go-custom-tag": "bson:\"relatedEntity,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedParty": {
           "type": "array",
@@ -2301,7 +2331,8 @@
           },
           "description": "A list of related party references (RelatedParty [*]). A related party defines party or party role linked to a specific entity",
           "x-go-custom-tag": "bson:\"relatedParty,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceCharacteristic": {
           "type": "array",
@@ -2310,7 +2341,8 @@
           },
           "description": "A list of characteristics that characterize this service (ServiceCharacteristic [*]) ",
           "x-go-custom-tag": "bson:\"serviceCharacteristic,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceOrderItem": {
           "type": "array",
@@ -2319,7 +2351,8 @@
           },
           "description": "A list of service order items related to this service",
           "x-go-custom-tag": "bson:\"serviceOrderItem,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceRelationship": {
           "type": "array",
@@ -2328,13 +2361,15 @@
           },
           "description": "A list of service relationships (ServiceRelationship [*]). Describes links with other service(s) in the inventory.",
           "x-go-custom-tag": "bson:\"serviceRelationship,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceSpecification": {
           "$ref": "#/definitions/ServiceSpecificationRef",
           "description": "The specification from which this service was instantiated",
           "x-go-custom-tag": "bson:\"serviceSpecification,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "state": {
           "$ref": "#/definitions/ServiceStateType",
@@ -2349,7 +2384,8 @@
           },
           "description": "A list of supporting resources (SupportingResource [*]).Note: only Service of type RFS can be associated with Resources",
           "x-go-custom-tag": "bson:\"supportingResource,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "supportingService": {
           "type": "array",
@@ -2358,7 +2394,8 @@
           },
           "description": "A list of supporting services (SupportingService [*]). A collection of services that support this service (bundling, link CFS to RFS)",
           "x-go-custom-tag": "bson:\"supportingService,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "@baseType": {
           "type": "string",
@@ -2461,7 +2498,8 @@
           },
           "description": "A list of external identifiers assoicated with this service",
           "x-go-custom-tag": "bson:\"externalIdentifier,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "feature": {
           "type": "array",
@@ -2470,7 +2508,8 @@
           },
           "description": "A list of feature associated with this service ",
           "x-go-custom-tag": "bson:\"feature,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "note": {
           "type": "array",
@@ -2479,19 +2518,22 @@
           },
           "description": "A list of notes made on this service",
           "x-go-custom-tag": "bson:\"note,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "operatingStatus": {
           "$ref": "#/definitions/ServiceOperatingStatusType",
           "description": "Indicates how a service is currently performing or operating. It is a logical representation of the service operating behaviour and is determined/managed by the service provider.",
           "x-go-custom-tag": "bson:\"operatingStatus,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "operatingStatusContextUpdate": {
           "$ref": "#/definitions/ContextUpdate",
           "description": "Additional information describing the context of operatingStatus and is determined/managed by the service provider.",
           "x-go-custom-tag": "bson:\"operatingStatusContextUpdate,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "place": {
           "type": "array",
@@ -2500,7 +2542,8 @@
           },
           "description": "A list of places (Place [*]). Used to define a place useful for the service (for example a geographical place whre the service is installed)",
           "x-go-custom-tag": "bson:\"place,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedEntity": {
           "type": "array",
@@ -2509,7 +2552,8 @@
           },
           "description": "A list of related  entity in relationship with this service ",
           "x-go-custom-tag": "bson:\"relatedEntity,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedParty": {
           "type": "array",
@@ -2518,7 +2562,8 @@
           },
           "description": "A list of related party references (RelatedParty [*]). A related party defines party or party role linked to a specific entity",
           "x-go-custom-tag": "bson:\"relatedParty,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceCharacteristic": {
           "type": "array",
@@ -2527,7 +2572,8 @@
           },
           "description": "A list of characteristics that characterize this service (ServiceCharacteristic [*]) ",
           "x-go-custom-tag": "bson:\"serviceCharacteristic,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceOrderItem": {
           "type": "array",
@@ -2536,7 +2582,8 @@
           },
           "description": "A list of service order items related to this service",
           "x-go-custom-tag": "bson:\"serviceOrderItem,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceRelationship": {
           "type": "array",
@@ -2545,19 +2592,22 @@
           },
           "description": "A list of service relationships (ServiceRelationship [*]). Describes links with other service(s) in the inventory.",
           "x-go-custom-tag": "bson:\"serviceRelationship,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceSpecification": {
           "$ref": "#/definitions/ServiceSpecificationRef",
           "description": "The specification from which this service was instantiated",
           "x-go-custom-tag": "bson:\"serviceSpecification,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "state": {
           "$ref": "#/definitions/ServiceStateType",
           "description": "The life cycle state of the service, such as designed, reserved, active, etc...",
           "x-go-custom-tag": "bson:\"state,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "supportingResource": {
           "type": "array",
@@ -2566,7 +2616,8 @@
           },
           "description": "A list of supporting resources (SupportingResource [*]).Note: only Service of type RFS can be associated with Resources",
           "x-go-custom-tag": "bson:\"supportingResource,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "supportingService": {
           "type": "array",
@@ -2575,7 +2626,8 @@
           },
           "description": "A list of supporting services (SupportingService [*]). A collection of services that support this service (bundling, link CFS to RFS)",
           "x-go-custom-tag": "bson:\"supportingService,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "@baseType": {
           "type": "string",
@@ -2764,7 +2816,8 @@
           },
           "description": "A list of external identifiers assoicated with this service",
           "x-go-custom-tag": "bson:\"externalIdentifier,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "feature": {
           "type": "array",
@@ -2773,7 +2826,8 @@
           },
           "description": "A list of feature associated with this service ",
           "x-go-custom-tag": "bson:\"feature,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "note": {
           "type": "array",
@@ -2782,7 +2836,8 @@
           },
           "description": "A list of notes made on this service",
           "x-go-custom-tag": "bson:\"note,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "operatingStatus": {
           "$ref": "#/definitions/ServiceOperatingStatusType",
@@ -2803,7 +2858,8 @@
           },
           "description": "A list of places (Place [*]). Used to define a place useful for the service (for example a geographical place whre the service is installed)",
           "x-go-custom-tag": "bson:\"place,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedEntity": {
           "type": "array",
@@ -2812,7 +2868,8 @@
           },
           "description": "A list of related  entity in relationship with this service ",
           "x-go-custom-tag": "bson:\"relatedEntity,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedParty": {
           "type": "array",
@@ -2821,7 +2878,8 @@
           },
           "description": "A list of related party references (RelatedParty [*]). A related party defines party or party role linked to a specific entity",
           "x-go-custom-tag": "bson:\"relatedParty,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceCharacteristic": {
           "type": "array",
@@ -2830,7 +2888,8 @@
           },
           "description": "A list of characteristics that characterize this service (ServiceCharacteristic [*]) ",
           "x-go-custom-tag": "bson:\"serviceCharacteristic,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceOrderItem": {
           "type": "array",
@@ -2839,7 +2898,8 @@
           },
           "description": "A list of service order items related to this service",
           "x-go-custom-tag": "bson:\"serviceOrderItem,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceRelationship": {
           "type": "array",
@@ -2848,13 +2908,15 @@
           },
           "description": "A list of service relationships (ServiceRelationship [*]). Describes links with other service(s) in the inventory.",
           "x-go-custom-tag": "bson:\"serviceRelationship,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceSpecification": {
           "$ref": "#/definitions/ServiceSpecificationRef",
           "description": "The specification from which this service was instantiated",
           "x-go-custom-tag": "bson:\"serviceSpecification,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "state": {
           "$ref": "#/definitions/ServiceStateType",
@@ -2869,7 +2931,8 @@
           },
           "description": "A list of supporting resources (SupportingResource [*]).Note: only Service of type RFS can be associated with Resources",
           "x-go-custom-tag": "bson:\"supportingResource,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "supportingService": {
           "type": "array",
@@ -2878,7 +2941,8 @@
           },
           "description": "A list of supporting services (SupportingService [*]). A collection of services that support this service (bundling, link CFS to RFS)",
           "x-go-custom-tag": "bson:\"supportingService,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "@baseType": {
           "type": "string",
@@ -2929,7 +2993,8 @@
           "items": {
             "$ref": "#/definitions/Characteristic",
             "x-go-custom-tag": "bson:\"serviceRelationshipCharacteristic,omitempty\"",
-            "x-nullable": true
+            "x-nullable": true,
+            "x-omitempty": true
           }
         },
         "@baseType": {

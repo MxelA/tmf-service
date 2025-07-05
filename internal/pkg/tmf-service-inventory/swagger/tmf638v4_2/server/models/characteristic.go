@@ -31,7 +31,7 @@ type Characteristic struct {
 	AtType *string `json:"@type,omitempty" bson:"@type,omitempty"`
 
 	// characteristic relationship
-	CharacteristicRelationship []*CharacteristicRelationship `json:"characteristicRelationship" bson:"characteristicRelationship,omitempty"`
+	CharacteristicRelationship []*CharacteristicRelationship `json:"characteristicRelationship,omitempty" bson:"characteristicRelationship,omitempty"`
 
 	// Unique identifier of the characteristic
 	ID *string `json:"id,omitempty" bson:"id,omitempty"`

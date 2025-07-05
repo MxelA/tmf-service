@@ -948,7 +948,8 @@ func init() {
             "$ref": "#/definitions/CharacteristicRelationship"
           },
           "x-go-custom-tag": "bson:\"characteristicRelationship,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "id": {
           "description": "Unique identifier of the characteristic",
@@ -1122,7 +1123,8 @@ func init() {
             "$ref": "#/definitions/EntityRef"
           },
           "x-go-custom-tag": "bson:\"relatedEntity,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedParty": {
           "description": "List of parties associated to the current status/state value.",
@@ -1131,7 +1133,8 @@ func init() {
             "$ref": "#/definitions/RelatedParty"
           },
           "x-go-custom-tag": "bson:\"relatedParty,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         }
       }
     },
@@ -1469,7 +1472,10 @@ func init() {
           "type": "array",
           "items": {
             "$ref": "#/definitions/ConstraintRef"
-          }
+          },
+          "x-go-custom-tag": "bson:\"constraint,omitempty\"",
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "featureCharacteristic": {
           "description": "This is a list of Characteristics for a particular feature.",
@@ -1478,7 +1484,8 @@ func init() {
             "$ref": "#/definitions/Characteristic"
           },
           "x-go-custom-tag": "bson:\"featureCharacteristic,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "featureRelationship": {
           "type": "array",
@@ -1486,7 +1493,8 @@ func init() {
             "$ref": "#/definitions/FeatureRelationship"
           },
           "x-go-custom-tag": "bson:\"featureRelationship,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "id": {
           "description": "Unique identifier of the feature.",
@@ -1563,6 +1571,7 @@ func init() {
           "description": "The period for which this feature relationship is valid.",
           "x-go-custom-tag": "bson:\"validFor,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/TimePeriod"
         }
       }
@@ -1949,6 +1958,7 @@ func init() {
           "description": "Action of the order item for this service",
           "x-go-custom-tag": "bson:\"itemAction,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/OrderItemActionType"
         },
         "itemId": {
@@ -2078,7 +2088,8 @@ func init() {
             "$ref": "#/definitions/ExternalIdentifier"
           },
           "x-go-custom-tag": "bson:\"externalIdentifier,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "feature": {
           "description": "A list of feature associated with this service ",
@@ -2087,7 +2098,8 @@ func init() {
             "$ref": "#/definitions/Feature"
           },
           "x-go-custom-tag": "bson:\"feature,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "hasStarted": {
           "description": "If TRUE, this Service has already been started",
@@ -2137,19 +2149,22 @@ func init() {
           "items": {
             "$ref": "#/definitions/Note"
           },
-          "x-go-custom-tag": "json:\"note,omitempty\" bson:\"note,omitempty\"",
-          "x-nullable": true
+          "x-go-custom-tag": "bson:\"note,omitempty\"",
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "operatingStatus": {
           "description": "Indicates how a service is currently performing or operating. It is a logical representation of the service operating behaviour and is determined/managed by the service provider.",
           "x-go-custom-tag": "bson:\"operatingStatus,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ServiceOperatingStatusType"
         },
         "operatingStatusContextUpdate": {
           "description": "Additional information describing the context of operatingStatus and is determined/managed by the service provider.",
           "x-go-custom-tag": "bson:\"operatingStatusContextUpdate,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ContextUpdate"
         },
         "place": {
@@ -2159,7 +2174,8 @@ func init() {
             "$ref": "#/definitions/RelatedPlaceRefOrValue"
           },
           "x-go-custom-tag": "bson:\"place,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedEntity": {
           "description": "A list of related  entity in relationship with this service ",
@@ -2168,7 +2184,8 @@ func init() {
             "$ref": "#/definitions/RelatedEntityRefOrValue"
           },
           "x-go-custom-tag": "bson:\"relatedEntity,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedParty": {
           "description": "A list of related party references (RelatedParty [*]). A related party defines party or party role linked to a specific entity",
@@ -2177,7 +2194,8 @@ func init() {
             "$ref": "#/definitions/RelatedParty"
           },
           "x-go-custom-tag": "bson:\"relatedParty,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceCharacteristic": {
           "description": "A list of characteristics that characterize this service (ServiceCharacteristic [*]) ",
@@ -2186,7 +2204,8 @@ func init() {
             "$ref": "#/definitions/Characteristic"
           },
           "x-go-custom-tag": "bson:\"serviceCharacteristic,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceDate": {
           "description": "Date when the service was created (whatever its status).",
@@ -2201,7 +2220,8 @@ func init() {
             "$ref": "#/definitions/RelatedServiceOrderItem"
           },
           "x-go-custom-tag": "bson:\"serviceOrderItem,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceRelationship": {
           "description": "A list of service relationships (ServiceRelationship [*]). Describes links with other service(s) in the inventory.",
@@ -2210,12 +2230,14 @@ func init() {
             "$ref": "#/definitions/ServiceRelationship"
           },
           "x-go-custom-tag": "bson:\"serviceRelationship,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceSpecification": {
           "description": "The specification from which this service was instantiated",
           "x-go-custom-tag": "bson:\"serviceSpecification,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ServiceSpecificationRef"
         },
         "serviceType": {
@@ -2241,6 +2263,7 @@ func init() {
           "description": "The life cycle state of the service, such as designed, reserved, active, etc...",
           "x-go-custom-tag": "bson:\"state,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ServiceStateType"
         },
         "supportingResource": {
@@ -2250,7 +2273,8 @@ func init() {
             "$ref": "#/definitions/ResourceRef"
           },
           "x-go-custom-tag": "bson:\"supportingResource,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "supportingService": {
           "description": "A list of supporting services (SupportingService [*]). A collection of services that support this service (bundling, link CFS to RFS)",
@@ -2259,7 +2283,8 @@ func init() {
             "$ref": "#/definitions/ServiceRefOrValue"
           },
           "x-go-custom-tag": "bson:\"supportingService,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         }
       }
     },
@@ -2713,7 +2738,8 @@ func init() {
             "$ref": "#/definitions/ExternalIdentifier"
           },
           "x-go-custom-tag": "bson:\"externalIdentifier,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "feature": {
           "description": "A list of feature associated with this service ",
@@ -2722,7 +2748,8 @@ func init() {
             "$ref": "#/definitions/Feature"
           },
           "x-go-custom-tag": "bson:\"feature,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "hasStarted": {
           "description": "If TRUE, this Service has already been started",
@@ -2773,7 +2800,8 @@ func init() {
             "$ref": "#/definitions/Note"
           },
           "x-go-custom-tag": "bson:\"note,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "operatingStatus": {
           "description": "Indicates how a service is currently performing or operating. It is a logical representation of the service operating behaviour and is determined/managed by the service provider.",
@@ -2794,7 +2822,8 @@ func init() {
             "$ref": "#/definitions/RelatedPlaceRefOrValue"
           },
           "x-go-custom-tag": "bson:\"place,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedEntity": {
           "description": "A list of related  entity in relationship with this service ",
@@ -2803,7 +2832,8 @@ func init() {
             "$ref": "#/definitions/RelatedEntityRefOrValue"
           },
           "x-go-custom-tag": "bson:\"relatedEntity,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedParty": {
           "description": "A list of related party references (RelatedParty [*]). A related party defines party or party role linked to a specific entity",
@@ -2812,7 +2842,8 @@ func init() {
             "$ref": "#/definitions/RelatedParty"
           },
           "x-go-custom-tag": "bson:\"relatedParty,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceCharacteristic": {
           "description": "A list of characteristics that characterize this service (ServiceCharacteristic [*]) ",
@@ -2821,7 +2852,8 @@ func init() {
             "$ref": "#/definitions/Characteristic"
           },
           "x-go-custom-tag": "bson:\"serviceCharacteristic,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceDate": {
           "description": "Date when the service was created (whatever its status).",
@@ -2836,7 +2868,8 @@ func init() {
             "$ref": "#/definitions/RelatedServiceOrderItem"
           },
           "x-go-custom-tag": "bson:\"serviceOrderItem,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceRelationship": {
           "description": "A list of service relationships (ServiceRelationship [*]). Describes links with other service(s) in the inventory.",
@@ -2845,12 +2878,14 @@ func init() {
             "$ref": "#/definitions/ServiceRelationship"
           },
           "x-go-custom-tag": "bson:\"serviceRelationship,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceSpecification": {
           "description": "The specification from which this service was instantiated",
           "x-go-custom-tag": "bson:\"serviceSpecification,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ServiceSpecificationRef"
         },
         "serviceType": {
@@ -2885,7 +2920,8 @@ func init() {
             "$ref": "#/definitions/ResourceRef"
           },
           "x-go-custom-tag": "bson:\"supportingResource,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "supportingService": {
           "description": "A list of supporting services (SupportingService [*]). A collection of services that support this service (bundling, link CFS to RFS)",
@@ -2894,7 +2930,8 @@ func init() {
             "$ref": "#/definitions/ServiceRefOrValue"
           },
           "x-go-custom-tag": "bson:\"supportingService,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         }
       }
     },
@@ -2939,6 +2976,7 @@ func init() {
           "items": {
             "x-go-custom-tag": "bson:\"serviceRelationshipCharacteristic,omitempty\"",
             "x-nullable": true,
+            "x-omitempty": true,
             "$ref": "#/definitions/Characteristic"
           }
         }
@@ -3149,7 +3187,8 @@ func init() {
             "$ref": "#/definitions/ExternalIdentifier"
           },
           "x-go-custom-tag": "bson:\"externalIdentifier,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "feature": {
           "description": "A list of feature associated with this service ",
@@ -3158,7 +3197,8 @@ func init() {
             "$ref": "#/definitions/Feature"
           },
           "x-go-custom-tag": "bson:\"feature,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "hasStarted": {
           "description": "If TRUE, this Service has already been started",
@@ -3197,7 +3237,8 @@ func init() {
             "$ref": "#/definitions/Note"
           },
           "x-go-custom-tag": "bson:\"note,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "place": {
           "description": "A list of places (Place [*]). Used to define a place useful for the service (for example a geographical place whre the service is installed)",
@@ -3206,7 +3247,8 @@ func init() {
             "$ref": "#/definitions/RelatedPlaceRefOrValue"
           },
           "x-go-custom-tag": "bson:\"place,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedEntity": {
           "description": "A list of related  entity in relationship with this service ",
@@ -3215,7 +3257,8 @@ func init() {
             "$ref": "#/definitions/RelatedEntityRefOrValue"
           },
           "x-go-custom-tag": "bson:\"relatedEntity,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedParty": {
           "description": "A list of related party references (RelatedParty [*]). A related party defines party or party role linked to a specific entity",
@@ -3224,7 +3267,8 @@ func init() {
             "$ref": "#/definitions/RelatedParty"
           },
           "x-go-custom-tag": "bson:\"relatedParty,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceCharacteristic": {
           "description": "A list of characteristics that characterize this service (ServiceCharacteristic [*]) ",
@@ -3233,7 +3277,8 @@ func init() {
             "$ref": "#/definitions/Characteristic"
           },
           "x-go-custom-tag": "bson:\"serviceCharacteristic,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceDate": {
           "description": "Date when the service was created (whatever its status).",
@@ -3248,7 +3293,8 @@ func init() {
             "$ref": "#/definitions/RelatedServiceOrderItem"
           },
           "x-go-custom-tag": "bson:\"serviceOrderItem,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceRelationship": {
           "description": "A list of service relationships (ServiceRelationship [*]). Describes links with other service(s) in the inventory.",
@@ -3257,12 +3303,14 @@ func init() {
             "$ref": "#/definitions/ServiceRelationship"
           },
           "x-go-custom-tag": "bson:\"serviceRelationship,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceSpecification": {
           "description": "The specification from which this service was instantiated",
           "x-go-custom-tag": "bson:\"serviceSpecification,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ServiceSpecificationRef"
         },
         "serviceType": {
@@ -3297,7 +3345,8 @@ func init() {
             "$ref": "#/definitions/ResourceRef"
           },
           "x-go-custom-tag": "bson:\"supportingResource,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "supportingService": {
           "description": "A list of supporting services (SupportingService [*]). A collection of services that support this service (bundling, link CFS to RFS)",
@@ -3306,7 +3355,8 @@ func init() {
             "$ref": "#/definitions/ServiceRefOrValue"
           },
           "x-go-custom-tag": "bson:\"supportingService,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         }
       }
     },
@@ -3359,7 +3409,8 @@ func init() {
             "$ref": "#/definitions/ExternalIdentifier"
           },
           "x-go-custom-tag": "bson:\"externalIdentifier,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "feature": {
           "description": "A list of feature associated with this service ",
@@ -3368,7 +3419,8 @@ func init() {
             "$ref": "#/definitions/Feature"
           },
           "x-go-custom-tag": "bson:\"feature,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "hasStarted": {
           "description": "If TRUE, this Service has already been started",
@@ -3407,18 +3459,21 @@ func init() {
             "$ref": "#/definitions/Note"
           },
           "x-go-custom-tag": "bson:\"note,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "operatingStatus": {
           "description": "Indicates how a service is currently performing or operating. It is a logical representation of the service operating behaviour and is determined/managed by the service provider.",
           "x-go-custom-tag": "bson:\"operatingStatus,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ServiceOperatingStatusType"
         },
         "operatingStatusContextUpdate": {
           "description": "Additional information describing the context of operatingStatus and is determined/managed by the service provider.",
           "x-go-custom-tag": "bson:\"operatingStatusContextUpdate,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ContextUpdate"
         },
         "place": {
@@ -3428,7 +3483,8 @@ func init() {
             "$ref": "#/definitions/RelatedPlaceRefOrValue"
           },
           "x-go-custom-tag": "bson:\"place,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedEntity": {
           "description": "A list of related  entity in relationship with this service ",
@@ -3437,7 +3493,8 @@ func init() {
             "$ref": "#/definitions/RelatedEntityRefOrValue"
           },
           "x-go-custom-tag": "bson:\"relatedEntity,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedParty": {
           "description": "A list of related party references (RelatedParty [*]). A related party defines party or party role linked to a specific entity",
@@ -3446,7 +3503,8 @@ func init() {
             "$ref": "#/definitions/RelatedParty"
           },
           "x-go-custom-tag": "bson:\"relatedParty,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceCharacteristic": {
           "description": "A list of characteristics that characterize this service (ServiceCharacteristic [*]) ",
@@ -3455,7 +3513,8 @@ func init() {
             "$ref": "#/definitions/Characteristic"
           },
           "x-go-custom-tag": "bson:\"serviceCharacteristic,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceOrderItem": {
           "description": "A list of service order items related to this service",
@@ -3464,7 +3523,8 @@ func init() {
             "$ref": "#/definitions/RelatedServiceOrderItem"
           },
           "x-go-custom-tag": "bson:\"serviceOrderItem,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceRelationship": {
           "description": "A list of service relationships (ServiceRelationship [*]). Describes links with other service(s) in the inventory.",
@@ -3473,12 +3533,14 @@ func init() {
             "$ref": "#/definitions/ServiceRelationship"
           },
           "x-go-custom-tag": "bson:\"serviceRelationship,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceSpecification": {
           "description": "The specification from which this service was instantiated",
           "x-go-custom-tag": "bson:\"serviceSpecification,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ServiceSpecificationRef"
         },
         "serviceType": {
@@ -3504,6 +3566,7 @@ func init() {
           "description": "The life cycle state of the service, such as designed, reserved, active, etc...",
           "x-go-custom-tag": "bson:\"state,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ServiceStateType"
         },
         "supportingResource": {
@@ -3513,7 +3576,8 @@ func init() {
             "$ref": "#/definitions/ResourceRef"
           },
           "x-go-custom-tag": "bson:\"supportingResource,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "supportingService": {
           "description": "A list of supporting services (SupportingService [*]). A collection of services that support this service (bundling, link CFS to RFS)",
@@ -3522,7 +3586,8 @@ func init() {
             "$ref": "#/definitions/ServiceRefOrValue"
           },
           "x-go-custom-tag": "bson:\"supportingService,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         }
       }
     },
@@ -4488,7 +4553,8 @@ func init() {
             "$ref": "#/definitions/CharacteristicRelationship"
           },
           "x-go-custom-tag": "bson:\"characteristicRelationship,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "id": {
           "description": "Unique identifier of the characteristic",
@@ -4662,7 +4728,8 @@ func init() {
             "$ref": "#/definitions/EntityRef"
           },
           "x-go-custom-tag": "bson:\"relatedEntity,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedParty": {
           "description": "List of parties associated to the current status/state value.",
@@ -4671,7 +4738,8 @@ func init() {
             "$ref": "#/definitions/RelatedParty"
           },
           "x-go-custom-tag": "bson:\"relatedParty,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         }
       }
     },
@@ -5009,7 +5077,10 @@ func init() {
           "type": "array",
           "items": {
             "$ref": "#/definitions/ConstraintRef"
-          }
+          },
+          "x-go-custom-tag": "bson:\"constraint,omitempty\"",
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "featureCharacteristic": {
           "description": "This is a list of Characteristics for a particular feature.",
@@ -5018,7 +5089,8 @@ func init() {
             "$ref": "#/definitions/Characteristic"
           },
           "x-go-custom-tag": "bson:\"featureCharacteristic,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "featureRelationship": {
           "type": "array",
@@ -5026,7 +5098,8 @@ func init() {
             "$ref": "#/definitions/FeatureRelationship"
           },
           "x-go-custom-tag": "bson:\"featureRelationship,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "id": {
           "description": "Unique identifier of the feature.",
@@ -5103,6 +5176,7 @@ func init() {
           "description": "The period for which this feature relationship is valid.",
           "x-go-custom-tag": "bson:\"validFor,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/TimePeriod"
         }
       }
@@ -5489,6 +5563,7 @@ func init() {
           "description": "Action of the order item for this service",
           "x-go-custom-tag": "bson:\"itemAction,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/OrderItemActionType"
         },
         "itemId": {
@@ -5618,7 +5693,8 @@ func init() {
             "$ref": "#/definitions/ExternalIdentifier"
           },
           "x-go-custom-tag": "bson:\"externalIdentifier,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "feature": {
           "description": "A list of feature associated with this service ",
@@ -5627,7 +5703,8 @@ func init() {
             "$ref": "#/definitions/Feature"
           },
           "x-go-custom-tag": "bson:\"feature,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "hasStarted": {
           "description": "If TRUE, this Service has already been started",
@@ -5677,19 +5754,22 @@ func init() {
           "items": {
             "$ref": "#/definitions/Note"
           },
-          "x-go-custom-tag": "json:\"note,omitempty\" bson:\"note,omitempty\"",
-          "x-nullable": true
+          "x-go-custom-tag": "bson:\"note,omitempty\"",
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "operatingStatus": {
           "description": "Indicates how a service is currently performing or operating. It is a logical representation of the service operating behaviour and is determined/managed by the service provider.",
           "x-go-custom-tag": "bson:\"operatingStatus,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ServiceOperatingStatusType"
         },
         "operatingStatusContextUpdate": {
           "description": "Additional information describing the context of operatingStatus and is determined/managed by the service provider.",
           "x-go-custom-tag": "bson:\"operatingStatusContextUpdate,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ContextUpdate"
         },
         "place": {
@@ -5699,7 +5779,8 @@ func init() {
             "$ref": "#/definitions/RelatedPlaceRefOrValue"
           },
           "x-go-custom-tag": "bson:\"place,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedEntity": {
           "description": "A list of related  entity in relationship with this service ",
@@ -5708,7 +5789,8 @@ func init() {
             "$ref": "#/definitions/RelatedEntityRefOrValue"
           },
           "x-go-custom-tag": "bson:\"relatedEntity,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedParty": {
           "description": "A list of related party references (RelatedParty [*]). A related party defines party or party role linked to a specific entity",
@@ -5717,7 +5799,8 @@ func init() {
             "$ref": "#/definitions/RelatedParty"
           },
           "x-go-custom-tag": "bson:\"relatedParty,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceCharacteristic": {
           "description": "A list of characteristics that characterize this service (ServiceCharacteristic [*]) ",
@@ -5726,7 +5809,8 @@ func init() {
             "$ref": "#/definitions/Characteristic"
           },
           "x-go-custom-tag": "bson:\"serviceCharacteristic,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceDate": {
           "description": "Date when the service was created (whatever its status).",
@@ -5741,7 +5825,8 @@ func init() {
             "$ref": "#/definitions/RelatedServiceOrderItem"
           },
           "x-go-custom-tag": "bson:\"serviceOrderItem,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceRelationship": {
           "description": "A list of service relationships (ServiceRelationship [*]). Describes links with other service(s) in the inventory.",
@@ -5750,12 +5835,14 @@ func init() {
             "$ref": "#/definitions/ServiceRelationship"
           },
           "x-go-custom-tag": "bson:\"serviceRelationship,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceSpecification": {
           "description": "The specification from which this service was instantiated",
           "x-go-custom-tag": "bson:\"serviceSpecification,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ServiceSpecificationRef"
         },
         "serviceType": {
@@ -5781,6 +5868,7 @@ func init() {
           "description": "The life cycle state of the service, such as designed, reserved, active, etc...",
           "x-go-custom-tag": "bson:\"state,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ServiceStateType"
         },
         "supportingResource": {
@@ -5790,7 +5878,8 @@ func init() {
             "$ref": "#/definitions/ResourceRef"
           },
           "x-go-custom-tag": "bson:\"supportingResource,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "supportingService": {
           "description": "A list of supporting services (SupportingService [*]). A collection of services that support this service (bundling, link CFS to RFS)",
@@ -5799,7 +5888,8 @@ func init() {
             "$ref": "#/definitions/ServiceRefOrValue"
           },
           "x-go-custom-tag": "bson:\"supportingService,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         }
       }
     },
@@ -6253,7 +6343,8 @@ func init() {
             "$ref": "#/definitions/ExternalIdentifier"
           },
           "x-go-custom-tag": "bson:\"externalIdentifier,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "feature": {
           "description": "A list of feature associated with this service ",
@@ -6262,7 +6353,8 @@ func init() {
             "$ref": "#/definitions/Feature"
           },
           "x-go-custom-tag": "bson:\"feature,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "hasStarted": {
           "description": "If TRUE, this Service has already been started",
@@ -6313,7 +6405,8 @@ func init() {
             "$ref": "#/definitions/Note"
           },
           "x-go-custom-tag": "bson:\"note,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "operatingStatus": {
           "description": "Indicates how a service is currently performing or operating. It is a logical representation of the service operating behaviour and is determined/managed by the service provider.",
@@ -6334,7 +6427,8 @@ func init() {
             "$ref": "#/definitions/RelatedPlaceRefOrValue"
           },
           "x-go-custom-tag": "bson:\"place,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedEntity": {
           "description": "A list of related  entity in relationship with this service ",
@@ -6343,7 +6437,8 @@ func init() {
             "$ref": "#/definitions/RelatedEntityRefOrValue"
           },
           "x-go-custom-tag": "bson:\"relatedEntity,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedParty": {
           "description": "A list of related party references (RelatedParty [*]). A related party defines party or party role linked to a specific entity",
@@ -6352,7 +6447,8 @@ func init() {
             "$ref": "#/definitions/RelatedParty"
           },
           "x-go-custom-tag": "bson:\"relatedParty,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceCharacteristic": {
           "description": "A list of characteristics that characterize this service (ServiceCharacteristic [*]) ",
@@ -6361,7 +6457,8 @@ func init() {
             "$ref": "#/definitions/Characteristic"
           },
           "x-go-custom-tag": "bson:\"serviceCharacteristic,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceDate": {
           "description": "Date when the service was created (whatever its status).",
@@ -6376,7 +6473,8 @@ func init() {
             "$ref": "#/definitions/RelatedServiceOrderItem"
           },
           "x-go-custom-tag": "bson:\"serviceOrderItem,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceRelationship": {
           "description": "A list of service relationships (ServiceRelationship [*]). Describes links with other service(s) in the inventory.",
@@ -6385,12 +6483,14 @@ func init() {
             "$ref": "#/definitions/ServiceRelationship"
           },
           "x-go-custom-tag": "bson:\"serviceRelationship,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceSpecification": {
           "description": "The specification from which this service was instantiated",
           "x-go-custom-tag": "bson:\"serviceSpecification,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ServiceSpecificationRef"
         },
         "serviceType": {
@@ -6425,7 +6525,8 @@ func init() {
             "$ref": "#/definitions/ResourceRef"
           },
           "x-go-custom-tag": "bson:\"supportingResource,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "supportingService": {
           "description": "A list of supporting services (SupportingService [*]). A collection of services that support this service (bundling, link CFS to RFS)",
@@ -6434,7 +6535,8 @@ func init() {
             "$ref": "#/definitions/ServiceRefOrValue"
           },
           "x-go-custom-tag": "bson:\"supportingService,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         }
       }
     },
@@ -6479,6 +6581,7 @@ func init() {
           "items": {
             "x-go-custom-tag": "bson:\"serviceRelationshipCharacteristic,omitempty\"",
             "x-nullable": true,
+            "x-omitempty": true,
             "$ref": "#/definitions/Characteristic"
           }
         }
@@ -6689,7 +6792,8 @@ func init() {
             "$ref": "#/definitions/ExternalIdentifier"
           },
           "x-go-custom-tag": "bson:\"externalIdentifier,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "feature": {
           "description": "A list of feature associated with this service ",
@@ -6698,7 +6802,8 @@ func init() {
             "$ref": "#/definitions/Feature"
           },
           "x-go-custom-tag": "bson:\"feature,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "hasStarted": {
           "description": "If TRUE, this Service has already been started",
@@ -6737,7 +6842,8 @@ func init() {
             "$ref": "#/definitions/Note"
           },
           "x-go-custom-tag": "bson:\"note,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "place": {
           "description": "A list of places (Place [*]). Used to define a place useful for the service (for example a geographical place whre the service is installed)",
@@ -6746,7 +6852,8 @@ func init() {
             "$ref": "#/definitions/RelatedPlaceRefOrValue"
           },
           "x-go-custom-tag": "bson:\"place,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedEntity": {
           "description": "A list of related  entity in relationship with this service ",
@@ -6755,7 +6862,8 @@ func init() {
             "$ref": "#/definitions/RelatedEntityRefOrValue"
           },
           "x-go-custom-tag": "bson:\"relatedEntity,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedParty": {
           "description": "A list of related party references (RelatedParty [*]). A related party defines party or party role linked to a specific entity",
@@ -6764,7 +6872,8 @@ func init() {
             "$ref": "#/definitions/RelatedParty"
           },
           "x-go-custom-tag": "bson:\"relatedParty,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceCharacteristic": {
           "description": "A list of characteristics that characterize this service (ServiceCharacteristic [*]) ",
@@ -6773,7 +6882,8 @@ func init() {
             "$ref": "#/definitions/Characteristic"
           },
           "x-go-custom-tag": "bson:\"serviceCharacteristic,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceDate": {
           "description": "Date when the service was created (whatever its status).",
@@ -6788,7 +6898,8 @@ func init() {
             "$ref": "#/definitions/RelatedServiceOrderItem"
           },
           "x-go-custom-tag": "bson:\"serviceOrderItem,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceRelationship": {
           "description": "A list of service relationships (ServiceRelationship [*]). Describes links with other service(s) in the inventory.",
@@ -6797,12 +6908,14 @@ func init() {
             "$ref": "#/definitions/ServiceRelationship"
           },
           "x-go-custom-tag": "bson:\"serviceRelationship,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceSpecification": {
           "description": "The specification from which this service was instantiated",
           "x-go-custom-tag": "bson:\"serviceSpecification,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ServiceSpecificationRef"
         },
         "serviceType": {
@@ -6837,7 +6950,8 @@ func init() {
             "$ref": "#/definitions/ResourceRef"
           },
           "x-go-custom-tag": "bson:\"supportingResource,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "supportingService": {
           "description": "A list of supporting services (SupportingService [*]). A collection of services that support this service (bundling, link CFS to RFS)",
@@ -6846,7 +6960,8 @@ func init() {
             "$ref": "#/definitions/ServiceRefOrValue"
           },
           "x-go-custom-tag": "bson:\"supportingService,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         }
       }
     },
@@ -6899,7 +7014,8 @@ func init() {
             "$ref": "#/definitions/ExternalIdentifier"
           },
           "x-go-custom-tag": "bson:\"externalIdentifier,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "feature": {
           "description": "A list of feature associated with this service ",
@@ -6908,7 +7024,8 @@ func init() {
             "$ref": "#/definitions/Feature"
           },
           "x-go-custom-tag": "bson:\"feature,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "hasStarted": {
           "description": "If TRUE, this Service has already been started",
@@ -6947,18 +7064,21 @@ func init() {
             "$ref": "#/definitions/Note"
           },
           "x-go-custom-tag": "bson:\"note,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "operatingStatus": {
           "description": "Indicates how a service is currently performing or operating. It is a logical representation of the service operating behaviour and is determined/managed by the service provider.",
           "x-go-custom-tag": "bson:\"operatingStatus,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ServiceOperatingStatusType"
         },
         "operatingStatusContextUpdate": {
           "description": "Additional information describing the context of operatingStatus and is determined/managed by the service provider.",
           "x-go-custom-tag": "bson:\"operatingStatusContextUpdate,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ContextUpdate"
         },
         "place": {
@@ -6968,7 +7088,8 @@ func init() {
             "$ref": "#/definitions/RelatedPlaceRefOrValue"
           },
           "x-go-custom-tag": "bson:\"place,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedEntity": {
           "description": "A list of related  entity in relationship with this service ",
@@ -6977,7 +7098,8 @@ func init() {
             "$ref": "#/definitions/RelatedEntityRefOrValue"
           },
           "x-go-custom-tag": "bson:\"relatedEntity,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "relatedParty": {
           "description": "A list of related party references (RelatedParty [*]). A related party defines party or party role linked to a specific entity",
@@ -6986,7 +7108,8 @@ func init() {
             "$ref": "#/definitions/RelatedParty"
           },
           "x-go-custom-tag": "bson:\"relatedParty,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceCharacteristic": {
           "description": "A list of characteristics that characterize this service (ServiceCharacteristic [*]) ",
@@ -6995,7 +7118,8 @@ func init() {
             "$ref": "#/definitions/Characteristic"
           },
           "x-go-custom-tag": "bson:\"serviceCharacteristic,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceOrderItem": {
           "description": "A list of service order items related to this service",
@@ -7004,7 +7128,8 @@ func init() {
             "$ref": "#/definitions/RelatedServiceOrderItem"
           },
           "x-go-custom-tag": "bson:\"serviceOrderItem,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceRelationship": {
           "description": "A list of service relationships (ServiceRelationship [*]). Describes links with other service(s) in the inventory.",
@@ -7013,12 +7138,14 @@ func init() {
             "$ref": "#/definitions/ServiceRelationship"
           },
           "x-go-custom-tag": "bson:\"serviceRelationship,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "serviceSpecification": {
           "description": "The specification from which this service was instantiated",
           "x-go-custom-tag": "bson:\"serviceSpecification,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ServiceSpecificationRef"
         },
         "serviceType": {
@@ -7044,6 +7171,7 @@ func init() {
           "description": "The life cycle state of the service, such as designed, reserved, active, etc...",
           "x-go-custom-tag": "bson:\"state,omitempty\"",
           "x-nullable": true,
+          "x-omitempty": true,
           "$ref": "#/definitions/ServiceStateType"
         },
         "supportingResource": {
@@ -7053,7 +7181,8 @@ func init() {
             "$ref": "#/definitions/ResourceRef"
           },
           "x-go-custom-tag": "bson:\"supportingResource,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "supportingService": {
           "description": "A list of supporting services (SupportingService [*]). A collection of services that support this service (bundling, link CFS to RFS)",
@@ -7062,7 +7191,8 @@ func init() {
             "$ref": "#/definitions/ServiceRefOrValue"
           },
           "x-go-custom-tag": "bson:\"supportingService,omitempty\"",
-          "x-nullable": true
+          "x-nullable": true,
+          "x-omitempty": true
         }
       }
     },

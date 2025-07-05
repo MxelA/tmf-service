@@ -31,13 +31,13 @@ type Feature struct {
 	AtType *string `json:"@type,omitempty" bson:"@type,omitempty"`
 
 	// This is a list of feature constraints.
-	Constraint []*ConstraintRef `json:"constraint"`
+	Constraint []*ConstraintRef `json:"constraint,omitempty" bson:"constraint,omitempty"`
 
 	// This is a list of Characteristics for a particular feature.
-	FeatureCharacteristic []*Characteristic `json:"featureCharacteristic" bson:"featureCharacteristic,omitempty"`
+	FeatureCharacteristic []*Characteristic `json:"featureCharacteristic,omitempty" bson:"featureCharacteristic,omitempty"`
 
 	// feature relationship
-	FeatureRelationship []*FeatureRelationship `json:"featureRelationship" bson:"featureRelationship,omitempty"`
+	FeatureRelationship []*FeatureRelationship `json:"featureRelationship,omitempty" bson:"featureRelationship,omitempty"`
 
 	// Unique identifier of the feature.
 	// Required: true
