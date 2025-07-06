@@ -6,10 +6,10 @@ import (
 )
 
 type ServiceInventoryHandler struct {
-	repo   *repository.MongoServiceInventoryRepository
+	repo   repository.ServiceInventoryRepository
 	logger *core.Logger
 }
 
-func NewServiceInventoryHandler(repo *repository.MongoServiceInventoryRepository, logger *core.Logger) *ServiceInventoryHandler {
+func NewServiceInventoryHandler(repo repository.ServiceInventoryRepository, logger *core.Logger) *ServiceInventoryHandler {
 	return &ServiceInventoryHandler{repo: repo, logger: logger}
 }

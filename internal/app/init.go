@@ -37,7 +37,7 @@ func (app *app) initPackages() {
 	)
 
 	// initialize tmf-service-inventory package
-	tmfServiceInventoryPkg := tmf_service_inventory.NewTmfServiceInventory(logger, db)
+	tmfServiceInventoryPkg := tmf_service_inventory.NewTmfServiceInventoryPkg(logger, db)
 	app.API.GetRouter().Handle("/tmf-api/serviceInventory/v4/", http.StripPrefix("", tmfServiceInventoryPkg.Server.GetHandler()))
 
 	defer logger.GetCore().Info("Initialize packages done!")

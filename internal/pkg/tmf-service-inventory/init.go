@@ -15,7 +15,7 @@ type TmfServiceInventoryPkg struct {
 	Server *restapi.Server
 }
 
-func NewTmfServiceInventory(l *core.Logger, db *core.DatabaseMongo) *TmfServiceInventoryPkg {
+func NewTmfServiceInventoryPkg(l *core.Logger, db *core.DatabaseMongo) *TmfServiceInventoryPkg {
 
 	// Initialize Swagger
 	swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "")
@@ -23,9 +23,15 @@ func NewTmfServiceInventory(l *core.Logger, db *core.DatabaseMongo) *TmfServiceI
 		log.Fatalln(err)
 	}
 
+	// Initialize Api
 	api := operations.NewTmfServiceInventoryV42API(swaggerSpec)
 
-	repo := repository.NewMongoServiceInventoryRepository(db.GetCore().Db.Collection("serviceInventor"), l)
+	// Initialize Mongo Repository
+	repo := &repository.MongoServiceInventoryRepository{
+		MongoCollection: db.GetCore().Db.Collection("serviceInventor"),
+		Logger:          l,
+	}
+	// Initialize Handler
 	serviceInventoryHandler := handler.NewServiceInventoryHandler(repo, l)
 
 	// Register Handlers

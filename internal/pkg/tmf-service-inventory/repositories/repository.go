@@ -13,17 +13,13 @@ import (
 )
 
 type ServiceInventoryRepository interface {
-	GetByID(context context.Context, id string, selectFields *string)
-	Create(context context.Context, serviceCreate *models.ServiceCreate) error
+	GetByID(context context.Context, id string, selectFields *string) (*models.Service, error)
+	Create(context context.Context, serviceCreate *models.ServiceCreate) (*mongo.InsertOneResult, error)
 }
 
 type MongoServiceInventoryRepository struct {
 	MongoCollection *mongo.Collection
 	Logger          *core.Logger
-}
-
-func NewMongoServiceInventoryRepository(mongoCollection *mongo.Collection, logger *core.Logger) *MongoServiceInventoryRepository {
-	return &MongoServiceInventoryRepository{MongoCollection: mongoCollection, Logger: logger}
 }
 
 func (repo *MongoServiceInventoryRepository) GetByID(context context.Context, id string, selectFields *string) (*models.Service, error) {
@@ -61,26 +57,4 @@ func (repo *MongoServiceInventoryRepository) Create(context context.Context, ser
 	}
 
 	return insertResult, nil
-}
-
-type Neo4JServiceInventoryRepository struct {
-	Db     *core.DatabaseNeo4j
-	Logger *core.Logger
-}
-
-func (repo *Neo4JServiceInventoryRepository) GetByID(context context.Context, id string, selectFields *string) {
-
-}
-func (repo *Neo4JServiceInventoryRepository) Create(context context.Context, serviceCreate *models.ServiceCreate) error {
-	a, err := utils.ToSlice(serviceCreate)
-
-	utils.PrettyPrint(a)
-
-	if err != nil {
-		return err
-	}
-
-	repo.Db.GetCore()
-
-	return nil
 }
