@@ -2964,21 +2964,23 @@ func init() {
         "relationshipType": {
           "type": "string",
           "x-go-custom-tag": "bson:\"relationshipType,omitempty\"",
-          "x-nullable": false
+          "x-nullable": false,
+          "x-omitempty": true
         },
         "service": {
           "x-go-custom-tag": "bson:\"service,omitempty\"",
           "x-nullable": false,
+          "x-omitempty": true,
           "$ref": "#/definitions/ServiceRefOrValue"
         },
         "serviceRelationshipCharacteristic": {
           "type": "array",
           "items": {
-            "x-go-custom-tag": "bson:\"serviceRelationshipCharacteristic,omitempty\"",
-            "x-nullable": true,
-            "x-omitempty": true,
             "$ref": "#/definitions/Characteristic"
-          }
+          },
+          "x-go-custom-tag": "bson:\"serviceRelationshipCharacteristic,omitempty\"",
+          "x-nullable": true,
+          "x-omitempty": true
         }
       }
     },
@@ -6576,21 +6578,23 @@ func init() {
         "relationshipType": {
           "type": "string",
           "x-go-custom-tag": "bson:\"relationshipType,omitempty\"",
-          "x-nullable": false
+          "x-nullable": false,
+          "x-omitempty": true
         },
         "service": {
           "x-go-custom-tag": "bson:\"service,omitempty\"",
           "x-nullable": false,
+          "x-omitempty": true,
           "$ref": "#/definitions/ServiceRefOrValue"
         },
         "serviceRelationshipCharacteristic": {
           "type": "array",
           "items": {
-            "x-go-custom-tag": "bson:\"serviceRelationshipCharacteristic,omitempty\"",
-            "x-nullable": true,
-            "x-omitempty": true,
             "$ref": "#/definitions/Characteristic"
-          }
+          },
+          "x-go-custom-tag": "bson:\"serviceRelationshipCharacteristic,omitempty\"",
+          "x-nullable": true,
+          "x-omitempty": true
         }
       }
     },

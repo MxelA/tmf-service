@@ -39,7 +39,7 @@ type ServiceRelationship struct {
 	Service *ServiceRefOrValue `json:"service"`
 
 	// service relationship characteristic
-	ServiceRelationshipCharacteristic []*Characteristic `json:"serviceRelationshipCharacteristic"`
+	ServiceRelationshipCharacteristic []*Characteristic `json:"serviceRelationshipCharacteristic,omitempty" bson:"serviceRelationshipCharacteristic,omitempty"`
 }
 
 // Validate validates this service relationship
