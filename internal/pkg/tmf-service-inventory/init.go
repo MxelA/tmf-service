@@ -37,6 +37,7 @@ func NewTmfServiceInventoryPkg(l *core.Logger, db *core.DatabaseMongo) *TmfServi
 	// Register Handlers
 	api.ServiceCreateServiceHandler = service.CreateServiceHandlerFunc(serviceInventoryHandler.CreateServiceHandler)
 	api.ServiceRetrieveServiceHandler = service.RetrieveServiceHandlerFunc(serviceInventoryHandler.RetrieveServiceHandler)
+	api.ServiceListServiceHandler = service.ListServiceHandlerFunc(serviceInventoryHandler.ListServiceHandler)
 
 	server := restapi.NewServer(api)
 	server.ConfigureAPI()

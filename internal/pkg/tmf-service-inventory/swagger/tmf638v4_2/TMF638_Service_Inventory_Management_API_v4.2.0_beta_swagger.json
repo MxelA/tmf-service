@@ -2981,21 +2981,23 @@
         "relationshipType": {
           "type": "string",
           "x-go-custom-tag": "bson:\"relationshipType,omitempty\"",
-          "x-nullable": false
+          "x-nullable": false,
+          "x-omitempty": true
         },
         "service": {
           "$ref": "#/definitions/ServiceRefOrValue",
           "x-go-custom-tag": "bson:\"service,omitempty\"",
-          "x-nullable": false
+          "x-nullable": false,
+          "x-omitempty": true
         },
         "serviceRelationshipCharacteristic": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Characteristic",
-            "x-go-custom-tag": "bson:\"serviceRelationshipCharacteristic,omitempty\"",
-            "x-nullable": true,
-            "x-omitempty": true
-          }
+            "$ref": "#/definitions/Characteristic"
+          },
+          "x-go-custom-tag": "bson:\"serviceRelationshipCharacteristic,omitempty\"",
+          "x-nullable": true,
+          "x-omitempty": true
         },
         "@baseType": {
           "type": "string",

@@ -53,7 +53,7 @@ func ConvertBsonMToMinimalJSONResponse(record mongo.SingleResult) (map[string]in
 	return response, nil
 }
 
-func BuildMongoFilter(queryParams map[string][]string) bson.M {
+func BuildTmfMongoFilter(queryParams map[string][]string) bson.M {
 	// Exclude pagination & projection params
 	delete(queryParams, "fields")
 	delete(queryParams, "limit")
