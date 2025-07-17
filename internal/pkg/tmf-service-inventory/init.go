@@ -11,11 +11,13 @@ import (
 	"log"
 )
 
+const CollectionName = "serviceInventory"
+
 type TmfServiceInventoryPkg struct {
 	Server *restapi.Server
 }
 
-func NewTmfServiceInventoryPkg(l *core.Logger, db *core.DatabaseMongo) *TmfServiceInventoryPkg {
+func New(l *core.Logger, db *core.DatabaseMongo) *TmfServiceInventoryPkg {
 
 	// Initialize Swagger
 	swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "")
@@ -28,7 +30,7 @@ func NewTmfServiceInventoryPkg(l *core.Logger, db *core.DatabaseMongo) *TmfServi
 
 	// Initialize Mongo Repository
 	repo := &repository.MongoServiceInventoryRepository{
-		MongoCollection: db.GetCore().Db.Collection("serviceInventor"),
+		MongoCollection: db.GetCore().Db.Collection(CollectionName),
 		Logger:          l,
 	}
 	// Initialize Handler
@@ -48,6 +50,7 @@ func NewTmfServiceInventoryPkg(l *core.Logger, db *core.DatabaseMongo) *TmfServi
 	return &TmfServiceInventoryPkg{
 		Server: server,
 	}
+
 }
 
 func (tsi *TmfServiceInventoryPkg) GetTmfServiceInventory() *TmfServiceInventoryPkg {
