@@ -60,57 +60,82 @@ func BuildTmfMongoFilter(queryParams map[string][]string) bson.M {
 	delete(queryParams, "offset")
 
 	filter := bson.M{}
+	orFilters := []bson.M{}
+
+	opMap := map[string]string{
+		"eq":  "$eq",
+		"gt":  "$gt",
+		"gte": "$gte",
+		"lt":  "$lt",
+		"lte": "$lte",
+		"ne":  "$ne",
+		"in":  "$in",
+		"nin": "$nin",
+	}
 
 	for key, values := range queryParams {
 		if len(values) == 0 {
 			continue
 		}
 
-		// Extract field name and operator (e.g., "serviceOrderItem.action.eq")
-		parts := strings.Split(key, ".") // Split into field and operator
+		parts := strings.Split(key, ".")
 		filterOperator := parts[len(parts)-1]
 		filterField := key
-		operator := "$eq" // Default to equality
+		operator := "$eq"
 
 		if len(parts) > 1 {
-			opMap := map[string]string{
-				"eq":  "$eq",
-				"gt":  "$gt",
-				"gte": "$gte",
-				"lt":  "$lt",
-				"lte": "$lte",
-				"ne":  "$ne",
-				"in":  "$in",
-				"nin": "$nin",
-			}
 			if op, exists := opMap[filterOperator]; exists {
 				operator = op
 				filterField = strings.Join(parts[:len(parts)-1], ".")
 			}
 		}
-
 		// Convert value to correct type
-		value := values[0]
-		var parsedValue interface{} = value
+		rawValue := values[0]
+		multipleValues := strings.Split(rawValue, ",")
 
-		if intValue, err := strconv.Atoi(value); err == nil {
-			parsedValue = intValue
-		} else if floatValue, err := strconv.ParseFloat(value, 64); err == nil {
-			parsedValue = floatValue
-		} else if dateValue, err := time.Parse(time.RFC3339, value); err == nil {
-			parsedValue = dateValue
+		// If operator $in or $nin — use directly
+		if operator == "$in" || operator == "$nin" {
+			var parsedItems []interface{}
+			for _, v := range multipleValues {
+				parsedItems = append(parsedItems, parseValue(v))
+			}
+			filter[filterField] = bson.M{operator: parsedItems}
+			continue
 		}
 
-		// If the field already exists, merge the conditions
-		if existing, exists := filter[filterField]; exists {
-			if existingMap, ok := existing.(bson.M); ok {
-				existingMap[operator] = parsedValue
-				filter[filterField] = existingMap
+		// If is multiple values  for others operators use $or
+		if len(multipleValues) > 1 {
+			for _, v := range multipleValues {
+				orFilters = append(orFilters, bson.M{
+					filterField: bson.M{operator: parseValue(v)},
+				})
 			}
+			continue
+		}
+
+		// Otherwise — only one condition
+		filter[filterField] = bson.M{operator: parseValue(rawValue)}
+	}
+
+	//Add $or if exist
+	if len(orFilters) > 0 {
+		if existingOr, exists := filter["$or"]; exists {
+			filter["$or"] = append(existingOr.([]bson.M), orFilters...)
 		} else {
-			filter[filterField] = bson.M{operator: parsedValue}
+			filter["$or"] = orFilters
 		}
 	}
 
 	return filter
+}
+
+func parseValue(value string) interface{} {
+	if intValue, err := strconv.Atoi(value); err == nil {
+		return intValue
+	} else if floatValue, err := strconv.ParseFloat(value, 64); err == nil {
+		return floatValue
+	} else if dateValue, err := time.Parse(time.RFC3339, value); err == nil {
+		return dateValue
+	}
+	return value
 }

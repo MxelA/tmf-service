@@ -2155,6 +2155,7 @@ func init() {
         },
         "operatingStatus": {
           "description": "Indicates how a service is currently performing or operating. It is a logical representation of the service operating behaviour and is determined/managed by the service provider.",
+          "type": "object",
           "x-go-custom-tag": "bson:\"operatingStatus,omitempty\"",
           "x-nullable": true,
           "x-omitempty": true,
@@ -5769,6 +5770,7 @@ func init() {
         },
         "operatingStatus": {
           "description": "Indicates how a service is currently performing or operating. It is a logical representation of the service operating behaviour and is determined/managed by the service provider.",
+          "type": "object",
           "x-go-custom-tag": "bson:\"operatingStatus,omitempty\"",
           "x-nullable": true,
           "x-omitempty": true,
