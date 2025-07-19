@@ -16,3 +16,22 @@ var dbCmd = &cobra.Command{
 		}
 	},
 }
+
+var dbSeedServiceCmd = &cobra.Command{
+	Use:   "seed:service",
+	Short: "Run db seed service: --serviceSeedName=[withRelationshipTo]|None --serviceSeedCount=1",
+	Run: func(cmd *cobra.Command, args []string) {
+		var err error
+
+		switch seedName {
+		case "withRelationshipTo":
+			err = app.SeedServicesWithRelationshipTo(seedCount)
+		default:
+			err = app.SeedServices(seedCount)
+		}
+
+		if err != nil {
+			log.Fatal("Failed Seed Services:", err)
+		}
+	},
+}
