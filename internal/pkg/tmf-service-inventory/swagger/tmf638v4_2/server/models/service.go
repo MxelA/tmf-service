@@ -71,10 +71,10 @@ type Service struct {
 	Note []*Note `json:"note,omitempty" bson:"note,omitempty"`
 
 	// Indicates how a service is currently performing or operating. It is a logical representation of the service operating behaviour and is determined/managed by the service provider.
-	OperatingStatus ServiceOperatingStatusType `json:"operatingStatus,omitempty"`
+	OperatingStatus ServiceOperatingStatusType `json:"operatingStatus,omitempty" bson:"operatingStatus,omitempty"`
 
 	// Additional information describing the context of operatingStatus and is determined/managed by the service provider.
-	OperatingStatusContextUpdate *ContextUpdate `json:"operatingStatusContextUpdate,omitempty"`
+	OperatingStatusContextUpdate *ContextUpdate `json:"operatingStatusContextUpdate,omitempty" bson:"operatingStatusContextUpdate,omitempty"`
 
 	// A list of places (Place [*]). Used to define a place useful for the service (for example a geographical place whre the service is installed)
 	Place []*RelatedPlaceRefOrValue `json:"place,omitempty" bson:"place,omitempty"`
