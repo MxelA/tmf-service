@@ -11,7 +11,7 @@ import (
 
 type CreateServiceInventoryFunc func(service.CreateServiceParams) middleware.Responder
 
-func WithBusinessValidation(
+func BusinessValidation(
 	repo repository.ServiceInventoryRepository,
 	next CreateServiceInventoryFunc,
 ) CreateServiceInventoryFunc {
@@ -34,7 +34,7 @@ func WithBusinessValidation(
 				Message: "Validation errors",
 			})
 		}
-		
+
 		return next(params)
 	}
 }

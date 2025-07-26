@@ -39,7 +39,7 @@ func New(l *core.Logger, db *core.DatabaseMongo) *TmfServiceInventoryPkg {
 
 	//Register Create Service Handler
 	createServiceInventoryHandler := serviceInventoryHandler.CreateServiceHandler
-	createServiceInventoryHandler = middleware.WithBusinessValidation(repo, createServiceInventoryHandler)
+	createServiceInventoryHandler = middleware.BusinessValidation(repo, createServiceInventoryHandler)
 	api.ServiceCreateServiceHandler = service.CreateServiceHandlerFunc(createServiceInventoryHandler)
 
 	// Register Handlers
