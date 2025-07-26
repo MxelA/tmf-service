@@ -4,7 +4,6 @@ import (
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 	"github.com/brianvoe/gofakeit/v6"
 	"github.com/go-openapi/strfmt"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
 )
 
@@ -18,10 +17,10 @@ func init() {
 
 // NewServiceFactory Constructor
 func NewServiceFactory() *ServiceFactory {
-	id := primitive.NewObjectID().Hex()
+	//id := primitive.NewObjectID()
 	return &ServiceFactory{
 		service: &models.Service{
-			ID:          &id,
+			//ID:          &id,
 			Name:        ptr(gofakeit.AppName()),
 			Description: ptr(gofakeit.Sentence(10)),
 			StartDate:   ptr(toStrfmtDateTime(gofakeit.Date())),
@@ -64,11 +63,12 @@ func (f *ServiceFactory) WithStartDate(t time.Time) *ServiceFactory {
 	return f
 }
 
-func (f *ServiceFactory) WithRelationshipTo(serviceID string, relationType string) *ServiceFactory {
+func (f *ServiceFactory) WithRelationshipTo(serviceID string, name string, relationType string) *ServiceFactory {
 	f.service.ServiceRelationship = append(f.service.ServiceRelationship, &models.ServiceRelationship{
 		RelationshipType: relationType,
 		Service: &models.ServiceRefOrValue{
-			ID: &serviceID,
+			ID:   &serviceID,
+			Name: &name,
 		},
 	})
 	return f

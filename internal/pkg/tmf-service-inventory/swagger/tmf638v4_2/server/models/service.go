@@ -118,6 +118,7 @@ type Service struct {
 
 	// A list of supporting services (SupportingService [*]). A collection of services that support this service (bundling, link CFS to RFS)
 	SupportingService []*ServiceRefOrValue `json:"supportingService,omitempty" bson:"supportingService,omitempty"`
+	RelatedServices []*ServiceRefOrValue `json:"relatedServices,omitempty" bson:"relatedServices,omitempty"`
 }
 
 // Validate validates this service

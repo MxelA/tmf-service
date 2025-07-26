@@ -3,6 +3,7 @@ package tmf_service_inventory
 import (
 	"github.com/MxelA/tmf-service/internal/core"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/handlers"
+	middleware "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/middlewares"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/repositories"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations"
@@ -36,8 +37,12 @@ func New(l *core.Logger, db *core.DatabaseMongo) *TmfServiceInventoryPkg {
 	// Initialize Handler
 	serviceInventoryHandler := handler.NewServiceInventoryHandler(repo, l)
 
+	//Register Create Service Handler
+	createServiceInventoryHandler := serviceInventoryHandler.CreateServiceHandler
+	createServiceInventoryHandler = middleware.WithBusinessValidation(repo, createServiceInventoryHandler)
+	api.ServiceCreateServiceHandler = service.CreateServiceHandlerFunc(createServiceInventoryHandler)
+
 	// Register Handlers
-	api.ServiceCreateServiceHandler = service.CreateServiceHandlerFunc(serviceInventoryHandler.CreateServiceHandler)
 	api.ServiceRetrieveServiceHandler = service.RetrieveServiceHandlerFunc(serviceInventoryHandler.RetrieveServiceHandler)
 	api.ServiceListServiceHandler = service.ListServiceHandlerFunc(serviceInventoryHandler.ListServiceHandler)
 

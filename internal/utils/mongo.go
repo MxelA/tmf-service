@@ -53,11 +53,20 @@ func ConvertBsonMToMinimalJSONResponse(record mongo.SingleResult) (map[string]in
 	return response, nil
 }
 
-func BuildTmfMongoFilter(queryParams map[string][]string) bson.M {
+func BuildTmfMongoFilter(queryParams map[string][]string) (interface{}, bool) {
 	// Exclude pagination & projection params
 	delete(queryParams, "fields")
 	delete(queryParams, "limit")
 	delete(queryParams, "offset")
+
+	// Check for deep parameter
+	depth := -1
+	if deepVals, ok := queryParams["deep"]; ok && len(deepVals) > 0 {
+		if d, err := strconv.Atoi(deepVals[0]); err == nil {
+			depth = d
+		}
+		delete(queryParams, "deep")
+	}
 
 	filter := bson.M{}
 	orFilters := []bson.M{}
@@ -89,11 +98,10 @@ func BuildTmfMongoFilter(queryParams map[string][]string) bson.M {
 				filterField = strings.Join(parts[:len(parts)-1], ".")
 			}
 		}
-		// Convert value to correct type
+
 		rawValue := values[0]
 		multipleValues := strings.Split(rawValue, ",")
 
-		// If operator $in or $nin — use directly
 		if operator == "$in" || operator == "$nin" {
 			var parsedItems []interface{}
 			for _, v := range multipleValues {
@@ -103,7 +111,6 @@ func BuildTmfMongoFilter(queryParams map[string][]string) bson.M {
 			continue
 		}
 
-		// If is multiple values  for others operators use $or
 		if len(multipleValues) > 1 {
 			for _, v := range multipleValues {
 				orFilters = append(orFilters, bson.M{
@@ -113,11 +120,9 @@ func BuildTmfMongoFilter(queryParams map[string][]string) bson.M {
 			continue
 		}
 
-		// Otherwise — only one condition
 		filter[filterField] = bson.M{operator: parseValue(rawValue)}
 	}
 
-	//Add $or if exist
 	if len(orFilters) > 0 {
 		if existingOr, exists := filter["$or"]; exists {
 			filter["$or"] = append(existingOr.([]bson.M), orFilters...)
@@ -126,7 +131,24 @@ func BuildTmfMongoFilter(queryParams map[string][]string) bson.M {
 		}
 	}
 
-	return filter
+	// If deep mode is enabled, return aggregate pipeline
+	if depth >= 0 {
+		pipeline := mongo.Pipeline{
+			{{Key: "$match", Value: filter}},
+			{{Key: "$graphLookup", Value: bson.M{
+				"from":             "service",
+				"startWith":        "$serviceRelationship.service.id",
+				"connectFromField": "serviceRelationship.service.id",
+				"connectToField":   "_id",
+				"as":               "relatedServices",
+				"depthField":       "level",
+				"maxDepth":         depth,
+			}}},
+		}
+		return pipeline, true
+	}
+
+	return filter, false
 }
 
 func parseValue(value string) interface{} {

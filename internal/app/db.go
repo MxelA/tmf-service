@@ -3,8 +3,8 @@ package app
 import (
 	"github.com/MxelA/tmf-service/internal/core"
 	tmf_service_inventory "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory"
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/database/migrations"
 	tmf_service_inventory_seeder "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/database/seeders"
-	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/migrations"
 )
 
 func ServiceInventoryPkgSetMongoIndex() error {

@@ -10,13 +10,13 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"log"
+	"net/http"
 )
 
 type ServiceInventoryRepository interface {
 	GetByID(context context.Context, id string, selectFields *string) (*models.Service, error)
 	Create(context context.Context, serviceCreate *models.ServiceCreate) (*mongo.InsertOneResult, error)
-	GetAllPaginate(context context.Context, queryParams bson.M, selectFields *string, offset *int64, limit *int64) ([]*models.Service, *int64, error)
+	GetAllPaginate(context context.Context, httpRequest *http.Request, selectFields *string, offset *int64, limit *int64) ([]*models.Service, *int64, error)
 }
 
 type MongoServiceInventoryRepository struct {
@@ -61,43 +61,75 @@ func (repo *MongoServiceInventoryRepository) Create(context context.Context, ser
 	return insertResult, nil
 }
 
-func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Context, queryParams bson.M, selectFields *string, offset *int64, limit *int64) ([]*models.Service, *int64, error) {
+func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Context, httpRequest *http.Request, selectFields *string, offset *int64, limit *int64) ([]*models.Service, *int64, error) {
 
 	offset, limit = utils.ValidatePaginationParams(offset, limit)
 
-	findOptions := &options.FindOptions{ // Find options
-		Skip:  offset,
-		Limit: limit,
-	}
+	// Get filter or pipeline
+	filterOrPipeline, isPipeline := utils.BuildTmfMongoFilter(httpRequest.URL.Query())
 
 	// Fields Projection
 	fieldProjection := utils.GerFieldsProjection(selectFields)
-	if len(fieldProjection) > 0 { // Only set projection if fields are provided
-		findOptions.SetProjection(fieldProjection)
-	}
+	if isPipeline {
+		// pipeline mode
+		pipeline := filterOrPipeline.(mongo.Pipeline)
 
-	// Get list of service orders
-
-	records, err := repo.MongoCollection.Find(context, queryParams, findOptions)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	retrieveServiceOrders := []*models.Service{}
-	for records.Next(context) {
-		var serviceOrder = models.Service{}
-		if err := records.Decode(&serviceOrder); err != nil {
-			log.Println("Error decoding document:", err)
-			continue
+		// Add pagination stages
+		if offset != nil && limit != nil {
+			pipeline = append(pipeline,
+				bson.D{{Key: "$skip", Value: *offset}},
+				bson.D{{Key: "$limit", Value: *limit}},
+			)
 		}
-		retrieveServiceOrders = append(retrieveServiceOrders, &serviceOrder) // Append pointer
+
+		// Add projection if defined
+		if len(fieldProjection) > 0 {
+			pipeline = append(pipeline,
+				bson.D{{Key: "$project", Value: fieldProjection}},
+			)
+		}
+
+		cursor, err := repo.MongoCollection.Aggregate(context, pipeline)
+		if err != nil {
+			return nil, nil, err
+		}
+
+		var results []*models.Service
+		//var rawResults []bson.M
+		if err := cursor.All(context, &results); err != nil {
+			return nil, nil, err
+		}
+
+		// For aggregate, total count isn't trivial – can omit or add $count stage separately if needed
+		total := int64(len(results))
+		return results, &total, nil
+
+	} else {
+		// regular find
+		findOptions := &options.FindOptions{
+			Skip:  offset,
+			Limit: limit,
+		}
+
+		if len(fieldProjection) > 0 {
+			findOptions.SetProjection(fieldProjection)
+		}
+
+		cursor, err := repo.MongoCollection.Find(context, filterOrPipeline.(bson.M), findOptions)
+		if err != nil {
+			return nil, nil, err
+		}
+
+		var results []*models.Service
+		if err := cursor.All(context, &results); err != nil {
+			return nil, nil, err
+		}
+
+		totalCount, err := repo.MongoCollection.CountDocuments(context, filterOrPipeline.(bson.M))
+		if err != nil {
+			return nil, nil, err
+		}
+
+		return results, &totalCount, nil
 	}
-
-	totalCount, err := repo.MongoCollection.CountDocuments(context, queryParams)
-
-	if err != nil {
-		return nil, nil, err
-	}
-
-	return retrieveServiceOrders, &totalCount, nil
 }

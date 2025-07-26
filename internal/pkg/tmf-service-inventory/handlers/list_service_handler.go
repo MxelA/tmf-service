@@ -3,15 +3,13 @@ package handler
 import (
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations/service"
-	"github.com/MxelA/tmf-service/internal/utils"
 	"github.com/go-openapi/runtime/middleware"
 	"log"
 )
 
 func (h ServiceInventoryHandler) ListServiceHandler(params service.ListServiceParams) middleware.Responder {
 
-	queryParams := utils.BuildTmfMongoFilter(params.HTTPRequest.URL.Query())
-	retrieveServiceOrders, retrieveServiceOrdersTotalCount, err := h.repo.GetAllPaginate(params.HTTPRequest.Context(), queryParams, params.Fields, params.Offset, params.Limit)
+	retrieveServiceOrders, retrieveServiceOrdersTotalCount, err := h.repo.GetAllPaginate(params.HTTPRequest.Context(), params.HTTPRequest, params.Fields, params.Offset, params.Limit)
 
 	if err != nil {
 		errCode := "500"
