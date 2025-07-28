@@ -2,9 +2,9 @@ package app
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/MxelA/tmf-service/internal/core"
-	tmf_service_inventory "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory"
 	"net/http"
 	"os"
 	"os/signal"
@@ -19,11 +19,10 @@ type App interface {
 // app contain all the core dependency and should
 // be implement at application startup.
 type app struct {
-	Addr                   string
-	API                    *core.API
-	DBMongo                *core.DatabaseMongo
-	Logger                 *core.Logger
-	TmfServiceInventoryPkg *tmf_service_inventory.TmfServiceInventoryPkg
+	Addr    string
+	API     *core.API
+	DBMongo *core.DatabaseMongo
+	Logger  *core.Logger
 	//PubSub *core.PubSub
 }
 
@@ -40,18 +39,21 @@ func New(host, port string) App {
 }
 
 func (app *app) Serve() {
-	//api := app.API.GetCore()
+	api := app.API.GetCore()
 	logger := app.Logger.GetCore()
 	//pubSub := app.PubSub.GetCore()
 
-	server := &http.Server{
-		Addr:    app.Addr,
-		Handler: app.API.GetRouter(),
-	}
+	//server := &http.Server{
+	//	Addr:    app.Addr,
+	//	Handler: app.API.GetRouter(),
+	//}
+
+	api.Addr = app.Addr
+	api.Handler = app.API.GetRouter()
 
 	go func() {
 		logger.Info("App running", "address", app.Addr)
-		if err := server.ListenAndServe(); err != http.ErrServerClosed {
+		if err := api.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
 			// Unexpected error, log and exit
 			fmt.Printf("ListenAndServe error: %v\n", err)
 			os.Exit(1)
@@ -68,7 +70,7 @@ func (app *app) Serve() {
 
 	defer logger.Info("App shutdown")
 
-	server.Shutdown(context.Background())
+	_ = api.Shutdown(context.Background())
 	//_ = api.ShutdownWithContext(context.Background())
 	//_ = pubSub.Close()
 }
