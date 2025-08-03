@@ -5,6 +5,7 @@ import (
 	"github.com/MxelA/tmf-service/internal/core"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 	"github.com/MxelA/tmf-service/internal/utils"
+	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
 	"github.com/jinzhu/copier"
 	"go.mongodb.org/mongo-driver/bson"
@@ -12,6 +13,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 type ServiceInventoryRepository interface {
@@ -62,6 +64,9 @@ func (repo *MongoServiceInventoryRepository) Create(context context.Context, ser
 
 	uid := uuid.New().String()
 	service.ID = &uid
+
+	createDate := strfmt.DateTime(time.Now().UTC())
+	service.ServiceDate = &createDate
 
 	_, err = repo.MongoCollection.InsertOne(context, service)
 

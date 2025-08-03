@@ -2010,6 +2010,7 @@
         },
         "serviceDate": {
           "type": "string",
+          "format": "date-time",
           "description": "Date when the service was created (whatever its status).",
           "x-go-custom-tag": "bson:\"serviceDate,omitempty\"",
           "x-nullable": true
@@ -2251,6 +2252,7 @@
         },
         "serviceDate": {
           "type": "string",
+          "format": "date-time",
           "description": "Date when the service was created (whatever its status).",
           "x-go-custom-tag": "bson:\"serviceDate,omitempty\"",
           "x-nullable": true
@@ -2786,6 +2788,7 @@
         },
         "serviceDate": {
           "type": "string",
+          "format": "date-time",
           "description": "Date when the service was created (whatever its status).",
           "x-go-custom-tag": "bson:\"serviceDate,omitempty\"",
           "x-nullable": true

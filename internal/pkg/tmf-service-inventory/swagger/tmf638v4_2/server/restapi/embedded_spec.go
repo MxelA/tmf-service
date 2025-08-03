@@ -2116,7 +2116,7 @@ func init() {
         "id": {
           "description": "Unique identifier of the service",
           "type": "string",
-          "x-go-custom-tag": "bson:\"_id,omitempty\"",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
           "x-nullable": true
         },
         "isBundle": {
@@ -2155,7 +2155,6 @@ func init() {
         },
         "operatingStatus": {
           "description": "Indicates how a service is currently performing or operating. It is a logical representation of the service operating behaviour and is determined/managed by the service provider.",
-          "type": "object",
           "x-go-custom-tag": "bson:\"operatingStatus,omitempty\"",
           "x-nullable": true,
           "x-omitempty": true,
@@ -2211,6 +2210,7 @@ func init() {
         "serviceDate": {
           "description": "Date when the service was created (whatever its status).",
           "type": "string",
+          "format": "date-time",
           "x-go-custom-tag": "bson:\"serviceDate,omitempty\"",
           "x-nullable": true
         },
@@ -2859,6 +2859,7 @@ func init() {
         "serviceDate": {
           "description": "Date when the service was created (whatever its status).",
           "type": "string",
+          "format": "date-time",
           "x-go-custom-tag": "bson:\"serviceDate,omitempty\"",
           "x-nullable": true
         },
@@ -3293,6 +3294,7 @@ func init() {
         "serviceDate": {
           "description": "Date when the service was created (whatever its status).",
           "type": "string",
+          "format": "date-time",
           "x-go-custom-tag": "bson:\"serviceDate,omitempty\"",
           "x-nullable": true
         },
@@ -5731,7 +5733,7 @@ func init() {
         "id": {
           "description": "Unique identifier of the service",
           "type": "string",
-          "x-go-custom-tag": "bson:\"_id,omitempty\"",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
           "x-nullable": true
         },
         "isBundle": {
@@ -5770,7 +5772,6 @@ func init() {
         },
         "operatingStatus": {
           "description": "Indicates how a service is currently performing or operating. It is a logical representation of the service operating behaviour and is determined/managed by the service provider.",
-          "type": "object",
           "x-go-custom-tag": "bson:\"operatingStatus,omitempty\"",
           "x-nullable": true,
           "x-omitempty": true,
@@ -5826,6 +5827,7 @@ func init() {
         "serviceDate": {
           "description": "Date when the service was created (whatever its status).",
           "type": "string",
+          "format": "date-time",
           "x-go-custom-tag": "bson:\"serviceDate,omitempty\"",
           "x-nullable": true
         },
@@ -6474,6 +6476,7 @@ func init() {
         "serviceDate": {
           "description": "Date when the service was created (whatever its status).",
           "type": "string",
+          "format": "date-time",
           "x-go-custom-tag": "bson:\"serviceDate,omitempty\"",
           "x-nullable": true
         },
@@ -6908,6 +6911,7 @@ func init() {
         "serviceDate": {
           "description": "Date when the service was created (whatever its status).",
           "type": "string",
+          "format": "date-time",
           "x-go-custom-tag": "bson:\"serviceDate,omitempty\"",
           "x-nullable": true
         },

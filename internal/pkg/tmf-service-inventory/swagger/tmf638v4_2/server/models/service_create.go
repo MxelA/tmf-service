@@ -78,7 +78,8 @@ type ServiceCreate struct {
 	ServiceCharacteristic []*Characteristic `json:"serviceCharacteristic,omitempty" bson:"serviceCharacteristic,omitempty"`
 
 	// Date when the service was created (whatever its status).
-	ServiceDate *string `json:"serviceDate,omitempty" bson:"serviceDate,omitempty"`
+	// Format: date-time
+	ServiceDate *strfmt.DateTime `json:"serviceDate,omitempty" bson:"serviceDate,omitempty"`
 
 	// A list of service order items related to this service
 	ServiceOrderItem []*RelatedServiceOrderItem `json:"serviceOrderItem,omitempty" bson:"serviceOrderItem,omitempty"`
@@ -148,6 +149,10 @@ func (m *ServiceCreate) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateServiceCharacteristic(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateServiceDate(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -386,6 +391,18 @@ func (m *ServiceCreate) validateServiceCharacteristic(formats strfmt.Registry) e
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *ServiceCreate) validateServiceDate(formats strfmt.Registry) error {
+	if swag.IsZero(m.ServiceDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("serviceDate", "body", "date-time", m.ServiceDate.String(), formats); err != nil {
+		return err
 	}
 
 	return nil

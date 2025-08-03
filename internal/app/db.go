@@ -11,7 +11,7 @@ func ServiceInventoryPkgSetMongoIndex() error {
 	logger := core.NewLogger()
 	db := core.NewDatabaseMongo(logger)
 
-	return migrations.SetMongoIndex(db.GetCore().Db.Collection(tmf_service_inventory.DbCollectionName), logger)
+	return migrations.CreateMongoIndex(db.GetCore().Db.Collection(tmf_service_inventory.DbCollectionName), logger)
 }
 
 func SeedServices(count int) error {
