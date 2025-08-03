@@ -16,7 +16,7 @@ func GerFieldsProjection(fieldsParam *string) bson.M {
 	}
 
 	fields := strings.Split(*fieldsParam, ",")
-	projection := bson.M{"_id": 1} // Always include ID
+	projection := bson.M{"id": 1} // Always include ID
 
 	for _, field := range fields {
 		projection[field] = 1
@@ -53,20 +53,20 @@ func ConvertBsonMToMinimalJSONResponse(record mongo.SingleResult) (map[string]in
 	return response, nil
 }
 
-func BuildTmfMongoFilter(queryParams map[string][]string) (interface{}, bool) {
+func BuildTmfMongoFilter(queryParams map[string][]string, usePipeline bool) (interface{}, bool) {
 	// Exclude pagination & projection params
 	delete(queryParams, "fields")
 	delete(queryParams, "limit")
 	delete(queryParams, "offset")
 
 	// Check for deep parameter
-	depth := -1
-	if deepVals, ok := queryParams["deep"]; ok && len(deepVals) > 0 {
-		if d, err := strconv.Atoi(deepVals[0]); err == nil {
-			depth = d
-		}
-		delete(queryParams, "deep")
-	}
+	//depth := -1
+	//if deepVals, ok := queryParams["deep"]; ok && len(deepVals) > 0 {
+	//	if d, err := strconv.Atoi(deepVals[0]); err == nil {
+	//		depth = d
+	//	}
+	//	delete(queryParams, "deep")
+	//}
 
 	filter := bson.M{}
 	orFilters := []bson.M{}
@@ -131,22 +131,28 @@ func BuildTmfMongoFilter(queryParams map[string][]string) (interface{}, bool) {
 		}
 	}
 
-	// If deep mode is enabled, return aggregate pipeline
-	if depth >= 0 {
+	if usePipeline == true {
 		pipeline := mongo.Pipeline{
 			{{Key: "$match", Value: filter}},
-			{{Key: "$graphLookup", Value: bson.M{
-				"from":             "service",
-				"startWith":        "$serviceRelationship.service.id",
-				"connectFromField": "serviceRelationship.service.id",
-				"connectToField":   "_id",
-				"as":               "relatedServices",
-				"depthField":       "level",
-				"maxDepth":         depth,
-			}}},
 		}
 		return pipeline, true
 	}
+	// If deep mode is enabled, return aggregate pipeline
+	//if depth >= 0 {
+	//	pipeline := mongo.Pipeline{
+	//		{{Key: "$match", Value: filter}},
+	//		{{Key: "$graphLookup", Value: bson.M{
+	//			"from":             "serviceInventory",
+	//			"startWith":        "$serviceRelationship.service.id",
+	//			"connectFromField": "serviceRelationship.service.id",
+	//			"connectToField":   "id",
+	//			"as":               "relatedServices",
+	//			"depthField":       "level",
+	//			"maxDepth":         depth,
+	//		}}},
+	//	}
+	//	return pipeline, true
+	//}
 
 	return filter, false
 }

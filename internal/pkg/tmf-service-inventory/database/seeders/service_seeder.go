@@ -5,7 +5,6 @@ import (
 	"fmt"
 	factory "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/database/factories"
 	"github.com/brianvoe/gofakeit/v6"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -36,15 +35,15 @@ func SeedServicesWithRelationshipTo(collection *mongo.Collection, deep int) erro
 		WithCategory("Security").
 		WithCharacteristic("Update Frequency", "Every 1h").
 		Build()
-	serviceDId, _ := collection.InsertOne(ctx, serviceD)
+	_, _ = collection.InsertOne(ctx, serviceD)
 
 	serviceC := factory.NewServiceFactory().
 		WithName("Firewall Protection").
 		WithCategory("Security").
 		WithCharacteristic("Policy Level", "High").
-		WithRelationshipTo(serviceDId.InsertedID.(primitive.ObjectID).Hex(), "Threat Intelligence Feed", "reliesOn").
+		WithRelationshipTo(*serviceD.ID, "Threat Intelligence Feed", "reliesOn").
 		Build()
-	serviceCId, _ := collection.InsertOne(ctx, serviceC)
+	_, _ = collection.InsertOne(ctx, serviceC)
 
 	serviceB := factory.
 		NewServiceFactory().
@@ -52,7 +51,7 @@ func SeedServicesWithRelationshipTo(collection *mongo.Collection, deep int) erro
 		WithCategory("Infrastructure").
 		WithCharacteristic("Router Model", "Cisco XR500").
 		Build()
-	serviceBId, _ := collection.InsertOne(ctx, serviceB)
+	_, _ = collection.InsertOne(ctx, serviceB)
 
 	// A zavisi od B
 	serviceA := factory.NewServiceFactory().
@@ -61,8 +60,8 @@ func SeedServicesWithRelationshipTo(collection *mongo.Collection, deep int) erro
 		WithCharacteristic("bandwidth", fmt.Sprintf("%d", gofakeit.Number(50, 1000))).
 		WithCharacteristic("unit", "Mbps").
 		WithCharacteristic("technology", "Fiber").
-		WithRelationshipTo(serviceBId.InsertedID.(primitive.ObjectID).Hex(), "Router Configuration", "reliesOn").
-		WithRelationshipTo(serviceCId.InsertedID.(primitive.ObjectID).Hex(), "Firewall Protection", "bundledWith").
+		WithRelationshipTo(*serviceB.ID, "Router Configuration", "reliesOn").
+		WithRelationshipTo(*serviceC.ID, "Firewall Protection", "bundledWith").
 		Build()
 
 	docs := []interface{}{serviceB, serviceA}

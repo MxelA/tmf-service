@@ -23,6 +23,7 @@ func NewApi(l *Logger) *API {
 func (r *API) GetRouter() *http.ServeMux {
 	return r.mux
 }
+
 func (r *API) GetCore() *http.Server {
 	return r.core
 }

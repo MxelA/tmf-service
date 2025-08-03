@@ -53,7 +53,7 @@ type Service struct {
 	Href *string `json:"href,omitempty" bson:"href,omitempty"`
 
 	// Unique identifier of the service
-	ID *string `json:"id,omitempty" bson:"_id,omitempty"`
+	ID *string `json:"id,omitempty" bson:"id,omitempty"`
 
 	// If true, the service is a ServiceBundle which regroup a service hierachy. If false, the service is a 'atomic' service (hierachy leaf).
 	IsBundle *bool `json:"isBundle,omitempty" bson:"isBundle,omitempty"`
@@ -118,7 +118,7 @@ type Service struct {
 
 	// A list of supporting services (SupportingService [*]). A collection of services that support this service (bundling, link CFS to RFS)
 	SupportingService []*ServiceRefOrValue `json:"supportingService,omitempty" bson:"supportingService,omitempty"`
-	RelatedServices []*ServiceRefOrValue `json:"relatedServices,omitempty" bson:"relatedServices,omitempty"`
+	RelatedServices   []*ServiceRefOrValue `json:"relatedServices,omitempty" bson:"relatedServices,omitempty"`
 }
 
 // Validate validates this service

@@ -1950,7 +1950,7 @@
         "id": {
           "type": "string",
           "description": "Unique identifier of the service",
-          "x-go-custom-tag": "bson:\"_id,omitempty\"",
+          "x-go-custom-tag": "bson:\"id,omitempty\"",
           "x-nullable": true
         },
         "href": {

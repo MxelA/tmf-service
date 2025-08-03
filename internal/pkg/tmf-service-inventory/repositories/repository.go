@@ -2,20 +2,21 @@ package repository
 
 import (
 	"context"
-	"errors"
 	"github.com/MxelA/tmf-service/internal/core"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 	"github.com/MxelA/tmf-service/internal/utils"
+	"github.com/google/uuid"
+	"github.com/jinzhu/copier"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"net/http"
+	"strconv"
 )
 
 type ServiceInventoryRepository interface {
 	GetByID(context context.Context, id string, selectFields *string) (*models.Service, error)
-	Create(context context.Context, serviceCreate *models.ServiceCreate) (*mongo.InsertOneResult, error)
+	Create(context context.Context, serviceCreate *models.ServiceCreate) (*models.Service, error)
 	GetAllPaginate(context context.Context, httpRequest *http.Request, selectFields *string, offset *int64, limit *int64) ([]*models.Service, *int64, error)
 }
 
@@ -25,11 +26,11 @@ type MongoServiceInventoryRepository struct {
 }
 
 func (repo *MongoServiceInventoryRepository) GetByID(context context.Context, id string, selectFields *string) (*models.Service, error) {
-	serviceId, err := primitive.ObjectIDFromHex(id)
+	//serviceId, err := primitive.ObjectIDFromHex(id)
 
-	if err != nil {
-		return nil, errors.New("id is not valid")
-	}
+	//if err != nil {
+	//	return nil, errors.New("id is not valid")
+	//}
 
 	// Apply projection if set
 	findOptions := options.FindOne()
@@ -38,11 +39,11 @@ func (repo *MongoServiceInventoryRepository) GetByID(context context.Context, id
 		findOptions.SetProjection(fieldProjection)
 	}
 
-	filter := bson.D{{Key: "_id", Value: serviceId}}
+	filter := bson.D{{Key: "id", Value: id}}
 	record := repo.MongoCollection.FindOne(context, filter, findOptions)
 
 	retrieveService := models.Service{}
-	err = record.Decode(&retrieveService)
+	err := record.Decode(&retrieveService)
 
 	if err != nil {
 		return nil, err
@@ -50,30 +51,57 @@ func (repo *MongoServiceInventoryRepository) GetByID(context context.Context, id
 
 	return &retrieveService, nil
 }
-func (repo *MongoServiceInventoryRepository) Create(context context.Context, serviceCreate *models.ServiceCreate) (*mongo.InsertOneResult, error) {
+func (repo *MongoServiceInventoryRepository) Create(context context.Context, serviceCreate *models.ServiceCreate) (*models.Service, error) {
 
-	insertResult, err := repo.MongoCollection.InsertOne(context, serviceCreate)
+	service := models.Service{}
+	err := copier.Copy(&service, serviceCreate)
 
 	if err != nil {
 		return nil, err
 	}
 
-	return insertResult, nil
+	uid := uuid.New().String()
+	service.ID = &uid
+
+	_, err = repo.MongoCollection.InsertOne(context, service)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &service, nil
 }
 
 func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Context, httpRequest *http.Request, selectFields *string, offset *int64, limit *int64) ([]*models.Service, *int64, error) {
 
 	offset, limit = utils.ValidatePaginationParams(offset, limit)
+	fieldProjection := utils.GerFieldsProjection(selectFields)
 
 	// Get filter or pipeline
-	filterOrPipeline, isPipeline := utils.BuildTmfMongoFilter(httpRequest.URL.Query())
+	queryParams := httpRequest.URL.Query()
+	depth := -1
+	if deepVals, ok := queryParams["deep"]; ok && len(deepVals) > 0 {
+		if d, err := strconv.Atoi(deepVals[0]); err == nil {
+			depth = d
+		}
+		delete(queryParams, "deep")
+	}
 
-	// Fields Projection
-	fieldProjection := utils.GerFieldsProjection(selectFields)
-	if isPipeline {
-		// pipeline mode
+	//TODO:  This logic move to service layer
+	if depth >= 0 { // pipeline mode
+		filterOrPipeline, _ := utils.BuildTmfMongoFilter(queryParams, true)
 		pipeline := filterOrPipeline.(mongo.Pipeline)
-
+		pipeline = append(pipeline,
+			bson.D{{Key: "$graphLookup", Value: bson.M{
+				"from":             "serviceInventory",
+				"startWith":        "$serviceRelationship.service.id",
+				"connectFromField": "serviceRelationship.service.id",
+				"connectToField":   "id",
+				"as":               "relatedServices",
+				"depthField":       "level",
+				"maxDepth":         depth,
+			}}},
+		)
 		// Add pagination stages
 		if offset != nil && limit != nil {
 			pipeline = append(pipeline,
@@ -84,6 +112,7 @@ func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Cont
 
 		// Add projection if defined
 		if len(fieldProjection) > 0 {
+
 			pipeline = append(pipeline,
 				bson.D{{Key: "$project", Value: fieldProjection}},
 			)
@@ -103,9 +132,8 @@ func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Cont
 		// For aggregate, total count isn't trivial – can omit or add $count stage separately if needed
 		total := int64(len(results))
 		return results, &total, nil
-
 	} else {
-		// regular find
+		filterOrPipeline, _ := utils.BuildTmfMongoFilter(queryParams, false)
 		findOptions := &options.FindOptions{
 			Skip:  offset,
 			Limit: limit,

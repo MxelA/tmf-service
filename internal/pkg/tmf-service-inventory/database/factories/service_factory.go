@@ -4,6 +4,7 @@ import (
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 	"github.com/brianvoe/gofakeit/v6"
 	"github.com/go-openapi/strfmt"
+	"github.com/google/uuid"
 	"time"
 )
 
@@ -17,10 +18,10 @@ func init() {
 
 // NewServiceFactory Constructor
 func NewServiceFactory() *ServiceFactory {
-	//id := primitive.NewObjectID()
+	id := uuid.New().String()
 	return &ServiceFactory{
 		service: &models.Service{
-			//ID:          &id,
+			ID:          &id,
 			Name:        ptr(gofakeit.AppName()),
 			Description: ptr(gofakeit.Sentence(10)),
 			StartDate:   ptr(toStrfmtDateTime(gofakeit.Date())),
