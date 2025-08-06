@@ -64,7 +64,7 @@ func SeedServicesWithRelationshipTo(collection *mongo.Collection, deep int) erro
 		WithRelationshipTo(*serviceC.ID, "Firewall Protection", "bundledWith").
 		Build()
 
-	docs := []interface{}{serviceB, serviceA}
+	docs := []interface{}{serviceA}
 
 	_, err := collection.InsertMany(ctx, docs)
 	return err

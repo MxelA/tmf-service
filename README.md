@@ -2,10 +2,18 @@
 - This application will contain TMF641, TMF638 and TMF633 specification.
 - Application is develop in golang and use [modular monolith architecture boilerplate](https://github.com/ArkjuniorK/gomomo) by ArkjuniorK
 
-## Setup notes
+## Setup notes (for develop)
+### Install G (Go version manager)
+```bash
+curl -sSL https://git.io/g-install | sh -s -- bash
+```
+```bash
+g set <version of go>
+```
+
 ### Install Task
 - Install task in your local machine, in order to do that you can follow [installation instructions](https://taskfile.dev/#/installation)\
-``` 
+```bash
 $ brew install go-task/tap/go-task 
 ```
 
@@ -37,7 +45,7 @@ sudo apt update
 sudo apt install swagger
 ```
 
-### Run tmf-service application
+## Run tmf-service application
 ```aiignore
 docker-compose up -d
 ```

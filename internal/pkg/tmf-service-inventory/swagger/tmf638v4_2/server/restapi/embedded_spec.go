@@ -2719,6 +2719,12 @@ func init() {
           "x-go-custom-tag": "bson:\"category,omitempty\"",
           "x-nullable": true
         },
+        "depth": {
+          "description": "Depth of service reference when we search graphLookup",
+          "type": "integer",
+          "x-go-custom-tag": "bson:\"depth,omitempty\"",
+          "x-nullable": true
+        },
         "description": {
           "description": "Free-text description of the service",
           "type": "string",
@@ -6334,6 +6340,12 @@ func init() {
           "description": "Is it a customer facing or resource facing service",
           "type": "string",
           "x-go-custom-tag": "bson:\"category,omitempty\"",
+          "x-nullable": true
+        },
+        "depth": {
+          "description": "Depth of service reference when we search graphLookup",
+          "type": "integer",
+          "x-go-custom-tag": "bson:\"depth,omitempty\"",
           "x-nullable": true
         },
         "description": {

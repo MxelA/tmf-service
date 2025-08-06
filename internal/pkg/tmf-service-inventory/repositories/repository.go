@@ -103,7 +103,7 @@ func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Cont
 				"connectFromField": "serviceRelationship.service.id",
 				"connectToField":   "id",
 				"as":               "relatedServices",
-				"depthField":       "level",
+				"depthField":       "depth",
 				"maxDepth":         depth,
 			}}},
 		)

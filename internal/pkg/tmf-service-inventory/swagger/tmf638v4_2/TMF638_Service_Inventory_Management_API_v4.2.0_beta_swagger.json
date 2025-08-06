@@ -2971,6 +2971,12 @@
           "description": "The actual type of the target instance when needed for disambiguation.",
           "x-go-custom-tag": "bson:\"@referredType,omitempty\"",
           "x-nullable": true
+        },
+        "depth": {
+          "type": "integer",
+          "description": "Depth of service reference when we search graphLookup",
+          "x-go-custom-tag": "bson:\"depth,omitempty\"",
+          "x-nullable": true
         }
       }
     },

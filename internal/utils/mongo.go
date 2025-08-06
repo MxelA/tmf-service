@@ -16,7 +16,7 @@ func GerFieldsProjection(fieldsParam *string) bson.M {
 	}
 
 	fields := strings.Split(*fieldsParam, ",")
-	projection := bson.M{"id": 1} // Always include ID
+	projection := bson.M{"_id": 1} // Always include ID
 
 	for _, field := range fields {
 		projection[field] = 1

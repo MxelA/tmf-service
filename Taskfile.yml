@@ -26,7 +26,7 @@ tasks:
     cmds:
       - GOOS=linux GOARCH=386 go build -o bin/tmf-service-linux-386 src/main.go
 
-  run.web-run server:
+  run.web-run-server:
     desc: Run the app
     cmds:
       - GOFLAGS=-mod=mod go build -o bin/tmf-service main.go
