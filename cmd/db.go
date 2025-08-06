@@ -7,7 +7,7 @@ import (
 )
 
 var dbCmd = &cobra.Command{
-	Use:   "db-set-index",
+	Use:   "db:set-index",
 	Short: "Run db set index",
 	Run: func(cmd *cobra.Command, args []string) {
 		err := app.ServiceInventoryPkgSetMongoIndex()
