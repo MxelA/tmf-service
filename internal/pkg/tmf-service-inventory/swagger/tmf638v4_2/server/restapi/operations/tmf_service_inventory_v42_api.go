@@ -135,6 +135,8 @@ type TmfServiceInventoryV42API struct {
 
 	// JSONConsumer registers a consumer for the following mime types:
 	//   - application/json
+	//   - application/json-patch+json
+	//   - application/merge-patch+json
 	JSONConsumer runtime.Consumer
 
 	// JSONProducer registers a producer for the following mime types:
@@ -309,6 +311,10 @@ func (o *TmfServiceInventoryV42API) ConsumersFor(mediaTypes []string) map[string
 		switch mt {
 		case "application/json":
 			result["application/json"] = o.JSONConsumer
+		case "application/json-patch+json":
+			result["application/json-patch+json"] = o.JSONConsumer
+		case "application/merge-patch+json":
+			result["application/merge-patch+json"] = o.JSONConsumer
 		}
 
 		if c, ok := o.customConsumers[mt]; ok {

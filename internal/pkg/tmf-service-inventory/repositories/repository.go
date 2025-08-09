@@ -22,19 +22,16 @@ type ServiceInventoryRepository interface {
 	Create(context context.Context, serviceCreate *models.ServiceCreate) (*models.Service, error)
 	Delete(context context.Context, id string) (bool, error)
 	GetAllPaginate(context context.Context, httpRequest *http.Request, selectFields *string, offset *int64, limit *int64) ([]*models.Service, *int64, error)
+	MergePatch(context context.Context, id string, serviceOrder *models.ServiceUpdate) (bool, error)
 }
 
 type MongoServiceInventoryRepository struct {
 	MongoCollection *mongo.Collection
+	MongoClient     *mongo.Client
 	Logger          *core.Logger
 }
 
 func (repo *MongoServiceInventoryRepository) GetByID(context context.Context, id string, selectFields *string) (*models.Service, error) {
-	//serviceId, err := primitive.ObjectIDFromHex(id)
-
-	//if err != nil {
-	//	return nil, errors.New("id is not valid")
-	//}
 
 	// Apply projection if set
 	findOptions := options.FindOne()
@@ -197,4 +194,38 @@ func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Cont
 
 		return results, &totalCount, nil
 	}
+}
+
+func (repo *MongoServiceInventoryRepository) MergePatch(context context.Context, id string, serviceOrder *models.ServiceUpdate) (bool, error) {
+
+	// Start a new session
+	session, err := repo.MongoClient.StartSession()
+	if err != nil {
+		return false, err
+	}
+	defer session.EndSession(context)
+
+	_, err = session.WithTransaction(context, func(sessCtx mongo.SessionContext) (interface{}, error) {
+		filter := bson.M{"id": id}
+		update := bson.M{"$set": serviceOrder}
+		result := repo.MongoCollection.FindOneAndUpdate(context, filter, update)
+
+		if err = result.Err(); err != nil {
+			return nil, err
+		}
+
+		// Decode the result
+		updatedServiceOrder := models.Service{}
+		if err = result.Decode(&updatedServiceOrder); err != nil {
+			return nil, err
+		}
+
+		return true, nil
+	})
+
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
 }

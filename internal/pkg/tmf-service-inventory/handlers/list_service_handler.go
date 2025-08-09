@@ -7,7 +7,7 @@ import (
 	"log"
 )
 
-func (h ServiceInventoryHandler) ListServiceHandler(params service.ListServiceParams) middleware.Responder {
+func (h *ServiceInventoryHandler) ListServiceHandler(params service.ListServiceParams) middleware.Responder {
 
 	retrieveServiceOrders, retrieveServiceOrdersTotalCount, err := h.repo.GetAllPaginate(params.HTTPRequest.Context(), params.HTTPRequest, params.Fields, params.Offset, params.Limit)
 

@@ -6,7 +6,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 )
 
-func (h ServiceInventoryHandler) CreateServiceHandler(params service.CreateServiceParams) middleware.Responder {
+func (h *ServiceInventoryHandler) CreateServiceHandler(params service.CreateServiceParams) middleware.Responder {
 	inventoryService, err := h.repo.Create(params.HTTPRequest.Context(), params.Service)
 
 	if err != nil {

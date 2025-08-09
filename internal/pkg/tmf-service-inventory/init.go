@@ -13,18 +13,19 @@ import (
 	"net/http"
 )
 
-const DbCollectionName = "serviceInventory"
+const DbCollectionName = "service"
 
 func New(api *core.API, db *core.DatabaseMongo, l *core.Logger) {
 
 	// Initialize Mongo Repository
+	mongoDb := db.GetCore()
 	repo := &repository.MongoServiceInventoryRepository{
-		MongoCollection: db.GetCore().Db.Collection(DbCollectionName),
+		MongoCollection: mongoDb.Db.Collection(DbCollectionName),
+		MongoClient:     mongoDb.Client,
 		Logger:          l,
 	}
 	// Initialize Handler
 	serviceInventoryHandler := handler.NewServiceInventoryHandler(repo, l)
-
 	serviceInventory := registerHandlers(serviceInventoryHandler, repo)
 
 	inventoryServer := restapi.NewServer(serviceInventory)
@@ -51,7 +52,7 @@ func registerHandlers(serviceInventoryHandler *handler.ServiceInventoryHandler, 
 	// Initialize Inventory Api
 	inventory := operations.NewTmfServiceInventoryV42API(swaggerSpec)
 
-	//Register Create Service Handler
+	//Register Create Service Handler with middleware for business validation
 	createServiceInventoryHandler := serviceInventoryHandler.CreateServiceHandler
 	createServiceInventoryHandler = middleware.BusinessValidation(repo, createServiceInventoryHandler)
 	inventory.ServiceCreateServiceHandler = service.CreateServiceHandlerFunc(createServiceInventoryHandler)
@@ -60,6 +61,7 @@ func registerHandlers(serviceInventoryHandler *handler.ServiceInventoryHandler, 
 	inventory.ServiceRetrieveServiceHandler = service.RetrieveServiceHandlerFunc(serviceInventoryHandler.RetrieveServiceHandler)
 	inventory.ServiceListServiceHandler = service.ListServiceHandlerFunc(serviceInventoryHandler.ListServiceHandler)
 	inventory.ServiceDeleteServiceHandler = service.DeleteServiceHandlerFunc(serviceInventoryHandler.DeleteServiceHandler)
+	inventory.ServicePatchServiceHandler = service.PatchServiceHandlerFunc(serviceInventoryHandler.PatchServiceHandler)
 
 	return inventory
 }

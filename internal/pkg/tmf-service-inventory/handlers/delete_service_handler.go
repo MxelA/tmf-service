@@ -6,7 +6,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 )
 
-func (h ServiceInventoryHandler) DeleteServiceHandler(params service.DeleteServiceParams) middleware.Responder {
+func (h *ServiceInventoryHandler) DeleteServiceHandler(params service.DeleteServiceParams) middleware.Responder {
 	_, err := h.repo.Delete(params.HTTPRequest.Context(), params.ID)
 
 	if err != nil {

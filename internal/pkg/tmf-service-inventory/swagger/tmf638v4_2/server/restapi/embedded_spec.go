@@ -818,6 +818,10 @@ func init() {
       },
       "patch": {
         "description": "This operation updates partially a Service entity.",
+        "consumes": [
+          "application/merge-patch+json",
+          "application/json-patch+json"
+        ],
         "tags": [
           "service"
         ],
@@ -4441,6 +4445,10 @@ func init() {
       },
       "patch": {
         "description": "This operation updates partially a Service entity.",
+        "consumes": [
+          "application/merge-patch+json",
+          "application/json-patch+json"
+        ],
         "tags": [
           "service"
         ],
