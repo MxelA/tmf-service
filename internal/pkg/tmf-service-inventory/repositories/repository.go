@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"errors"
 	"github.com/MxelA/tmf-service/internal/core"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 	"github.com/MxelA/tmf-service/internal/utils"
@@ -19,6 +20,7 @@ import (
 type ServiceInventoryRepository interface {
 	GetByID(context context.Context, id string, selectFields *string) (*models.Service, error)
 	Create(context context.Context, serviceCreate *models.ServiceCreate) (*models.Service, error)
+	Delete(context context.Context, id string) (bool, error)
 	GetAllPaginate(context context.Context, httpRequest *http.Request, selectFields *string, offset *int64, limit *int64) ([]*models.Service, *int64, error)
 }
 
@@ -77,6 +79,37 @@ func (repo *MongoServiceInventoryRepository) Create(context context.Context, ser
 	return &service, nil
 }
 
+func (repo *MongoServiceInventoryRepository) Delete(context context.Context, id string) (bool, error) {
+
+	filter := bson.D{{Key: "id", Value: id}}
+	deleteRecord, err := repo.MongoCollection.DeleteOne(context, filter)
+
+	if err != nil {
+		return false, err
+	}
+
+	if deleteRecord.DeletedCount == 0 {
+		return false, errors.New("Delete record with ID:" + id + " not success")
+	}
+
+	// filter document where serviceRelationship.service.id is deleted document and remove that from list
+	_, err = repo.MongoCollection.UpdateMany(
+		context,
+		bson.M{"serviceRelationship.service.id": id},
+		bson.M{"$pull": bson.M{
+			"serviceRelationship": bson.M{
+				"service.id": id,
+			},
+		}},
+	)
+
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
+}
+
 func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Context, httpRequest *http.Request, selectFields *string, offset *int64, limit *int64) ([]*models.Service, *int64, error) {
 
 	offset, limit = utils.ValidatePaginationParams(offset, limit)
@@ -117,7 +150,6 @@ func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Cont
 
 		// Add projection if defined
 		if len(fieldProjection) > 0 {
-
 			pipeline = append(pipeline,
 				bson.D{{Key: "$project", Value: fieldProjection}},
 			)

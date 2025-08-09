@@ -14,7 +14,7 @@ func CreateMongoIndex(collection *mongo.Collection, logger *core.Logger) error {
 			Keys: bson.D{
 				{"id", 1},
 			},
-			Options: options.Index().SetName("idx_id"), // Add index name:
+			Options: options.Index().SetName("idx_id").SetUnique(true),
 		},
 		{
 			Keys: bson.D{

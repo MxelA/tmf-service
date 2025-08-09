@@ -59,6 +59,7 @@ func registerHandlers(serviceInventoryHandler *handler.ServiceInventoryHandler, 
 	// Register Handlers
 	inventory.ServiceRetrieveServiceHandler = service.RetrieveServiceHandlerFunc(serviceInventoryHandler.RetrieveServiceHandler)
 	inventory.ServiceListServiceHandler = service.ListServiceHandlerFunc(serviceInventoryHandler.ListServiceHandler)
+	inventory.ServiceDeleteServiceHandler = service.DeleteServiceHandlerFunc(serviceInventoryHandler.DeleteServiceHandler)
 
 	return inventory
 }
