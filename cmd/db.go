@@ -7,7 +7,7 @@ import (
 )
 
 var dbCmd = &cobra.Command{
-	Use:   "db:set-index",
+	Use:   "db:service-inventory:set-index",
 	Short: "Run db set index",
 	Run: func(cmd *cobra.Command, args []string) {
 		err := app.ServiceInventoryPkgSetMongoIndex()
@@ -18,7 +18,7 @@ var dbCmd = &cobra.Command{
 }
 
 var dbSeedServiceCmd = &cobra.Command{
-	Use:   "seed:service",
+	Use:   "seed:service-inventory",
 	Short: "Run db seed service: --seedName=[withRelationshipTo]|None --count=1",
 	Run: func(cmd *cobra.Command, args []string) {
 		var err error

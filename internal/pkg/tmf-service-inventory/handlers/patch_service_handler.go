@@ -33,7 +33,7 @@ func (h *ServiceInventoryHandler) PatchServiceHandler(req service.PatchServicePa
 func processJsonPatch(h *ServiceInventoryHandler, req service.PatchServiceParams) middleware.Responder {
 
 	var jpo []*models.JSONPatchOperation
-	
+
 	//marshal to json bytes
 	raw, err := json.Marshal(req.Service)
 	if err != nil {
@@ -75,18 +75,7 @@ func processJsonPatch(h *ServiceInventoryHandler, req service.PatchServiceParams
 			return service.NewPatchServiceBadRequest().WithPayload(&errModel)
 		}
 	}
-	//if err := jpo.Validate(strfmt.Default); err != nil {
-	//	errCode := "606"
-	//	reason := "Validation error"
-	//	var errModel = models.Error{
-	//		Code:    &errCode,
-	//		Message: err.Error(),
-	//		Reason:  &reason,
-	//	}
-	//	log.Println(err)
-	//	return service.NewPatchServiceBadRequest().WithPayload(&errModel)
-	//}
-
+	
 	// make patch operation
 	patchOperation, err := jsonpatch.DecodePatch(raw)
 	if err != nil {
