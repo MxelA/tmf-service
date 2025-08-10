@@ -46,6 +46,9 @@ type Service struct {
 	// A list of feature associated with this service
 	Feature []*Feature `json:"feature,omitempty" bson:"feature,omitempty"`
 
+	// A list of connecting services. A collection of services that are in relation
+	GraphLookup []*ServiceRefOrValue `json:"graphLookup,omitempty" bson:"graphLookup,omitempty"`
+
 	// If TRUE, this Service has already been started
 	HasStarted *bool `json:"hasStarted,omitempty" bson:"hasStarted,omitempty"`
 
@@ -119,7 +122,6 @@ type Service struct {
 
 	// A list of supporting services (SupportingService [*]). A collection of services that support this service (bundling, link CFS to RFS)
 	SupportingService []*ServiceRefOrValue `json:"supportingService,omitempty" bson:"supportingService,omitempty"`
-	GraphLookup   []*ServiceRefOrValue `json:"graphLookup,omitempty" bson:"graphLookup,omitempty"`
 }
 
 // Validate validates this service
@@ -139,6 +141,10 @@ func (m *Service) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateFeature(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateGraphLookup(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -274,6 +280,32 @@ func (m *Service) validateFeature(formats strfmt.Registry) error {
 					return ve.ValidateName("feature" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
 					return ce.ValidateName("feature" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *Service) validateGraphLookup(formats strfmt.Registry) error {
+	if swag.IsZero(m.GraphLookup) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.GraphLookup); i++ {
+		if swag.IsZero(m.GraphLookup[i]) { // not required
+			continue
+		}
+
+		if m.GraphLookup[i] != nil {
+			if err := m.GraphLookup[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("graphLookup" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("graphLookup" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -626,6 +658,10 @@ func (m *Service) ContextValidate(ctx context.Context, formats strfmt.Registry) 
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateGraphLookup(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateNote(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -724,6 +760,31 @@ func (m *Service) contextValidateFeature(ctx context.Context, formats strfmt.Reg
 					return ve.ValidateName("feature" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
 					return ce.ValidateName("feature" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *Service) contextValidateGraphLookup(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.GraphLookup); i++ {
+
+		if m.GraphLookup[i] != nil {
+
+			if swag.IsZero(m.GraphLookup[i]) { // not required
+				return nil
+			}
+
+			if err := m.GraphLookup[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("graphLookup" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("graphLookup" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

@@ -25,6 +25,7 @@
 //
 //	Copyright (c)TM Forum 2019. All Rights Reserved.
 //	Schemes:
+//	  http
 //	  https
 //	Host: serverRoot
 //	BasePath: /tmf-api/serviceInventory/v4

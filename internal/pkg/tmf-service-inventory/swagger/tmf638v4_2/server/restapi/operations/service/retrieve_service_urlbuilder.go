@@ -10,13 +10,16 @@ import (
 	"net/url"
 	golangswaggerpaths "path"
 	"strings"
+
+	"github.com/go-openapi/swag"
 )
 
 // RetrieveServiceURL generates an URL for the retrieve service operation
 type RetrieveServiceURL struct {
 	ID string
 
-	Fields *string
+	Fields           *string
+	GraphLookupDepth *int64
 
 	_basePath string
 	// avoid unkeyed usage
@@ -65,6 +68,14 @@ func (o *RetrieveServiceURL) Build() (*url.URL, error) {
 	}
 	if fieldsQ != "" {
 		qs.Set("fields", fieldsQ)
+	}
+
+	var graphLookupDepthQ string
+	if o.GraphLookupDepth != nil {
+		graphLookupDepthQ = swag.FormatInt64(*o.GraphLookupDepth)
+	}
+	if graphLookupDepthQ != "" {
+		qs.Set("graphLookupDepth", graphLookupDepthQ)
 	}
 
 	_result.RawQuery = qs.Encode()

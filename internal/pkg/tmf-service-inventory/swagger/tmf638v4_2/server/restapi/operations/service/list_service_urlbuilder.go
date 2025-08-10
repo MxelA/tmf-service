@@ -15,9 +15,10 @@ import (
 
 // ListServiceURL generates an URL for the list service operation
 type ListServiceURL struct {
-	Fields *string
-	Limit  *int64
-	Offset *int64
+	Fields           *string
+	GraphLookupDepth *int64
+	Limit            *int64
+	Offset           *int64
 
 	_basePath string
 	// avoid unkeyed usage
@@ -59,6 +60,14 @@ func (o *ListServiceURL) Build() (*url.URL, error) {
 	}
 	if fieldsQ != "" {
 		qs.Set("fields", fieldsQ)
+	}
+
+	var graphLookupDepthQ string
+	if o.GraphLookupDepth != nil {
+		graphLookupDepthQ = swag.FormatInt64(*o.GraphLookupDepth)
+	}
+	if graphLookupDepthQ != "" {
+		qs.Set("graphLookupDepth", graphLookupDepthQ)
 	}
 
 	var limitQ string

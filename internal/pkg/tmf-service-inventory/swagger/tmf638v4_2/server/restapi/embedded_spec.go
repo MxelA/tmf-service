@@ -25,7 +25,8 @@ func init() {
     "application/json;charset=utf-8"
   ],
   "schemes": [
-    "https"
+    "https",
+    "http"
   ],
   "swagger": "2.0",
   "info": {
@@ -548,6 +549,12 @@ func init() {
             "description": "Requested number of resources to be provided in response",
             "name": "limit",
             "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Requested number of how depth will go in graphLookup",
+            "name": "graphLookupDepth",
+            "in": "query"
           }
         ],
         "responses": {
@@ -698,6 +705,12 @@ func init() {
             "type": "string",
             "description": "Comma-separated properties to provide in response",
             "name": "fields",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Requested number of how depth will go in graphLookup",
+            "name": "graphLookupDepth",
             "in": "query"
           }
         ],
@@ -2135,6 +2148,16 @@ func init() {
             "$ref": "#/definitions/Feature"
           },
           "x-go-custom-tag": "bson:\"feature,omitempty\"",
+          "x-nullable": true,
+          "x-omitempty": true
+        },
+        "graphLookup": {
+          "description": "A list of connecting services. A collection of services that are in relation ",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ServiceRefOrValue"
+          },
+          "x-go-custom-tag": "bson:\"graphLookup,omitempty\"",
           "x-nullable": true,
           "x-omitempty": true
         },
@@ -3685,7 +3708,8 @@ func init() {
     "application/json;charset=utf-8"
   ],
   "schemes": [
-    "https"
+    "https",
+    "http"
   ],
   "swagger": "2.0",
   "info": {
@@ -4208,6 +4232,12 @@ func init() {
             "description": "Requested number of resources to be provided in response",
             "name": "limit",
             "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Requested number of how depth will go in graphLookup",
+            "name": "graphLookupDepth",
+            "in": "query"
           }
         ],
         "responses": {
@@ -4358,6 +4388,12 @@ func init() {
             "type": "string",
             "description": "Comma-separated properties to provide in response",
             "name": "fields",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Requested number of how depth will go in graphLookup",
+            "name": "graphLookupDepth",
             "in": "query"
           }
         ],
@@ -5795,6 +5831,16 @@ func init() {
             "$ref": "#/definitions/Feature"
           },
           "x-go-custom-tag": "bson:\"feature,omitempty\"",
+          "x-nullable": true,
+          "x-omitempty": true
+        },
+        "graphLookup": {
+          "description": "A list of connecting services. A collection of services that are in relation ",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ServiceRefOrValue"
+          },
+          "x-go-custom-tag": "bson:\"graphLookup,omitempty\"",
           "x-nullable": true,
           "x-omitempty": true
         },

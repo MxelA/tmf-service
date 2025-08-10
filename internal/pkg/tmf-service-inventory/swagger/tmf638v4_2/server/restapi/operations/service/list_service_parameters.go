@@ -36,6 +36,10 @@ type ListServiceParams struct {
 	  In: query
 	*/
 	Fields *string
+	/*Requested number of how depth will go in graphLookup
+	  In: query
+	*/
+	GraphLookupDepth *int64
 	/*Requested number of resources to be provided in response
 	  In: query
 	*/
@@ -59,6 +63,11 @@ func (o *ListServiceParams) BindRequest(r *http.Request, route *middleware.Match
 
 	qFields, qhkFields, _ := qs.GetOK("fields")
 	if err := o.bindFields(qFields, qhkFields, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qGraphLookupDepth, qhkGraphLookupDepth, _ := qs.GetOK("graphLookupDepth")
+	if err := o.bindGraphLookupDepth(qGraphLookupDepth, qhkGraphLookupDepth, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -91,6 +100,29 @@ func (o *ListServiceParams) bindFields(rawData []string, hasKey bool, formats st
 		return nil
 	}
 	o.Fields = &raw
+
+	return nil
+}
+
+// bindGraphLookupDepth binds and validates parameter GraphLookupDepth from query.
+func (o *ListServiceParams) bindGraphLookupDepth(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+
+	value, err := swag.ConvertInt64(raw)
+	if err != nil {
+		return errors.InvalidType("graphLookupDepth", "query", "int64", raw)
+	}
+	o.GraphLookupDepth = &value
 
 	return nil
 }
