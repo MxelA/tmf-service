@@ -36,9 +36,6 @@ type ServiceRefOrValue struct {
 	// Is it a customer facing or resource facing service
 	Category *string `json:"category,omitempty" bson:"category,omitempty"`
 
-	// Depth of service reference when we search graphLookup
-	Depth *int64 `json:"depth,omitempty" bson:"depth,omitempty"`
-
 	// Free-text description of the service
 	Description *string `json:"description,omitempty" bson:"description,omitempty"`
 
@@ -51,6 +48,9 @@ type ServiceRefOrValue struct {
 
 	// A list of feature associated with this service
 	Feature []*Feature `json:"feature,omitempty" bson:"feature,omitempty"`
+
+	// Depth of service reference when we search graphLookup
+	GraphLookupDepth *int64 `json:"graphLookupDepth,omitempty" bson:"graphLookupDepth,omitempty"`
 
 	// If TRUE, this Service has already been started
 	HasStarted *bool `json:"hasStarted,omitempty" bson:"hasStarted,omitempty"`

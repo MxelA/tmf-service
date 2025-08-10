@@ -2756,12 +2756,6 @@ func init() {
           "x-go-custom-tag": "bson:\"category,omitempty\"",
           "x-nullable": true
         },
-        "depth": {
-          "description": "Depth of service reference when we search graphLookup",
-          "type": "integer",
-          "x-go-custom-tag": "bson:\"depth,omitempty\"",
-          "x-nullable": true
-        },
         "description": {
           "description": "Free-text description of the service",
           "type": "string",
@@ -2794,6 +2788,12 @@ func init() {
           "x-go-custom-tag": "bson:\"feature,omitempty\"",
           "x-nullable": true,
           "x-omitempty": true
+        },
+        "graphLookupDepth": {
+          "description": "Depth of service reference when we search graphLookup",
+          "type": "integer",
+          "x-go-custom-tag": "bson:\"graphLookupDepth,omitempty\"",
+          "x-nullable": true
         },
         "hasStarted": {
           "description": "If TRUE, this Service has already been started",
@@ -6416,12 +6416,6 @@ func init() {
           "x-go-custom-tag": "bson:\"category,omitempty\"",
           "x-nullable": true
         },
-        "depth": {
-          "description": "Depth of service reference when we search graphLookup",
-          "type": "integer",
-          "x-go-custom-tag": "bson:\"depth,omitempty\"",
-          "x-nullable": true
-        },
         "description": {
           "description": "Free-text description of the service",
           "type": "string",
@@ -6454,6 +6448,12 @@ func init() {
           "x-go-custom-tag": "bson:\"feature,omitempty\"",
           "x-nullable": true,
           "x-omitempty": true
+        },
+        "graphLookupDepth": {
+          "description": "Depth of service reference when we search graphLookup",
+          "type": "integer",
+          "x-go-custom-tag": "bson:\"graphLookupDepth,omitempty\"",
+          "x-nullable": true
         },
         "hasStarted": {
           "description": "If TRUE, this Service has already been started",

@@ -2977,10 +2977,10 @@
           "x-go-custom-tag": "bson:\"@referredType,omitempty\"",
           "x-nullable": true
         },
-        "depth": {
+        "graphLookupDepth": {
           "type": "integer",
           "description": "Depth of service reference when we search graphLookup",
-          "x-go-custom-tag": "bson:\"depth,omitempty\"",
+          "x-go-custom-tag": "bson:\"graphLookupDepth,omitempty\"",
           "x-nullable": true
         }
       }

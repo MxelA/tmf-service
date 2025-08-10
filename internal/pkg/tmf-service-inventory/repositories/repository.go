@@ -114,27 +114,28 @@ func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Cont
 
 	// Get filter or pipeline
 	queryParams := httpRequest.URL.Query()
-	depth := -1
-	if deepVals, ok := queryParams["deep"]; ok && len(deepVals) > 0 {
+	graphLookupDepth := -1
+	if deepVals, ok := queryParams["graphLookupDepth"]; ok && len(deepVals) > 0 {
 		if d, err := strconv.Atoi(deepVals[0]); err == nil {
-			depth = d
+			graphLookupDepth = d
 		}
-		delete(queryParams, "deep")
+		delete(queryParams, "graphLookupDepth")
 	}
 
 	//TODO:  This logic move to service layer
-	if depth >= 0 { // pipeline mode
+	if graphLookupDepth >= 0 { // pipeline mode
 		filterOrPipeline, _ := utils.BuildTmfMongoFilter(queryParams, true)
 		pipeline := filterOrPipeline.(mongo.Pipeline)
+		name := repo.MongoCollection.Name()
 		pipeline = append(pipeline,
 			bson.D{{Key: "$graphLookup", Value: bson.M{
-				"from":             "serviceInventory",
+				"from":             name,
 				"startWith":        "$serviceRelationship.service.id",
 				"connectFromField": "serviceRelationship.service.id",
 				"connectToField":   "id",
-				"as":               "relatedServices",
-				"depthField":       "depth",
-				"maxDepth":         depth,
+				"as":               "graphLookup",
+				"depthField":       "graphLookupDepth",
+				"maxDepth":         graphLookupDepth,
 			}}},
 		)
 		// Add pagination stages
