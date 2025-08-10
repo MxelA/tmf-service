@@ -1,8 +1,22 @@
 # TMF Service application
 - This application will contain TMF641, TMF638 and TMF633 specification.
 - Application is develop in golang and use [modular monolith architecture boilerplate](https://github.com/ArkjuniorK/gomomo) by ArkjuniorK
+## Modules
+- ### Service inventory
+    Swagger doc http | https://{host}/tmf-api/serviceInventory/v4/docs
 
-## Setup notes (for develop)
+
+# Setup notes (for develop)
+
+## Run tmf-service application
+```aiignore
+docker-compose up -d
+```
+### Development
+```aiignore
+docker-compose -f docker-compose.yml -f docker-compose-dev.yml up -d
+```
+
 ### Install G (Go version manager)
 ```bash
 curl -sSL https://git.io/g-install | sh -s -- bash
@@ -45,11 +59,4 @@ sudo apt update
 sudo apt install swagger
 ```
 
-## Run tmf-service application
-```aiignore
-docker-compose up -d
-```
-### Development
-```aiignore
-docker-compose -f docker-compose.yml -f docker-compose-dev.yml up -d
-```
+
