@@ -22,7 +22,7 @@ type ServiceInventoryRepository interface {
 	Create(context context.Context, serviceCreate *models.ServiceCreate) (*models.Service, error)
 	Delete(context context.Context, id string) (bool, error)
 	GetAllPaginate(context context.Context, httpRequest *http.Request, selectFields *string, offset *int64, limit *int64) ([]*models.Service, *int64, error)
-	MergePatch(context context.Context, id string, serviceOrder *models.ServiceUpdate) (bool, error)
+	Update(context context.Context, id string, service interface{}) (bool, error)
 }
 
 type MongoServiceInventoryRepository struct {
@@ -196,7 +196,13 @@ func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Cont
 	}
 }
 
-func (repo *MongoServiceInventoryRepository) MergePatch(context context.Context, id string, serviceOrder *models.ServiceUpdate) (bool, error) {
+func (repo *MongoServiceInventoryRepository) Update(context context.Context, id string, service interface{}) (bool, error) {
+
+	if _, ok := service.(*models.ServiceUpdate); !ok {
+		if _, ok := service.(*models.Service); !ok {
+			return false, errors.New("Invalid service type")
+		}
+	}
 
 	// Start a new session
 	session, err := repo.MongoClient.StartSession()
@@ -207,7 +213,7 @@ func (repo *MongoServiceInventoryRepository) MergePatch(context context.Context,
 
 	_, err = session.WithTransaction(context, func(sessCtx mongo.SessionContext) (interface{}, error) {
 		filter := bson.M{"id": id}
-		update := bson.M{"$set": serviceOrder}
+		update := bson.M{"$set": service}
 		result := repo.MongoCollection.FindOneAndUpdate(context, filter, update)
 
 		if err = result.Err(); err != nil {

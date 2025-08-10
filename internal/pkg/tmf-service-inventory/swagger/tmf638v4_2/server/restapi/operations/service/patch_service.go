@@ -32,9 +32,9 @@ func NewPatchService(ctx *middleware.Context, handler PatchServiceHandler) *Patc
 /*
 	PatchService swagger:route PATCH /service/{id} service patchService
 
-# Updates partially a Service
+Updates partially a Service
 
-This operation updates partially a Service entity.
+	This operation updates partially a Service entity. **Supported formats:** - `application/merge-patch+json` → body matches `Service_Update` schema.- `application/json-patch+json` → body is an array of JSON Patch operations.
 */
 type PatchService struct {
 	Context *middleware.Context

@@ -265,7 +265,7 @@
       "patch": {
         "operationId": "patchService",
         "summary": "Updates partially a Service",
-        "description": "This operation updates partially a Service entity.",
+        "description": " This operation updates partially a Service entity. **Supported formats:** - `application/merge-patch+json` → body matches `Service_Update` schema.- `application/json-patch+json` → body is an array of JSON Patch operations.",
         "tags": [
           "service"
         ],
@@ -286,7 +286,8 @@
             "description": "The Service to be updated",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Service_Update"
+              "type": "object",
+              "additionalProperties": true
             },
             "in": "body"
           }
@@ -3626,6 +3627,38 @@
         "@type": {
           "type": "string",
           "description": "When sub-classing, this defines the sub-class entity name."
+        }
+      }
+    },
+    "JSONPatchOperation": {
+      "type": "object",
+      "required": [
+        "op",
+        "path"
+      ],
+      "properties": {
+        "op": {
+          "type": "string",
+          "description": "The operation to be performed",
+          "enum": [
+            "add",
+            "remove",
+            "replace",
+            "move",
+            "copy",
+            "test"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "description": "A JSON Pointer"
+        },
+        "value": {
+          "description": "The value to be used within the operations."
+        },
+        "from": {
+          "type": "string",
+          "description": "A string containing a JSON Pointer path (for move/copy)"
         }
       }
     }

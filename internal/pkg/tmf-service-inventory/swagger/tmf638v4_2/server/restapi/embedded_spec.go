@@ -817,7 +817,7 @@ func init() {
         }
       },
       "patch": {
-        "description": "This operation updates partially a Service entity.",
+        "description": " This operation updates partially a Service entity. **Supported formats:** - ` + "`" + `application/merge-patch+json` + "`" + ` → body matches ` + "`" + `Service_Update` + "`" + ` schema.- ` + "`" + `application/json-patch+json` + "`" + ` → body is an array of JSON Patch operations.",
         "consumes": [
           "application/merge-patch+json",
           "application/json-patch+json"
@@ -841,7 +841,8 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Service_Update"
+              "type": "object",
+              "additionalProperties": true
             }
           }
         ],
@@ -1577,6 +1578,38 @@ func init() {
           "x-nullable": true,
           "x-omitempty": true,
           "$ref": "#/definitions/TimePeriod"
+        }
+      }
+    },
+    "JSONPatchOperation": {
+      "type": "object",
+      "required": [
+        "op",
+        "path"
+      ],
+      "properties": {
+        "from": {
+          "description": "A string containing a JSON Pointer path (for move/copy)",
+          "type": "string"
+        },
+        "op": {
+          "description": "The operation to be performed",
+          "type": "string",
+          "enum": [
+            "add",
+            "remove",
+            "replace",
+            "move",
+            "copy",
+            "test"
+          ]
+        },
+        "path": {
+          "description": "A JSON Pointer",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value to be used within the operations."
         }
       }
     },
@@ -4444,7 +4477,7 @@ func init() {
         }
       },
       "patch": {
-        "description": "This operation updates partially a Service entity.",
+        "description": " This operation updates partially a Service entity. **Supported formats:** - ` + "`" + `application/merge-patch+json` + "`" + ` → body matches ` + "`" + `Service_Update` + "`" + ` schema.- ` + "`" + `application/json-patch+json` + "`" + ` → body is an array of JSON Patch operations.",
         "consumes": [
           "application/merge-patch+json",
           "application/json-patch+json"
@@ -4468,7 +4501,8 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Service_Update"
+              "type": "object",
+              "additionalProperties": true
             }
           }
         ],
@@ -5204,6 +5238,38 @@ func init() {
           "x-nullable": true,
           "x-omitempty": true,
           "$ref": "#/definitions/TimePeriod"
+        }
+      }
+    },
+    "JSONPatchOperation": {
+      "type": "object",
+      "required": [
+        "op",
+        "path"
+      ],
+      "properties": {
+        "from": {
+          "description": "A string containing a JSON Pointer path (for move/copy)",
+          "type": "string"
+        },
+        "op": {
+          "description": "The operation to be performed",
+          "type": "string",
+          "enum": [
+            "add",
+            "remove",
+            "replace",
+            "move",
+            "copy",
+            "test"
+          ]
+        },
+        "path": {
+          "description": "A JSON Pointer",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value to be used within the operations."
         }
       }
     },
