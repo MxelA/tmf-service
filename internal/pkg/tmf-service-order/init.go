@@ -25,9 +25,9 @@ func New(api *core.API, db *core.DatabaseMongo, l *core.Logger) {
 	}
 	// Initialize Handler
 	serviceOrderHandler := handler.NewServiceOrderHandler(repo, l)
-	serviceOrder := registerHandlers(serviceOrderHandler, repo)
+	serviceOrderOperators := registerOperators(serviceOrderHandler, repo)
 
-	serviceOrderServer := restapi.NewServer(serviceOrder)
+	serviceOrderServer := restapi.NewServer(serviceOrderOperators)
 	serviceOrderServer.ConfigureAPI()
 
 	api.GetRouter().Handle("/tmf-api/serviceOrdering/v4/", http.StripPrefix("", serviceOrderServer.GetHandler()))
@@ -41,7 +41,7 @@ func New(api *core.API, db *core.DatabaseMongo, l *core.Logger) {
 
 }
 
-func registerHandlers(serviceOrderHandler *handler.ServiceOrderHandler, repo *repository.MongoServiceOrderRepository) *operations.TmfServiceOrderV42API {
+func registerOperators(serviceOrderHandler *handler.ServiceOrderHandler, repo *repository.MongoServiceOrderRepository) *operations.TmfServiceOrderV42API {
 	// Initialize Swagger
 	swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "")
 	if err != nil {

@@ -25,7 +25,8 @@ func init() {
     "application/json;charset=utf-8"
   ],
   "schemes": [
-    "https"
+    "https",
+    "http"
   ],
   "swagger": "2.0",
   "info": {
@@ -1427,7 +1428,8 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ServiceOrder_Update"
+              "type": "object",
+              "additionalProperties": true
             }
           }
         ],
@@ -5793,7 +5795,8 @@ func init() {
     "application/json;charset=utf-8"
   ],
   "schemes": [
-    "https"
+    "https",
+    "http"
   ],
   "swagger": "2.0",
   "info": {
@@ -7195,7 +7198,8 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ServiceOrder_Update"
+              "type": "object",
+              "additionalProperties": true
             }
           }
         ],

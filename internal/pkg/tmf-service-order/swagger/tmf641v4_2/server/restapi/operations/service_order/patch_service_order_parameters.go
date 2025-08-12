@@ -13,9 +13,6 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
-	"github.com/go-openapi/validate"
-
-	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/swagger/tmf641v4_2/server/models"
 )
 
 // NewPatchServiceOrderParams creates a new PatchServiceOrderParams object
@@ -44,7 +41,7 @@ type PatchServiceOrderParams struct {
 	  Required: true
 	  In: body
 	*/
-	ServiceOrder *models.ServiceOrderUpdate
+	ServiceOrder interface{}
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -63,7 +60,7 @@ func (o *PatchServiceOrderParams) BindRequest(r *http.Request, route *middleware
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		var body models.ServiceOrderUpdate
+		var body interface{}
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
 				res = append(res, errors.Required("serviceOrder", "body", ""))
@@ -71,19 +68,8 @@ func (o *PatchServiceOrderParams) BindRequest(r *http.Request, route *middleware
 				res = append(res, errors.NewParseError("serviceOrder", "body", "", err))
 			}
 		} else {
-			// validate body object
-			if err := body.Validate(route.Formats); err != nil {
-				res = append(res, err)
-			}
-
-			ctx := validate.WithOperationRequest(r.Context())
-			if err := body.ContextValidate(ctx, route.Formats); err != nil {
-				res = append(res, err)
-			}
-
-			if len(res) == 0 {
-				o.ServiceOrder = &body
-			}
+			// no validation on generic interface
+			o.ServiceOrder = body
 		}
 	} else {
 		res = append(res, errors.Required("serviceOrder", "body", ""))

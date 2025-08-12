@@ -8,7 +8,8 @@
   "host": "serverRoot",
   "basePath": "/tmf-api/serviceOrdering/v4",
   "schemes": [
-    "https"
+    "https",
+    "http"
   ],
   "consumes": [
     "application/json;charset=utf-8"
@@ -289,7 +290,8 @@
             "description": "The ServiceOrder to be updated",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ServiceOrder_Update"
+              "type": "object",
+              "additionalProperties": true
             },
             "in": "body"
           }

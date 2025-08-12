@@ -33,6 +33,7 @@
 //
 //	Copyright © TM Forum 2020. All Rights Reserved
 //	Schemes:
+//	  http
 //	  https
 //	Host: serverRoot
 //	BasePath: /tmf-api/serviceOrdering/v4
