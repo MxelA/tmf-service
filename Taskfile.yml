@@ -32,19 +32,6 @@ tasks:
       - GOFLAGS=-mod=mod go build -o bin/tmf-service main.go
       - GOFLAGS=-mod=mod go run main.go web-server
 
-  swagger.doc.tmf638.v4_0:
-    desc: "Swagger Documentation for TMF638 v4.0 "
-    cmds:
-      - docker run -i yousan/swagger-yaml-to-html < internal/pkg/tmf-service-inventory/swagger/tmf638v4_0/TMF638_Service_Inventory_Management_API_v4.0.0_swagger.json > internal/pkg/tmf-service-inventory/swagger/tmf638v4_0/doc/index.html
-
-  swagger.validate.tmf638.v4_0:
-    desc: Validate swagger
-    cmds:
-      - swagger validate internal/pkg/tmf-service-inventory/swagger/tmf638v4_0/TMF638_Service_Inventory_Management_API_v4.0.0_swagger.json
-  swagger.gen.tmf638.v4_0:
-    desc: Generate Go code
-    cmds:
-      - GOFLAGS=-mod=mod go generate github.com/MxelA/tmf-service github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_0
 
   swagger.validate.tmf638.v4_2:
     desc: Validate swagger
@@ -54,13 +41,21 @@ tasks:
     desc: Generate Go code
     cmds:
       - GOFLAGS=-mod=mod go generate github.com/MxelA/tmf-service github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2
-
   swagger.doc.tmf638.v4_2:
     desc: "Swagger Documentation for TMF638 v4.2 "
     cmds:
       - docker run -i yousan/swagger-yaml-to-html < internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/TMF638_Service_Inventory_Management_API_v4.2.0_beta_swagger.json > internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/doc/index.html
 
-  oapi-codegen.gen.v5:
+
+  swagger.validate.tmf641.v4_2:
+    desc: Validate swagger
+    cmds:
+      - swagger validate internal/pkg/tmf-service-order/swagger/tmf641v4_2/TMF641-ServiceOrdering-v4.2.0.json
+  swagger.gen.tmf641.v4_2:
     desc: Generate Go code
     cmds:
-      - GOFLAGS=-mod=mod go generate github.com/MxelA/tmf-service github.com/MxelA/tmf-service/src/oapi_codegen/tmf638v5
+      - GOFLAGS=-mod=mod go generate github.com/MxelA/tmf-service github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/swagger/tmf641v4_2
+  swagger.doc.tmf641.v4_2:
+    desc: "Swagger Documentation for TMF638 v4.0 "
+    cmds:
+      - docker run -i yousan/swagger-yaml-to-html < internal/pkg/tmf-service-order/swagger/tmf641v4_2/TMF641-ServiceOrdering-v4.2.0.json > internal/pkg/tmf-service-order/swagger/tmf641v4_2/doc/index.html
