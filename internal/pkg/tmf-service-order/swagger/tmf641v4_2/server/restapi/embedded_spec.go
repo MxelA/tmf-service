@@ -2748,6 +2748,38 @@ func init() {
         }
       }
     },
+    "JSONPatchOperation": {
+      "type": "object",
+      "required": [
+        "op",
+        "path"
+      ],
+      "properties": {
+        "from": {
+          "description": "A string containing a JSON Pointer path (for move/copy)",
+          "type": "string"
+        },
+        "op": {
+          "description": "The operation to be performed",
+          "type": "string",
+          "enum": [
+            "add",
+            "remove",
+            "replace",
+            "move",
+            "copy",
+            "test"
+          ]
+        },
+        "path": {
+          "description": "A JSON Pointer",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value to be used within the operations."
+        }
+      }
+    },
     "JeopardyAlert": {
       "description": "A JeopardyAlert represents a predicted exception during a process that may cause a risk to complete successfully the process.",
       "type": "object",
@@ -3721,7 +3753,7 @@ func init() {
         "id": {
           "description": "ID created on repository side",
           "type": "string",
-          "x-go-custom-tag": "bson:\"_id,omitempty\""
+          "x-go-custom-tag": "bson:\"id,omitempty\""
         },
         "jeopardyAlert": {
           "description": "A list of jeopardy alerts related to this order",
@@ -8484,6 +8516,38 @@ func init() {
         }
       }
     },
+    "JSONPatchOperation": {
+      "type": "object",
+      "required": [
+        "op",
+        "path"
+      ],
+      "properties": {
+        "from": {
+          "description": "A string containing a JSON Pointer path (for move/copy)",
+          "type": "string"
+        },
+        "op": {
+          "description": "The operation to be performed",
+          "type": "string",
+          "enum": [
+            "add",
+            "remove",
+            "replace",
+            "move",
+            "copy",
+            "test"
+          ]
+        },
+        "path": {
+          "description": "A JSON Pointer",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value to be used within the operations."
+        }
+      }
+    },
     "JeopardyAlert": {
       "description": "A JeopardyAlert represents a predicted exception during a process that may cause a risk to complete successfully the process.",
       "type": "object",
@@ -9457,7 +9521,7 @@ func init() {
         "id": {
           "description": "ID created on repository side",
           "type": "string",
-          "x-go-custom-tag": "bson:\"_id,omitempty\""
+          "x-go-custom-tag": "bson:\"id,omitempty\""
         },
         "jeopardyAlert": {
           "description": "A list of jeopardy alerts related to this order",

@@ -3344,7 +3344,7 @@
         "id": {
           "type": "string",
           "description": "ID created on repository side",
-          "x-go-custom-tag": "bson:\"_id,omitempty\""
+          "x-go-custom-tag": "bson:\"id,omitempty\""
         },
         "href": {
           "type": "string",
@@ -5742,6 +5742,38 @@
           "$ref": "#/definitions/CancelServiceOrder",
           "x-go-custom-tag": "bson:\"cancelServiceOrder,omitempty\"",
           "x-nullable": true
+        }
+      }
+    },
+    "JSONPatchOperation": {
+      "type": "object",
+      "required": [
+        "op",
+        "path"
+      ],
+      "properties": {
+        "op": {
+          "type": "string",
+          "description": "The operation to be performed",
+          "enum": [
+            "add",
+            "remove",
+            "replace",
+            "move",
+            "copy",
+            "test"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "description": "A JSON Pointer"
+        },
+        "value": {
+          "description": "The value to be used within the operations."
+        },
+        "from": {
+          "type": "string",
+          "description": "A string containing a JSON Pointer path (for move/copy)"
         }
       }
     }

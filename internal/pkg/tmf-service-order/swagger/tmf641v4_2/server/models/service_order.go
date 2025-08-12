@@ -65,7 +65,7 @@ type ServiceOrder struct {
 	Href *string `json:"href,omitempty" bson:"href,omitempty"`
 
 	// ID created on repository side
-	ID string `json:"id,omitempty" bson:"_id,omitempty"`
+	ID string `json:"id,omitempty" bson:"id,omitempty"`
 
 	// A list of jeopardy alerts related to this order
 	JeopardyAlert []*ServiceOrderJeopardyAlert `json:"jeopardyAlert,omitempty" bson:"jeopardyAlert,omitempty"`

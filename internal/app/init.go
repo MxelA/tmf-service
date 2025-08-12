@@ -3,6 +3,7 @@ package app
 import (
 	"github.com/MxelA/tmf-service/internal/core"
 	tmf_service_inventory "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory"
+	tmf_service_order "github.com/MxelA/tmf-service/internal/pkg/tmf-service-order"
 )
 
 // initCore initialize core packages of application
@@ -36,6 +37,7 @@ func (app *app) initPackages() {
 	)
 
 	tmf_service_inventory.New(api, db, logger)
+	tmf_service_order.New(api, db, logger)
 
 	defer logger.GetCore().Info("Initialize packages done!")
 }
