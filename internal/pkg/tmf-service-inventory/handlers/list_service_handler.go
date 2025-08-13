@@ -4,7 +4,6 @@ import (
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations/service"
 	"github.com/go-openapi/runtime/middleware"
-	"log"
 )
 
 func (h *ServiceInventoryHandler) ListServiceHandler(params service.ListServiceParams) middleware.Responder {
@@ -19,7 +18,7 @@ func (h *ServiceInventoryHandler) ListServiceHandler(params service.ListServiceP
 			Code:    &errCode,
 			Message: "Internal server error",
 		}
-		log.Println(err)
+		h.logger.GetCore().Error(err.Error())
 		return service.NewListServiceInternalServerError().WithPayload(&errModel)
 	}
 	return service.NewListServiceOK().

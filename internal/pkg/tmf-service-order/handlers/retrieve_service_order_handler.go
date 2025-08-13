@@ -4,7 +4,6 @@ import (
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/swagger/tmf641v4_2/server/models"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/swagger/tmf641v4_2/server/restapi/operations/service_order"
 	"github.com/go-openapi/runtime/middleware"
-	"log"
 )
 
 func (h *ServiceOrderHandler) RetrieveServiceOrderHandler(params service_order.RetrieveServiceOrderParams) middleware.Responder {
@@ -17,7 +16,7 @@ func (h *ServiceOrderHandler) RetrieveServiceOrderHandler(params service_order.R
 			Code:    &errCode,
 			Message: "Internal server error",
 		}
-		log.Println(err)
+		h.logger.GetCore().Error(err.Error())
 		return service_order.NewRetrieveServiceOrderInternalServerError().WithPayload(&errModel)
 	}
 
