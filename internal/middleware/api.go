@@ -38,8 +38,8 @@ func (a *APIWrapper) RegisterRoute(pattern string, handler http.Handler, localMw
 	a.Router.Handle(pattern, ChainMiddleware(handler, allMws...))
 }
 
-// GetHandler
-func (a *APIWrapper) GetHandler() http.Handler {
+// GetRouter
+func (a *APIWrapper) GetRouter() http.Handler {
 	return a.Router
 }
 
