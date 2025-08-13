@@ -3,6 +3,7 @@ package core
 import (
 	"github.com/ThreeDotsLabs/watermill"
 	"github.com/ThreeDotsLabs/watermill/message"
+	"github.com/ThreeDotsLabs/watermill/message/router/plugin"
 	"github.com/ThreeDotsLabs/watermill/pubsub/gochannel"
 )
 
@@ -37,6 +38,10 @@ func NewPubSub(l *Logger) *PubSub {
 		if err != nil {
 			panic(err)
 		}
+
+		// SignalsHandler will gracefully shutdown Router when SIGTERM is received.
+		// You can also close the router by just calling `r.Close()`.
+		router.AddPlugin(plugin.SignalsHandler)
 	}
 
 	return &PubSub{core: gochan, router: router}
