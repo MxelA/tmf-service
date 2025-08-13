@@ -2,6 +2,7 @@ package tmf_service_order
 
 import (
 	"github.com/MxelA/tmf-service/internal/core"
+	"github.com/MxelA/tmf-service/internal/middleware"
 	handler "github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/handlers"
 	repository "github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/repositories"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/swagger/tmf641v4_2/server/restapi"
@@ -14,7 +15,7 @@ import (
 
 const DbCollectionName = "service_order"
 
-func New(api *core.API, db *core.DatabaseMongo, l *core.Logger) {
+func New(api *middleware.APIWrapper, db *core.DatabaseMongo, l *core.Logger) {
 
 	// Initialize Mongo Repository
 	mongoDb := db.GetCore()
@@ -30,8 +31,8 @@ func New(api *core.API, db *core.DatabaseMongo, l *core.Logger) {
 	serviceOrderServer := restapi.NewServer(serviceOrderOperators)
 	serviceOrderServer.ConfigureAPI()
 
-	api.GetRouter().Handle("/tmf-api/serviceOrdering/v4/", http.StripPrefix("", serviceOrderServer.GetHandler()))
-	api.GetRouter().Handle("/tmf-api/serviceOrdering/v4/docs", http.StripPrefix("/tmf-api/serviceOrdering/v4/docs", http.FileServer(http.Dir("internal/pkg/tmf-service-order/swagger/tmf641v4_2/doc"))))
+	api.RegisterRoute("/tmf-api/serviceOrdering/v4/", http.StripPrefix("", serviceOrderServer.GetHandler()))
+	api.RegisterRoute("/tmf-api/serviceOrdering/v4/docs", http.StripPrefix("/tmf-api/serviceOrdering/v4/docs", http.FileServer(http.Dir("internal/pkg/tmf-service-order/swagger/tmf641v4_2/doc"))))
 
 	defer func(serviceOrderServer *restapi.Server) {
 		_ = serviceOrderServer.Shutdown()

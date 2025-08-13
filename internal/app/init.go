@@ -2,6 +2,7 @@ package app
 
 import (
 	"github.com/MxelA/tmf-service/internal/core"
+	"github.com/MxelA/tmf-service/internal/middleware"
 	tmf_service_inventory "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory"
 	tmf_service_order "github.com/MxelA/tmf-service/internal/pkg/tmf-service-order"
 )
@@ -16,11 +17,15 @@ func (app *app) initCore() {
 	app.DBMongo = db
 
 	api := core.NewApi(logger)
+	apiWrapper := middleware.NewAPIWrapper(api.GetRouter(),
+		middleware.ApiLoggingMiddleware(logger),
+	)
 	app.API = api
+	app.APIWrapper = apiWrapper
 
-	//pubSub := core.NewPubSub(logger)
-	//middleware.InitPubSubMiddleware(pubSub)
-	//app.PubSub = pubSub
+	pubSub := core.NewPubSub(logger)
+	middleware.InitPubSubMiddleware(pubSub)
+	app.PubSub = pubSub
 
 	defer logger.GetCore().Info("Initialize dependencies done!")
 }
@@ -30,14 +35,15 @@ func (app *app) initCore() {
 // packages should be initialized.
 func (app *app) initPackages() {
 	var (
-		db  = app.DBMongo
-		api = app.API
+		db = app.DBMongo
+		//api        = app.API
+		apiWrapper = app.APIWrapper
 		//pubSub = app.PubSub
 		logger = app.Logger
 	)
 
-	tmf_service_inventory.New(api, db, logger)
-	tmf_service_order.New(api, db, logger)
+	tmf_service_inventory.New(apiWrapper, db, logger)
+	tmf_service_order.New(apiWrapper, db, logger)
 
 	defer logger.GetCore().Info("Initialize packages done!")
 }

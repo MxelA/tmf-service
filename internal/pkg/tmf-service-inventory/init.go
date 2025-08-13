@@ -2,8 +2,9 @@ package tmf_service_inventory
 
 import (
 	"github.com/MxelA/tmf-service/internal/core"
+	"github.com/MxelA/tmf-service/internal/middleware"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/handlers"
-	middleware "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/middlewares"
+	local_middleware "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/middlewares"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/repositories"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations"
@@ -15,7 +16,7 @@ import (
 
 const DbCollectionName = "service"
 
-func New(api *core.API, db *core.DatabaseMongo, l *core.Logger) {
+func New(api *middleware.APIWrapper, db *core.DatabaseMongo, l *core.Logger) {
 
 	// Initialize Mongo Repository
 	mongoDb := db.GetCore()
@@ -31,8 +32,8 @@ func New(api *core.API, db *core.DatabaseMongo, l *core.Logger) {
 	inventoryServer := restapi.NewServer(serviceInventory)
 	inventoryServer.ConfigureAPI()
 
-	api.GetRouter().Handle("/tmf-api/serviceInventory/v4/", http.StripPrefix("", inventoryServer.GetHandler()))
-	api.GetRouter().Handle("/tmf-api/serviceInventory/v4/docs", http.StripPrefix("/tmf-api/serviceInventory/v4/docs", http.FileServer(http.Dir("internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/doc"))))
+	api.RegisterRoute("/tmf-api/serviceInventory/v4/", http.StripPrefix("", inventoryServer.GetHandler()))
+	api.RegisterRoute("/tmf-api/serviceInventory/v4/docs", http.StripPrefix("/tmf-api/serviceInventory/v4/docs", http.FileServer(http.Dir("internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/doc"))))
 
 	defer func(inventoryServer *restapi.Server) {
 		_ = inventoryServer.Shutdown()
@@ -54,7 +55,7 @@ func registerHandlers(serviceInventoryHandler *handler.ServiceInventoryHandler, 
 
 	//Register Create Service Handler with middleware for business validation
 	createServiceInventoryHandler := serviceInventoryHandler.CreateServiceHandler
-	createServiceInventoryHandler = middleware.BusinessValidation(repo, createServiceInventoryHandler)
+	createServiceInventoryHandler = local_middleware.BusinessValidation(repo, createServiceInventoryHandler)
 	inventory.ServiceCreateServiceHandler = service.CreateServiceHandlerFunc(createServiceInventoryHandler)
 
 	// Register Handlers

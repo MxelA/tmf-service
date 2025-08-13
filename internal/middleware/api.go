@@ -1,0 +1,57 @@
+package middleware
+
+import (
+	"github.com/MxelA/tmf-service/internal/core"
+	"net/http"
+	"time"
+)
+
+// Middleware function type
+type Middleware func(http.Handler) http.Handler
+
+// ChainMiddleware primenjuje više middleware-a na handler
+func ChainMiddleware(h http.Handler, mws ...Middleware) http.Handler {
+	for i := len(mws) - 1; i >= 0; i-- {
+		h = mws[i](h)
+	}
+	return h
+}
+
+// APIWrapper save router and global middleware
+type APIWrapper struct {
+	Router    *http.ServeMux
+	GlobalMws []Middleware
+}
+
+// NewAPIWrapper kreira novi wrapper
+func NewAPIWrapper(router *http.ServeMux, globalMws ...Middleware) *APIWrapper {
+	return &APIWrapper{
+		Router:    router,
+		GlobalMws: globalMws,
+	}
+}
+
+// RegisterRoute register route with local and global middlewares
+func (a *APIWrapper) RegisterRoute(pattern string, handler http.Handler, localMws ...Middleware) {
+	// Combine global and local middlewares
+	allMws := append(a.GlobalMws, localMws...)
+	a.Router.Handle(pattern, ChainMiddleware(handler, allMws...))
+}
+
+// GetHandler
+func (a *APIWrapper) GetHandler() http.Handler {
+	return a.Router
+}
+
+func ApiLoggingMiddleware(l *core.Logger) func(http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			start := time.Now()
+			l.GetCore().Info("Started", r.Method, r.URL.Path)
+
+			next.ServeHTTP(w, r)
+
+			l.GetCore().Info("Completed", r.Method, r.URL.Path, "in", time.Since(start))
+		})
+	}
+}
