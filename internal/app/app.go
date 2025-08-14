@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 	//"syscall"
 )
 
@@ -44,36 +45,62 @@ func (app *app) Serve() {
 	api := app.API.GetCore()
 	logger := app.Logger.GetCore()
 	pubSub := app.PubSub.GetCore()
-
-	//server := &http.Server{
-	//	Addr:    app.Addr,
-	//	Handler: app.API.GetRouter(),
-	//}
+	pubSubRouter := app.PubSub.GetRouter()
 
 	api.Addr = app.Addr
 	api.Handler = app.API.GetRouter()
 
+	// 1️⃣ Pokreni HTTP server asinhrono
+	httpErrChan := make(chan error, 1)
 	go func() {
 		logger.Info("App running", "address", app.Addr)
 		if err := api.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
-			// Unexpected error, log and exit
-			fmt.Printf("ListenAndServe error: %v\n", err)
-			os.Exit(1)
+			httpErrChan <- fmt.Errorf("ListenAndServe error: %w", err)
+		} else {
+			httpErrChan <- nil
 		}
 	}()
 
-	var sig os.Signal
-	c := make(chan os.Signal, 1)                    // Create channel to signify a signal being sent
-	signal.Notify(c, os.Interrupt, syscall.SIGTERM) // When an interrupt or termination signal is sent, notify the channel
-	sig = <-c                                       // This blocks the main thread until an interrupt is received
+	// 2️⃣ Pokreni Pub/Sub router asinhrono
+	pubSubErrChan := make(chan error, 1)
+	go func() {
+		if err := pubSubRouter.Run(context.Background()); err != nil {
+			pubSubErrChan <- fmt.Errorf("PubSub Router error: %w", err)
+		} else {
+			pubSubErrChan <- nil
+		}
+	}()
+
+	// 3️⃣ Čekaj signal za gašenje
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
+	sig := <-sigChan
 
 	logger.Info("Signal received", "signal", sig.String())
-	logger.Info("Shutting down app, waiting background process to finish")
+	logger.Info("Shutting down app, waiting for background processes")
+	defer logger.Info("App shutdown complete")
 
-	defer logger.Info("App shutdown")
+	// 4️⃣ Shutdown HTTP server sa timeout-om
+	httpCtx, httpCancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer httpCancel()
 
-	_ = api.Shutdown(context.Background())
-	_ = pubSub.Close()
-	//_ = api.ShutdownWithContext(context.Background())
+	if err := api.Shutdown(httpCtx); err != nil {
+		logger.Error("HTTP server shutdown error", "err", err)
+	}
+	logger.Info("HTTP server shutdown complete")
+
+	// 5️⃣ Shutdown Pub/Sub sa kraćim timeout-om (5 sekundi)
+	pubSubDone := make(chan struct{})
+	go func() {
+		_ = pubSub.Close()
+		close(pubSubDone)
+	}()
+
+	select {
+	case <-pubSubDone:
+		logger.Info("Pub/Sub closed successfully")
+	case <-time.After(5 * time.Second):
+		logger.Warn("Pub/Sub shutdown timed out")
+	}
 
 }

@@ -4,18 +4,18 @@ import (
 	"encoding/json"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/swagger/tmf641v4_2/server/models"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/swagger/tmf641v4_2/server/restapi/operations/service_order"
+	"github.com/MxelA/tmf-service/internal/utils"
 	jsonpatch "github.com/evanphx/json-patch/v5"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
-	"strings"
 )
 
 func (h *ServiceOrderHandler) PatchServiceOrderHandler(req service_order.PatchServiceOrderParams) middleware.Responder {
-	contentType := req.HTTPRequest.Header["Content-Type"][0]
 
-	if strings.Contains(contentType, "application/json-patch+json") {
+	patchType := utils.DetectPatchMediaType(req.HTTPRequest.Header)
+	if *patchType == utils.JSONPatch {
 		return processJsonPatch(h, req)
-	} else if strings.Contains(contentType, "application/merge-patch+json") {
+	} else if *patchType == utils.MergePatch {
 		return processMergePatch(h, req)
 	}
 
@@ -24,7 +24,7 @@ func (h *ServiceOrderHandler) PatchServiceOrderHandler(req service_order.PatchSe
 	errModel := models.Error{
 		Reason:  &reason,
 		Code:    &errCode,
-		Message: "Unsupported media type " + contentType,
+		Message: "Unsupported media type ",
 	}
 
 	return service_order.NewPatchServiceOrderInternalServerError().WithPayload(&errModel)

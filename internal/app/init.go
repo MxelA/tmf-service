@@ -5,17 +5,22 @@ import (
 	"github.com/MxelA/tmf-service/internal/middleware"
 	tmf_service_inventory "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory"
 	tmf_service_order "github.com/MxelA/tmf-service/internal/pkg/tmf-service-order"
+	watermill_middleware "github.com/ThreeDotsLabs/watermill/message/router/middleware"
 )
 
 // initCore initialize core packages of application
 // such as router, logger, database, etc.
 func (app *app) initCore() {
+
+	// Initialize Logger
 	logger := core.NewLogger()
 	app.Logger = logger
 
+	// Initialize Mongo DB
 	db := core.NewDatabaseMongo(logger)
 	app.DBMongo = db
 
+	// Initialize Web Api
 	api := core.NewApi(logger)
 	apiWrapper := middleware.NewAPIWrapper(api.GetRouter(),
 		middleware.ApiLoggingMiddleware(logger),
@@ -23,8 +28,12 @@ func (app *app) initCore() {
 	app.API = api
 	app.APIWrapper = apiWrapper
 
+	// Initialize PubSub
 	pubSub := core.NewPubSub(logger)
-	middleware.InitPubSubMiddleware(pubSub)
+	middleware.InitPubSubMiddleware(pubSub,
+		watermill_middleware.CorrelationID,
+		watermill_middleware.Recoverer,
+	)
 	app.PubSub = pubSub
 
 	defer logger.GetCore().Info("Initialize dependencies done!")
@@ -38,12 +47,12 @@ func (app *app) initPackages() {
 		db = app.DBMongo
 		//api        = app.API
 		apiWrapper = app.APIWrapper
-		//pubSub = app.PubSub
-		logger = app.Logger
+		pubSub     = app.PubSub
+		logger     = app.Logger
 	)
 
 	tmf_service_inventory.New(apiWrapper, db, logger)
-	tmf_service_order.New(apiWrapper, db, logger)
+	tmf_service_order.New(apiWrapper, db, pubSub, logger)
 
 	defer logger.GetCore().Info("Initialize packages done!")
 }
