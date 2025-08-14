@@ -4,6 +4,7 @@ import (
 	"github.com/MxelA/tmf-service/internal/core"
 	"github.com/MxelA/tmf-service/internal/middleware"
 	handler "github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/handlers"
+	local_middleware "github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/middleware"
 	repository "github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/repositories"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/swagger/tmf641v4_2/server/restapi"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/swagger/tmf641v4_2/server/restapi/operations"
@@ -26,7 +27,7 @@ func New(api *middleware.APIWrapper, db *core.DatabaseMongo, l *core.Logger) {
 	}
 	// Initialize Handler
 	serviceOrderHandler := handler.NewServiceOrderHandler(repo, l)
-	serviceOrderOperators := registerOperators(serviceOrderHandler, repo)
+	serviceOrderOperators := registerOperators(serviceOrderHandler, l)
 
 	serviceOrderServer := restapi.NewServer(serviceOrderOperators)
 	serviceOrderServer.ConfigureAPI()
@@ -42,7 +43,7 @@ func New(api *middleware.APIWrapper, db *core.DatabaseMongo, l *core.Logger) {
 
 }
 
-func registerOperators(serviceOrderHandler *handler.ServiceOrderHandler, repo *repository.MongoServiceOrderRepository) *operations.TmfServiceOrderV42API {
+func registerOperators(serviceOrderHandler *handler.ServiceOrderHandler, l *core.Logger) *operations.TmfServiceOrderV42API {
 	// Initialize Swagger
 	swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "")
 	if err != nil {
@@ -56,7 +57,11 @@ func registerOperators(serviceOrderHandler *handler.ServiceOrderHandler, repo *r
 	serviceOrder.ServiceOrderCreateServiceOrderHandler = service_order.CreateServiceOrderHandlerFunc(serviceOrderHandler.CreateServiceOrderHandler)
 	serviceOrder.ServiceOrderDeleteServiceOrderHandler = service_order.DeleteServiceOrderHandlerFunc(serviceOrderHandler.DeleteServiceOrderHandler)
 	serviceOrder.ServiceOrderListServiceOrderHandler = service_order.ListServiceOrderHandlerFunc(serviceOrderHandler.ListServiceOrderHandler)
-	serviceOrder.ServiceOrderPatchServiceOrderHandler = service_order.PatchServiceOrderHandlerFunc(serviceOrderHandler.PatchServiceOrderHandler)
+
+	patchServiceOrderHandler := serviceOrderHandler.PatchServiceOrderHandler
+	patchServiceOrderHandler = local_middleware.SendPatchServiceOrderEventMiddleware(l, patchServiceOrderHandler)
+	serviceOrder.ServiceOrderPatchServiceOrderHandler = service_order.PatchServiceOrderHandlerFunc(patchServiceOrderHandler)
+
 	serviceOrder.ServiceOrderRetrieveServiceOrderHandler = service_order.RetrieveServiceOrderHandlerFunc(serviceOrderHandler.RetrieveServiceOrderHandler)
 
 	return serviceOrder

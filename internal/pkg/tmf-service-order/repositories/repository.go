@@ -6,8 +6,6 @@ import (
 	"github.com/MxelA/tmf-service/internal/core"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/swagger/tmf641v4_2/server/models"
 	"github.com/MxelA/tmf-service/internal/utils"
-	"github.com/google/uuid"
-	"github.com/jinzhu/copier"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -17,7 +15,7 @@ import (
 
 type ServiceOrderRepository interface {
 	GetByID(context context.Context, id string, selectFields *string) (*models.ServiceOrder, error)
-	Create(context context.Context, serviceCreate *models.ServiceOrderCreate) (*models.ServiceOrder, error)
+	Create(context context.Context, serviceCreate *models.ServiceOrder) (*models.ServiceOrder, error)
 	Delete(context context.Context, id string) (bool, error)
 	GetAllPaginate(context context.Context, httpRequest *http.Request, selectFields *string, offset *int64, limit *int64) ([]*models.ServiceOrder, *int64, error)
 	Update(context context.Context, id string, serviceOrder interface{}) (bool, error)
@@ -50,25 +48,15 @@ func (repo *MongoServiceOrderRepository) GetByID(context context.Context, id str
 
 	return &retrieveService, nil
 }
-func (repo *MongoServiceOrderRepository) Create(context context.Context, serviceOrderCreate *models.ServiceOrderCreate) (*models.ServiceOrder, error) {
+func (repo *MongoServiceOrderRepository) Create(context context.Context, serviceOrderCreate *models.ServiceOrder) (*models.ServiceOrder, error) {
 
-	serviceOrder := models.ServiceOrder{}
-	err := copier.Copy(&serviceOrder, serviceOrderCreate)
-
-	if err != nil {
-		return nil, err
-	}
-
-	uid := uuid.New().String()
-	serviceOrder.ID = uid
-
-	_, err = repo.MongoCollection.InsertOne(context, serviceOrder)
+	_, err := repo.MongoCollection.InsertOne(context, serviceOrderCreate)
 
 	if err != nil {
 		return nil, err
 	}
 
-	return &serviceOrder, nil
+	return serviceOrderCreate, nil
 }
 
 func (repo *MongoServiceOrderRepository) Delete(context context.Context, id string) (bool, error) {

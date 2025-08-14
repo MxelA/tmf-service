@@ -4,7 +4,7 @@ import (
 	"github.com/MxelA/tmf-service/internal/core"
 	"github.com/MxelA/tmf-service/internal/middleware"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/handlers"
-	local_middleware "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/middlewares"
+	local_middleware "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/middleware"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/repositories"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations"
