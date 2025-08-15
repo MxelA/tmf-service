@@ -7,9 +7,6 @@ import (
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/swagger/tmf641v4_2/server/models"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/swagger/tmf641v4_2/server/restapi/operations/service_order"
 	"github.com/MxelA/tmf-service/internal/utils"
-	"github.com/ThreeDotsLabs/watermill"
-	"github.com/ThreeDotsLabs/watermill/message"
-	watermillmiddleware "github.com/ThreeDotsLabs/watermill/message/router/middleware"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
@@ -19,7 +16,7 @@ import (
 type PatchServiceOrderFunc func(service_order.PatchServiceOrderParams) middleware.Responder
 
 func SendPatchServiceOrderEventMiddleware(
-	ps *core.PubSub,
+	serviceOrderPubSub *pub_sub.ServiceOrderPubSub,
 	l *core.Logger,
 	next PatchServiceOrderFunc,
 ) PatchServiceOrderFunc {
@@ -36,7 +33,7 @@ func SendPatchServiceOrderEventMiddleware(
 		case utils.JSONPatch:
 			processJsonPatch(req, okResp, l)
 		case utils.MergePatch:
-			processMergePatch(ps, req, okResp, l)
+			processMergePatch(serviceOrderPubSub, req, okResp, l)
 		}
 
 		l.GetCore().Info("SendPatchServiceOrderEventMiddleware")
@@ -59,7 +56,7 @@ func processJsonPatch(req service_order.PatchServiceOrderParams, okResp *service
 
 }
 
-func processMergePatch(ps *core.PubSub, req service_order.PatchServiceOrderParams, okResp *service_order.PatchServiceOrderOK, l *core.Logger) {
+func processMergePatch(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, req service_order.PatchServiceOrderParams, okResp *service_order.PatchServiceOrderOK, l *core.Logger) {
 	raw, err := json.Marshal(req.ServiceOrder)
 	if err != nil {
 		return
@@ -71,13 +68,13 @@ func processMergePatch(ps *core.PubSub, req service_order.PatchServiceOrderParam
 	}
 
 	if serviceOrderUpdate.State != okResp.Payload.State {
-		sendServiceOrderStateChangeEvent(ps, okResp)
+		sendServiceOrderStateChangeEvent(serviceOrderPubSub, okResp)
 	} else {
 		sendServiceOrderAttributeValueChangeEvent(okResp)
 	}
 }
 
-func sendServiceOrderStateChangeEvent(ps *core.PubSub, okResp *service_order.PatchServiceOrderOK) {
+func sendServiceOrderStateChangeEvent(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, okResp *service_order.PatchServiceOrderOK) {
 	id := uuid.New().String()
 	eventType := "ServiceOrderStateChangeEvent"
 	eventTime := strfmt.DateTime(time.Now().UTC())
@@ -90,13 +87,7 @@ func sendServiceOrderStateChangeEvent(ps *core.PubSub, okResp *service_order.Pat
 		EventTime: &eventTime,
 	}
 
-	msg, _ := json.Marshal(&serviceOrderStateChangeEvent)
-	eventMsg := message.NewMessage(watermill.NewUUID(), msg)
-	watermillmiddleware.SetCorrelationID(*serviceOrderStateChangeEvent.CorrelationID, eventMsg)
-
-	if err := ps.GetCore().Publish(pub_sub.ServiceOrderStateChangeEventTopic, eventMsg); err != nil {
-		panic(err)
-	}
+	serviceOrderPubSub.ServiceOrderStateChangePublisher(&serviceOrderStateChangeEvent)
 }
 
 func sendServiceOrderAttributeValueChangeEvent(okResp *service_order.PatchServiceOrderOK) {

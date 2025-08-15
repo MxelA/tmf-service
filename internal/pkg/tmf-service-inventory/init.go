@@ -5,6 +5,7 @@ import (
 	"github.com/MxelA/tmf-service/internal/middleware"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/handlers"
 	local_middleware "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/middleware"
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/pub_sub"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/repositories"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/restapi/operations"
@@ -16,7 +17,7 @@ import (
 
 const DbCollectionName = "service"
 
-func New(api *middleware.APIWrapper, db *core.DatabaseMongo, l *core.Logger) {
+func New(api *middleware.APIWrapper, db *core.DatabaseMongo, pubSub *core.PubSub, l *core.Logger) {
 
 	// Initialize Mongo Repository
 	mongoDb := db.GetCore()
@@ -25,6 +26,11 @@ func New(api *middleware.APIWrapper, db *core.DatabaseMongo, l *core.Logger) {
 		MongoClient:     mongoDb.Client,
 		Logger:          l,
 	}
+
+	// Register Subscribers
+	serviceInventoryPubSub := pub_sub.NewServiceInventoryPubSub(pubSub, l)
+	serviceInventoryPubSub.RegisterSubscribers()
+
 	// Initialize Handler
 	serviceInventoryHandler := handler.NewServiceInventoryHandler(repo, l)
 	serviceInventory := registerHandlers(serviceInventoryHandler, repo)

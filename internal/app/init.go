@@ -51,7 +51,7 @@ func (app *app) initPackages() {
 		logger     = app.Logger
 	)
 
-	tmf_service_inventory.New(apiWrapper, db, logger)
+	tmf_service_inventory.New(apiWrapper, db, pubSub, logger)
 	tmf_service_order.New(apiWrapper, db, pubSub, logger)
 
 	defer logger.GetCore().Info("Initialize packages done!")
