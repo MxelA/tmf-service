@@ -5,7 +5,8 @@ import (
 )
 
 const (
-	ServiceOrderStateChangeEventTopic string = "service_order_state_change"
+	ServiceOrderStateChangeEventTopic          string = "service_order_state_change"
+	ServiceOrderAttributeValueChangeEventTopic string = "service_order_attribute_value_change"
 )
 
 type ServiceOrderPubSub struct {

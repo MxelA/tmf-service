@@ -67,10 +67,10 @@ func processMergePatch(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, req servi
 		return
 	}
 
-	if serviceOrderUpdate.State != okResp.Payload.State {
+	if serviceOrderUpdate.State != nil {
 		sendServiceOrderStateChangeEvent(serviceOrderPubSub, okResp)
 	} else {
-		sendServiceOrderAttributeValueChangeEvent(okResp)
+		sendServiceOrderAttributeValueChangeEvent(serviceOrderPubSub, okResp)
 	}
 }
 
@@ -78,6 +78,7 @@ func sendServiceOrderStateChangeEvent(serviceOrderPubSub *pub_sub.ServiceOrderPu
 	id := uuid.New().String()
 	eventType := "ServiceOrderStateChangeEvent"
 	eventTime := strfmt.DateTime(time.Now().UTC())
+
 	serviceOrderStateChangeEvent := models.ServiceOrderStateChangeEvent{
 		CorrelationID: &id,
 		EventType:     &eventType,
@@ -90,14 +91,19 @@ func sendServiceOrderStateChangeEvent(serviceOrderPubSub *pub_sub.ServiceOrderPu
 	serviceOrderPubSub.ServiceOrderStateChangePublisher(&serviceOrderStateChangeEvent)
 }
 
-func sendServiceOrderAttributeValueChangeEvent(okResp *service_order.PatchServiceOrderOK) {
+func sendServiceOrderAttributeValueChangeEvent(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, okResp *service_order.PatchServiceOrderOK) {
 	id := uuid.New().String()
-	serviceOrderStateEvent := models.ServiceOrderAttributeValueChangeEventPayload{
-		ServiceOrder: okResp.Payload,
+	eventType := "ServiceOrderAttributeValueChangeEvent"
+	eventTime := strfmt.DateTime(time.Now().UTC())
+
+	serviceOrderAttributeValueChange := models.ServiceOrderAttributeValueChangeEvent{
+		CorrelationID: &id,
+		EventType:     &eventType,
+		EventTime:     &eventTime,
+		Event: &models.ServiceOrderAttributeValueChangeEventPayload{
+			ServiceOrder: okResp.Payload,
+		},
 	}
 
-	_ = models.ServiceOrderAttributeValueChangeEvent{
-		CorrelationID: &id,
-		Event:         &serviceOrderStateEvent,
-	}
+	serviceOrderPubSub.ServiceOrderAttributeValueChangePublisher(&serviceOrderAttributeValueChange)
 }

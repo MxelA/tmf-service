@@ -17,3 +17,13 @@ func (serviceOrderPubSub *ServiceOrderPubSub) ServiceOrderStateChangePublisher(s
 		panic(err)
 	}
 }
+
+func (serviceOrderPubSub *ServiceOrderPubSub) ServiceOrderAttributeValueChangePublisher(serviceOrderStateChangeEvent *models.ServiceOrderAttributeValueChangeEvent) {
+	msg, _ := json.Marshal(&serviceOrderStateChangeEvent)
+	eventMsg := message.NewMessage(watermill.NewUUID(), msg)
+	watermillmiddleware.SetCorrelationID(*serviceOrderStateChangeEvent.CorrelationID, eventMsg)
+
+	if err := serviceOrderPubSub.pubSub.GetCore().Publish(ServiceOrderAttributeValueChangeEventTopic, eventMsg); err != nil {
+		panic(err)
+	}
+}

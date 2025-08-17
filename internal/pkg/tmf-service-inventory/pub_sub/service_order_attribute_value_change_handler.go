@@ -6,18 +6,17 @@ import (
 	"fmt"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 	"github.com/ThreeDotsLabs/watermill/message"
-	"github.com/jinzhu/copier"
 )
 
-func (serviceOrderInventoryPubSub *ServiceInventoryPubSub) ServiceOrderStateChangeSubscriber() {
+func (serviceOrderInventoryPubSub *ServiceInventoryPubSub) ServiceOrderAttributeValueChangeSubscriber() {
 	router := serviceOrderInventoryPubSub.PubSub.GetRouter()
-	router.AddNoPublisherHandler(fmt.Sprintf("servcie-inventory_%s", ServiceOrderStateChangeEventTopic), ServiceOrderStateChangeEventTopic, serviceOrderInventoryPubSub.PubSub.GetCore(), serviceOrderInventoryPubSub.serviceOrderStateChangeSubscriberHandler)
+	router.AddNoPublisherHandler(fmt.Sprintf("service-inventory_%s", ServiceOrderAttributeValueChangeEventTopic), ServiceOrderAttributeValueChangeEventTopic, serviceOrderInventoryPubSub.PubSub.GetCore(), serviceOrderInventoryPubSub.serviceOrderAttributeValueChangeSubscriberHandler)
 }
 
-func (serviceOrderInventoryPubSub *ServiceInventoryPubSub) serviceOrderStateChangeSubscriberHandler(msg *message.Message) error {
+func (serviceOrderInventoryPubSub *ServiceInventoryPubSub) serviceOrderAttributeValueChangeSubscriberHandler(msg *message.Message) error {
 	serviceOrderInventoryPubSub.Logger.GetCore().Info("Received message", "payload:", msg.Payload, "metadata", msg.Metadata)
 
-	services, err := parseServiceOrderStateChangeMsg(msg)
+	services, err := parseServiceOrderAttributeValueChangeMsg(msg)
 	if err != nil {
 		return err
 	}
@@ -38,7 +37,7 @@ func (serviceOrderInventoryPubSub *ServiceInventoryPubSub) serviceOrderStateChan
 	return nil
 }
 
-func parseServiceOrderStateChangeMsg(msg *message.Message) ([]*models.Service, error) {
+func parseServiceOrderAttributeValueChangeMsg(msg *message.Message) ([]*models.Service, error) {
 	var services []*models.Service
 	var evt struct {
 		Event struct {
@@ -76,16 +75,4 @@ func parseServiceOrderStateChangeMsg(msg *message.Message) ([]*models.Service, e
 	}
 
 	return services, nil
-}
-
-func MapToServiceCreate(svc models.Service) models.ServiceCreate {
-	var create models.ServiceCreate
-	_ = copier.Copy(&create, &svc)
-	return create
-}
-
-func MapToServiceUpdate(svc models.Service) models.ServiceUpdate {
-	var update models.ServiceUpdate
-	_ = copier.Copy(&update, &svc)
-	return update
 }
