@@ -28,7 +28,7 @@ func New(api *middleware.APIWrapper, db *core.DatabaseMongo, pubSub *core.PubSub
 	}
 
 	// Register Subscribers
-	serviceInventoryPubSub := pub_sub.NewServiceInventoryPubSub(pubSub, l)
+	serviceInventoryPubSub := pub_sub.NewServiceInventoryPubSub(pubSub, repo, l)
 	serviceInventoryPubSub.RegisterSubscribers()
 
 	// Initialize Handler

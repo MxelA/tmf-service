@@ -50,15 +50,15 @@ func processJsonPatch(h *ServiceInventoryHandler, req service.PatchServiceParams
 
 	// Unmarshal to JSONPatchOperation struct
 	if err := json.Unmarshal(raw, &jpo); err != nil {
-		errCode := "400"
-		reason := err.Error()
+		errCode := "422"
+		reason := "Payload is not in json patch format"
 		var errModel = models.Error{
 			Reason:  &reason,
 			Code:    &errCode,
-			Message: "Internal server error",
+			Message: "Validation error",
 		}
 		h.logger.GetCore().Error(err.Error())
-		return service.NewPatchServiceInternalServerError().WithPayload(&errModel)
+		return service.NewPatchServiceBadRequest().WithPayload(&errModel)
 	}
 
 	// Validate JSONPatchOperation struct
@@ -75,7 +75,7 @@ func processJsonPatch(h *ServiceInventoryHandler, req service.PatchServiceParams
 			return service.NewPatchServiceBadRequest().WithPayload(&errModel)
 		}
 	}
-	
+
 	// make patch operation
 	patchOperation, err := jsonpatch.DecodePatch(raw)
 	if err != nil {
