@@ -11,14 +11,13 @@ import (
 	"github.com/jinzhu/copier"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"net/http"
 	"strconv"
 	"time"
 )
 
 type ServiceInventoryRepository interface {
-	GetByID(context context.Context, id string, selectFields *string) (*models.Service, error)
+	GetByID(context context.Context, id string, selectFields *string, GraphLookupDepth *int64) (*models.Service, error)
 	Create(context context.Context, serviceCreate *models.ServiceCreate) (*models.Service, error)
 	Delete(context context.Context, id string) (bool, error)
 	GetAllPaginate(context context.Context, httpRequest *http.Request, selectFields *string, offset *int64, limit *int64) ([]*models.Service, *int64, error)
@@ -31,26 +30,53 @@ type MongoServiceInventoryRepository struct {
 	Logger          *core.Logger
 }
 
-func (repo *MongoServiceInventoryRepository) GetByID(context context.Context, id string, selectFields *string) (*models.Service, error) {
+func (repo *MongoServiceInventoryRepository) GetByID(ctx context.Context, id string, selectFields *string, graphLookupDepth *int64) (*models.Service, error) {
 
-	// Apply projection if set
-	findOptions := options.FindOne()
-	fieldProjection := utils.GerFieldsProjection(selectFields)
-	if len(fieldProjection) > 0 { // Only set projection if fields are provided
-		findOptions.SetProjection(fieldProjection)
+	mongoPipeline := mongo.Pipeline{
+		{{"$match", bson.D{{"id", id}}}},
+		{{"$limit", 1}},
 	}
 
-	filter := bson.D{{Key: "id", Value: id}}
-	record := repo.MongoCollection.FindOne(context, filter, findOptions)
+	if graphLookupDepth != nil && *graphLookupDepth >= 0 {
+		mongoPipeline = append(mongoPipeline,
+			bson.D{{Key: "$graphLookup", Value: bson.M{
+				"from":             repo.MongoCollection.Name(),
+				"startWith":        "$serviceRelationship.service.id",
+				"connectFromField": "serviceRelationship.service.id",
+				"connectToField":   "id",
+				"as":               "graphLookup",
+				"depthField":       "graphLookupDepth",
+				"maxDepth":         *graphLookupDepth,
+			}}},
+		)
+	}
 
-	retrieveService := models.Service{}
-	err := record.Decode(&retrieveService)
-
+	fieldProjection := utils.GerFieldsProjection(selectFields)
+	if len(fieldProjection) > 0 { // Only set projection if fields are provided
+		mongoPipeline = append(mongoPipeline,
+			bson.D{{Key: "$project", Value: fieldProjection}},
+		)
+	}
+	record, err := repo.MongoCollection.Aggregate(ctx, mongoPipeline)
+	defer func() {
+		_ = record.Close(context.Background())
+	}()
 	if err != nil {
 		return nil, err
 	}
 
-	return &retrieveService, nil
+	retrieveService := models.Service{}
+	if record.Next(ctx) {
+		err = record.Decode(&retrieveService)
+		if err != nil {
+			return nil, err
+		}
+
+		return &retrieveService, nil
+
+	}
+
+	return nil, mongo.ErrNoDocuments
 }
 func (repo *MongoServiceInventoryRepository) Create(context context.Context, serviceCreate *models.ServiceCreate) (*models.Service, error) {
 
@@ -89,7 +115,7 @@ func (repo *MongoServiceInventoryRepository) Delete(context context.Context, id 
 		return false, errors.New("Delete record with ID:" + id + " not success")
 	}
 
-	// filter document where serviceRelationship.service.id is deleted document and remove that from list
+	// filter document where serviceRelationship.service.id is deleted and remove that from list
 	_, err = repo.MongoCollection.UpdateMany(
 		context,
 		bson.M{"serviceRelationship.service.id": id},
@@ -110,9 +136,19 @@ func (repo *MongoServiceInventoryRepository) Delete(context context.Context, id 
 func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Context, httpRequest *http.Request, selectFields *string, offset *int64, limit *int64) ([]*models.Service, *int64, error) {
 
 	offset, limit = utils.ValidatePaginationParams(offset, limit)
-	fieldProjection := utils.GerFieldsProjection(selectFields)
+	mongoPipeline := mongo.Pipeline{
+		bson.D{{Key: "$skip", Value: *offset}},
+		bson.D{{Key: "$limit", Value: *limit}},
+	}
 
-	// Get filter or pipeline
+	// Add projection if defined
+	fieldProjection := utils.GerFieldsProjection(selectFields)
+	if len(fieldProjection) > 0 {
+		mongoPipeline = append(mongoPipeline,
+			bson.D{{Key: "$project", Value: fieldProjection}},
+		)
+	}
+
 	queryParams := httpRequest.URL.Query()
 	graphLookupDepth := -1
 	if deepVals, ok := queryParams["graphLookupDepth"]; ok && len(deepVals) > 0 {
@@ -122,14 +158,10 @@ func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Cont
 		delete(queryParams, "graphLookupDepth")
 	}
 
-	//TODO:  This logic move to service layer
-	if graphLookupDepth >= 0 { // pipeline mode
-		filterOrPipeline, _ := utils.BuildTmfMongoFilter(queryParams, true)
-		pipeline := filterOrPipeline.(mongo.Pipeline)
-		name := repo.MongoCollection.Name()
-		pipeline = append(pipeline,
+	if graphLookupDepth >= 0 {
+		mongoPipeline = append(mongoPipeline,
 			bson.D{{Key: "$graphLookup", Value: bson.M{
-				"from":             name,
+				"from":             repo.MongoCollection.Name(),
 				"startWith":        "$serviceRelationship.service.id",
 				"connectFromField": "serviceRelationship.service.id",
 				"connectToField":   "id",
@@ -138,63 +170,27 @@ func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Cont
 				"maxDepth":         graphLookupDepth,
 			}}},
 		)
-		// Add pagination stages
-		if offset != nil && limit != nil {
-			pipeline = append(pipeline,
-				bson.D{{Key: "$skip", Value: *offset}},
-				bson.D{{Key: "$limit", Value: *limit}},
-			)
-		}
-
-		// Add projection if defined
-		if len(fieldProjection) > 0 {
-			pipeline = append(pipeline,
-				bson.D{{Key: "$project", Value: fieldProjection}},
-			)
-		}
-
-		cursor, err := repo.MongoCollection.Aggregate(context, pipeline)
-		if err != nil {
-			return nil, nil, err
-		}
-
-		var results []*models.Service
-		//var rawResults []bson.M
-		if err := cursor.All(context, &results); err != nil {
-			return nil, nil, err
-		}
-
-		// For aggregate, total count isn't trivial – can omit or add $count stage separately if needed
-		total := int64(len(results))
-		return results, &total, nil
-	} else {
-		filterOrPipeline, _ := utils.BuildTmfMongoFilter(queryParams, false)
-		findOptions := &options.FindOptions{
-			Skip:  offset,
-			Limit: limit,
-		}
-
-		if len(fieldProjection) > 0 {
-			findOptions.SetProjection(fieldProjection)
-		}
-
-		cursor, err := repo.MongoCollection.Find(context, filterOrPipeline.(bson.M), findOptions)
-		if err != nil {
-			return nil, nil, err
-		}
-
-		var results []*models.Service
-		if err := cursor.All(context, &results); err != nil {
-			return nil, nil, err
-		}
-
-		totalCount, err := repo.MongoCollection.CountDocuments(context, filterOrPipeline.(bson.M))
-		if err != nil {
-			return nil, nil, err
-		}
-
-		return results, &totalCount, nil
 	}
+
+	// Apply Filter
+	mongoPipeline = append(mongoPipeline,
+		bson.D{{Key: "$match", Value: utils.BuildTmfMongoFilter(queryParams)}},
+	)
+
+	cursor, err := repo.MongoCollection.Aggregate(context, mongoPipeline)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var results []*models.Service
+	//var rawResults []bson.M
+	if err := cursor.All(context, &results); err != nil {
+		return nil, nil, err
+	}
+
+	// For aggregate, total count isn't trivial – can omit or add $count stage separately if needed
+	total := int64(len(results))
+	return results, &total, nil
 }
 
 func (repo *MongoServiceInventoryRepository) Update(context context.Context, id string, service interface{}) (bool, error) {

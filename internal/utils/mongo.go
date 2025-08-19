@@ -53,20 +53,11 @@ func ConvertBsonMToMinimalJSONResponse(record mongo.SingleResult) (map[string]in
 	return response, nil
 }
 
-func BuildTmfMongoFilter(queryParams map[string][]string, usePipeline bool) (interface{}, bool) {
+func BuildTmfMongoFilter(queryParams map[string][]string) bson.M {
 	// Exclude pagination & projection params
 	delete(queryParams, "fields")
 	delete(queryParams, "limit")
 	delete(queryParams, "offset")
-
-	// Check for deep parameter
-	//depth := -1
-	//if deepVals, ok := queryParams["deep"]; ok && len(deepVals) > 0 {
-	//	if d, err := strconv.Atoi(deepVals[0]); err == nil {
-	//		depth = d
-	//	}
-	//	delete(queryParams, "deep")
-	//}
 
 	filter := bson.M{}
 	orFilters := []bson.M{}
@@ -131,30 +122,7 @@ func BuildTmfMongoFilter(queryParams map[string][]string, usePipeline bool) (int
 		}
 	}
 
-	if usePipeline == true {
-		pipeline := mongo.Pipeline{
-			{{Key: "$match", Value: filter}},
-		}
-		return pipeline, true
-	}
-	// If deep mode is enabled, return aggregate pipeline
-	//if depth >= 0 {
-	//	pipeline := mongo.Pipeline{
-	//		{{Key: "$match", Value: filter}},
-	//		{{Key: "$graphLookup", Value: bson.M{
-	//			"from":             "serviceInventory",
-	//			"startWith":        "$serviceRelationship.service.id",
-	//			"connectFromField": "serviceRelationship.service.id",
-	//			"connectToField":   "id",
-	//			"as":               "relatedServices",
-	//			"depthField":       "level",
-	//			"maxDepth":         depth,
-	//		}}},
-	//	}
-	//	return pipeline, true
-	//}
-
-	return filter, false
+	return filter
 }
 
 func parseValue(value string) interface{} {

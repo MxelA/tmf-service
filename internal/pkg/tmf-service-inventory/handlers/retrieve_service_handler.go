@@ -7,7 +7,7 @@ import (
 )
 
 func (h *ServiceInventoryHandler) RetrieveServiceHandler(params service.RetrieveServiceParams) middleware.Responder {
-	retrieveService, err := h.repo.GetByID(params.HTTPRequest.Context(), params.ID, params.Fields)
+	retrieveService, err := h.repo.GetByID(params.HTTPRequest.Context(), params.ID, params.Fields, params.GraphLookupDepth)
 	if err != nil {
 		errCode := "500"
 		reason := err.Error()

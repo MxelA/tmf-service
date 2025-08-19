@@ -9,10 +9,10 @@ import (
 
 func ValidateBusinessRules(createServiceParams service.CreateServiceParams, repo repository.ServiceInventoryRepository) []*models.Error {
 	var errs []*models.Error
-	
+
 	for _, serviceRelation := range createServiceParams.Service.ServiceRelationship {
 		if serviceRelation.Service != nil && serviceRelation.Service.ID != nil && *serviceRelation.Service.ID != "" {
-			serviceInventory, err := repo.GetByID(createServiceParams.HTTPRequest.Context(), *serviceRelation.Service.ID, nil)
+			serviceInventory, err := repo.GetByID(createServiceParams.HTTPRequest.Context(), *serviceRelation.Service.ID, nil, nil)
 
 			if err != nil {
 				code := "500"

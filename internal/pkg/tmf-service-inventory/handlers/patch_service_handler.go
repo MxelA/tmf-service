@@ -91,7 +91,7 @@ func processJsonPatch(h *ServiceInventoryHandler, req service.PatchServiceParams
 	}
 
 	// get service from DB
-	serviceEntity, err := h.repo.GetByID(req.HTTPRequest.Context(), req.ID, nil)
+	serviceEntity, err := h.repo.GetByID(req.HTTPRequest.Context(), req.ID, nil, nil)
 	if err != nil {
 		errCode := "404"
 		reason := err.Error()
@@ -216,7 +216,7 @@ func processMergePatch(h *ServiceInventoryHandler, req service.PatchServiceParam
 		return service.NewPatchServiceInternalServerError().WithPayload(&errModel)
 	}
 
-	retrieveServiceOrder, err := h.repo.GetByID(req.HTTPRequest.Context(), req.ID, nil)
+	retrieveServiceOrder, err := h.repo.GetByID(req.HTTPRequest.Context(), req.ID, nil, nil)
 
 	return service.NewPatchServiceOK().WithPayload(retrieveServiceOrder)
 }

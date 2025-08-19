@@ -93,9 +93,19 @@ func (repo *MongoServiceOrderRepository) Delete(context context.Context, id stri
 func (repo *MongoServiceOrderRepository) GetAllPaginate(context context.Context, httpRequest *http.Request, selectFields *string, offset *int64, limit *int64) ([]*models.ServiceOrder, *int64, error) {
 
 	offset, limit = utils.ValidatePaginationParams(offset, limit)
-	fieldProjection := utils.GerFieldsProjection(selectFields)
+	mongoPipeline := mongo.Pipeline{
+		bson.D{{Key: "$skip", Value: *offset}},
+		bson.D{{Key: "$limit", Value: *limit}},
+	}
 
-	// Get filter or pipeline
+	// Add projection if defined
+	fieldProjection := utils.GerFieldsProjection(selectFields)
+	if len(fieldProjection) > 0 {
+		mongoPipeline = append(mongoPipeline,
+			bson.D{{Key: "$project", Value: fieldProjection}},
+		)
+	}
+
 	queryParams := httpRequest.URL.Query()
 	graphLookupDepth := -1
 	if deepVals, ok := queryParams["graphLookupDepth"]; ok && len(deepVals) > 0 {
@@ -105,14 +115,10 @@ func (repo *MongoServiceOrderRepository) GetAllPaginate(context context.Context,
 		delete(queryParams, "graphLookupDepth")
 	}
 
-	//TODO:  This logic move to service layer
-	if graphLookupDepth >= 0 { // pipeline mode
-		filterOrPipeline, _ := utils.BuildTmfMongoFilter(queryParams, true)
-		pipeline := filterOrPipeline.(mongo.Pipeline)
-		name := repo.MongoCollection.Name()
-		pipeline = append(pipeline,
+	if graphLookupDepth >= 0 {
+		mongoPipeline = append(mongoPipeline,
 			bson.D{{Key: "$graphLookup", Value: bson.M{
-				"from":             name,
+				"from":             repo.MongoCollection.Name(),
 				"startWith":        "$serviceRelationship.service.id",
 				"connectFromField": "serviceRelationship.service.id",
 				"connectToField":   "id",
@@ -121,63 +127,27 @@ func (repo *MongoServiceOrderRepository) GetAllPaginate(context context.Context,
 				"maxDepth":         graphLookupDepth,
 			}}},
 		)
-		// Add pagination stages
-		if offset != nil && limit != nil {
-			pipeline = append(pipeline,
-				bson.D{{Key: "$skip", Value: *offset}},
-				bson.D{{Key: "$limit", Value: *limit}},
-			)
-		}
-
-		// Add projection if defined
-		if len(fieldProjection) > 0 {
-			pipeline = append(pipeline,
-				bson.D{{Key: "$project", Value: fieldProjection}},
-			)
-		}
-
-		cursor, err := repo.MongoCollection.Aggregate(context, pipeline)
-		if err != nil {
-			return nil, nil, err
-		}
-
-		var results []*models.ServiceOrder
-		//var rawResults []bson.M
-		if err := cursor.All(context, &results); err != nil {
-			return nil, nil, err
-		}
-
-		// For aggregate, total count isn't trivial – can omit or add $count stage separately if needed
-		total := int64(len(results))
-		return results, &total, nil
-	} else {
-		filterOrPipeline, _ := utils.BuildTmfMongoFilter(queryParams, false)
-		findOptions := &options.FindOptions{
-			Skip:  offset,
-			Limit: limit,
-		}
-
-		if len(fieldProjection) > 0 {
-			findOptions.SetProjection(fieldProjection)
-		}
-
-		cursor, err := repo.MongoCollection.Find(context, filterOrPipeline.(bson.M), findOptions)
-		if err != nil {
-			return nil, nil, err
-		}
-
-		var results []*models.ServiceOrder
-		if err := cursor.All(context, &results); err != nil {
-			return nil, nil, err
-		}
-
-		totalCount, err := repo.MongoCollection.CountDocuments(context, filterOrPipeline.(bson.M))
-		if err != nil {
-			return nil, nil, err
-		}
-
-		return results, &totalCount, nil
 	}
+
+	// Apply Filter
+	mongoPipeline = append(mongoPipeline,
+		bson.D{{Key: "$match", Value: utils.BuildTmfMongoFilter(queryParams)}},
+	)
+
+	cursor, err := repo.MongoCollection.Aggregate(context, mongoPipeline)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var results []*models.ServiceOrder
+	//var rawResults []bson.M
+	if err := cursor.All(context, &results); err != nil {
+		return nil, nil, err
+	}
+
+	// For aggregate, total count isn't trivial – can omit or add $count stage separately if needed
+	total := int64(len(results))
+	return results, &total, nil
 }
 
 func (repo *MongoServiceOrderRepository) Update(context context.Context, id string, serviceOrder interface{}) (bool, error) {

@@ -11,10 +11,15 @@ import (
 
 func (serviceOrderInventoryPubSub *ServiceInventoryPubSub) ServiceOrderStateChangeSubscriber() {
 	router := serviceOrderInventoryPubSub.PubSub.GetRouter()
-	router.AddNoPublisherHandler(fmt.Sprintf("servcie-inventory_%s", ServiceOrderStateChangeEventTopic), ServiceOrderStateChangeEventTopic, serviceOrderInventoryPubSub.PubSub.GetCore(), serviceOrderInventoryPubSub.serviceOrderStateChangeSubscriberHandler)
+	router.AddNoPublisherHandler(fmt.Sprintf("servcie-inventory_%s", ServiceOrderStateChangeEventTopic), ServiceOrderStateChangeEventTopic, serviceOrderInventoryPubSub.PubSub.GetCore(), serviceOrderInventoryPubSub.serviceOrderChangeSubscriberHandler)
 }
 
-func (serviceOrderInventoryPubSub *ServiceInventoryPubSub) serviceOrderStateChangeSubscriberHandler(msg *message.Message) error {
+func (serviceOrderInventoryPubSub *ServiceInventoryPubSub) ServiceOrderAttributeValueChangeSubscriber() {
+	router := serviceOrderInventoryPubSub.PubSub.GetRouter()
+	router.AddNoPublisherHandler(fmt.Sprintf("service-inventory_%s", ServiceOrderAttributeValueChangeEventTopic), ServiceOrderAttributeValueChangeEventTopic, serviceOrderInventoryPubSub.PubSub.GetCore(), serviceOrderInventoryPubSub.serviceOrderChangeSubscriberHandler)
+}
+
+func (serviceOrderInventoryPubSub *ServiceInventoryPubSub) serviceOrderChangeSubscriberHandler(msg *message.Message) error {
 	serviceOrderInventoryPubSub.Logger.GetCore().Info("Received message", "payload:", msg.Payload, "metadata", msg.Metadata)
 
 	services, err := parseServiceOrderStateChangeMsg(msg)
