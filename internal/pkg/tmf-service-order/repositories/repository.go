@@ -10,7 +10,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"net/http"
-	"strconv"
 )
 
 type ServiceOrderRepository interface {
@@ -106,32 +105,9 @@ func (repo *MongoServiceOrderRepository) GetAllPaginate(context context.Context,
 		)
 	}
 
-	queryParams := httpRequest.URL.Query()
-	graphLookupDepth := -1
-	if deepVals, ok := queryParams["graphLookupDepth"]; ok && len(deepVals) > 0 {
-		if d, err := strconv.Atoi(deepVals[0]); err == nil {
-			graphLookupDepth = d
-		}
-		delete(queryParams, "graphLookupDepth")
-	}
-
-	if graphLookupDepth >= 0 {
-		mongoPipeline = append(mongoPipeline,
-			bson.D{{Key: "$graphLookup", Value: bson.M{
-				"from":             repo.MongoCollection.Name(),
-				"startWith":        "$serviceRelationship.service.id",
-				"connectFromField": "serviceRelationship.service.id",
-				"connectToField":   "id",
-				"as":               "graphLookup",
-				"depthField":       "graphLookupDepth",
-				"maxDepth":         graphLookupDepth,
-			}}},
-		)
-	}
-
 	// Apply Filter
 	mongoPipeline = append(mongoPipeline,
-		bson.D{{Key: "$match", Value: utils.BuildTmfMongoFilter(queryParams)}},
+		bson.D{{Key: "$match", Value: utils.BuildTmfMongoFilter(httpRequest.URL.Query())}},
 	)
 
 	cursor, err := repo.MongoCollection.Aggregate(context, mongoPipeline)
