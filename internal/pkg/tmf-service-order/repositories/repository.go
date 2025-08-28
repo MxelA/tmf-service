@@ -106,8 +106,9 @@ func (repo *MongoServiceOrderRepository) GetAllPaginate(context context.Context,
 	}
 
 	// Apply Filter
+	mongoFilter := utils.BuildTmfMongoFilter(httpRequest.URL.Query())
 	mongoPipeline = append(mongoPipeline,
-		bson.D{{Key: "$match", Value: utils.BuildTmfMongoFilter(httpRequest.URL.Query())}},
+		bson.D{{Key: "$match", Value: mongoFilter}},
 	)
 
 	cursor, err := repo.MongoCollection.Aggregate(context, mongoPipeline)
@@ -121,8 +122,11 @@ func (repo *MongoServiceOrderRepository) GetAllPaginate(context context.Context,
 		return nil, nil, err
 	}
 
-	// For aggregate, total count isn't trivial – can omit or add $count stage separately if needed
-	total := int64(len(results))
+	total, err := repo.MongoCollection.CountDocuments(context, mongoFilter)
+	if err != nil {
+		return nil, nil, err
+	}
+
 	return results, &total, nil
 }
 

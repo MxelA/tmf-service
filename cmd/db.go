@@ -19,13 +19,13 @@ var dbCmd = &cobra.Command{
 
 var dbSeedServiceCmd = &cobra.Command{
 	Use:   "seed:service-inventory",
-	Short: "Run db seed service: --seedName=[withRelationshipTo]|None --count=1",
+	Short: "Run db seed service: --seedName=[withRelationshipTo]|None --count=1 --deep=2 --rootServiceName=''",
 	Run: func(cmd *cobra.Command, args []string) {
 		var err error
 
 		switch seedName {
 		case "withRelationshipTo":
-			err = app.SeedServicesWithRelationshipTo(seedCount)
+			err = app.SeedServicesWithRelationshipTo(seedCount, deep, rootServiceName)
 		default:
 			err = app.SeedServices(seedCount)
 		}

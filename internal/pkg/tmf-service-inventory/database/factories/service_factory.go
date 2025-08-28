@@ -22,7 +22,7 @@ func NewServiceFactory() *ServiceFactory {
 	return &ServiceFactory{
 		service: &models.Service{
 			ID:          &id,
-			Name:        ptr(gofakeit.AppName()),
+			Name:        ptr(gofakeit.ProductName()),
 			Description: ptr(gofakeit.Sentence(10)),
 			StartDate:   ptr(toStrfmtDateTime(gofakeit.Date())),
 			EndDate:     ptr(toStrfmtDateTime(gofakeit.Date())),

@@ -20,8 +20,8 @@ func SeedServices(count int) error {
 	return tmf_service_inventory_seeder.SeedServices(db.GetCore().Db.Collection(tmf_service_inventory.DbCollectionName), count)
 }
 
-func SeedServicesWithRelationshipTo(count int) error {
+func SeedServicesWithRelationshipTo(count int, deep int, rootServiceName string) error {
 	logger := core.NewLogger()
 	db := core.NewDatabaseMongo(logger)
-	return tmf_service_inventory_seeder.SeedServicesWithRelationshipTo(db.GetCore().Db.Collection(tmf_service_inventory.DbCollectionName), count)
+	return tmf_service_inventory_seeder.SeedServicesWithRelationshipTo(db.GetCore().Db.Collection(tmf_service_inventory.DbCollectionName), count, deep, rootServiceName)
 }

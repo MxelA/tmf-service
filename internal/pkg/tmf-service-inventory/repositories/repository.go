@@ -141,14 +141,6 @@ func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Cont
 		bson.D{{Key: "$limit", Value: *limit}},
 	}
 
-	// Add projection if defined
-	fieldProjection := utils.GerFieldsProjection(selectFields)
-	if len(fieldProjection) > 0 {
-		mongoPipeline = append(mongoPipeline,
-			bson.D{{Key: "$project", Value: fieldProjection}},
-		)
-	}
-
 	queryParams := httpRequest.URL.Query()
 	graphLookupDepth := -1
 	if deepVals, ok := queryParams["graphLookupDepth"]; ok && len(deepVals) > 0 {
@@ -173,9 +165,18 @@ func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Cont
 	}
 
 	// Apply Filter
+	mongoFilter := utils.BuildTmfMongoFilter(queryParams)
 	mongoPipeline = append(mongoPipeline,
-		bson.D{{Key: "$match", Value: utils.BuildTmfMongoFilter(queryParams)}},
+		bson.D{{Key: "$match", Value: mongoFilter}},
 	)
+
+	// Add projection if defined
+	fieldProjection := utils.GerFieldsProjection(selectFields)
+	if len(fieldProjection) > 0 {
+		mongoPipeline = append(mongoPipeline,
+			bson.D{{Key: "$project", Value: fieldProjection}},
+		)
+	}
 
 	cursor, err := repo.MongoCollection.Aggregate(context, mongoPipeline)
 	if err != nil {
@@ -188,8 +189,11 @@ func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Cont
 		return nil, nil, err
 	}
 
-	// For aggregate, total count isn't trivial – can omit or add $count stage separately if needed
-	total := int64(len(results))
+	total, err := repo.MongoCollection.CountDocuments(context, mongoFilter)
+	if err != nil {
+		return nil, nil, err
+	}
+
 	return results, &total, nil
 }
 
