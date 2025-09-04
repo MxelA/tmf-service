@@ -28,6 +28,12 @@ func CreateMongoIndex(collection *mongo.Collection, logger *core.Logger) error {
 			},
 			Options: options.Index().SetName("idx_serviceRelationship_service_id"), // Add index name:
 		},
+		{
+			Keys: bson.D{
+				{"name", 1},
+			},
+			Options: options.Index().SetName("idx_name"), // Add index name:
+		},
 	}
 
 	name, err := collection.Indexes().CreateMany(context.TODO(), indexModels)

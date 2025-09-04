@@ -91,11 +91,13 @@ func (repo *MongoServiceOrderRepository) Delete(context context.Context, id stri
 
 func (repo *MongoServiceOrderRepository) GetAllPaginate(context context.Context, httpRequest *http.Request, selectFields *string, offset *int64, limit *int64) ([]*models.ServiceOrder, *int64, error) {
 
-	offset, limit = utils.ValidatePaginationParams(offset, limit)
-	mongoPipeline := mongo.Pipeline{
-		bson.D{{Key: "$skip", Value: *offset}},
-		bson.D{{Key: "$limit", Value: *limit}},
-	}
+	mongoPipeline := mongo.Pipeline{}
+
+	// Apply Filter
+	mongoFilter := utils.BuildTmfMongoFilter(httpRequest.URL.Query())
+	mongoPipeline = append(mongoPipeline,
+		bson.D{{Key: "$match", Value: mongoFilter}},
+	)
 
 	// Add projection if defined
 	fieldProjection := utils.GerFieldsProjection(selectFields)
@@ -105,10 +107,10 @@ func (repo *MongoServiceOrderRepository) GetAllPaginate(context context.Context,
 		)
 	}
 
-	// Apply Filter
-	mongoFilter := utils.BuildTmfMongoFilter(httpRequest.URL.Query())
+	offset, limit = utils.ValidatePaginationParams(offset, limit)
 	mongoPipeline = append(mongoPipeline,
-		bson.D{{Key: "$match", Value: mongoFilter}},
+		bson.D{{Key: "$skip", Value: *offset}},
+		bson.D{{Key: "$limit", Value: *limit}},
 	)
 
 	cursor, err := repo.MongoCollection.Aggregate(context, mongoPipeline)

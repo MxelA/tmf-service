@@ -135,12 +135,6 @@ func (repo *MongoServiceInventoryRepository) Delete(context context.Context, id 
 
 func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Context, httpRequest *http.Request, selectFields *string, offset *int64, limit *int64) ([]*models.Service, *int64, error) {
 
-	offset, limit = utils.ValidatePaginationParams(offset, limit)
-	mongoPipeline := mongo.Pipeline{
-		bson.D{{Key: "$skip", Value: *offset}},
-		bson.D{{Key: "$limit", Value: *limit}},
-	}
-
 	queryParams := httpRequest.URL.Query()
 	graphLookupDepth := -1
 	if deepVals, ok := queryParams["graphLookupDepth"]; ok && len(deepVals) > 0 {
@@ -149,6 +143,13 @@ func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Cont
 		}
 		delete(queryParams, "graphLookupDepth")
 	}
+
+	// Apply Filter
+	mongoPipeline := mongo.Pipeline{}
+	mongoFilter := utils.BuildTmfMongoFilter(queryParams)
+	mongoPipeline = append(mongoPipeline,
+		bson.D{{Key: "$match", Value: mongoFilter}},
+	)
 
 	if graphLookupDepth >= 0 {
 		mongoPipeline = append(mongoPipeline,
@@ -164,12 +165,6 @@ func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Cont
 		)
 	}
 
-	// Apply Filter
-	mongoFilter := utils.BuildTmfMongoFilter(queryParams)
-	mongoPipeline = append(mongoPipeline,
-		bson.D{{Key: "$match", Value: mongoFilter}},
-	)
-
 	// Add projection if defined
 	fieldProjection := utils.GerFieldsProjection(selectFields)
 	if len(fieldProjection) > 0 {
@@ -177,6 +172,13 @@ func (repo *MongoServiceInventoryRepository) GetAllPaginate(context context.Cont
 			bson.D{{Key: "$project", Value: fieldProjection}},
 		)
 	}
+
+	// paginate
+	offset, limit = utils.ValidatePaginationParams(offset, limit)
+	mongoPipeline = append(mongoPipeline,
+		bson.D{{Key: "$skip", Value: *offset}},
+		bson.D{{Key: "$limit", Value: *limit}},
+	)
 
 	cursor, err := repo.MongoCollection.Aggregate(context, mongoPipeline)
 	if err != nil {
