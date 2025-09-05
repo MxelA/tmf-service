@@ -50,7 +50,7 @@ func (app *app) Serve() {
 	api.Addr = app.Addr
 	api.Handler = app.API.GetRouter()
 
-	// 1️⃣ Pokreni HTTP server asinhrono
+	// Start HTTP server
 	httpErrChan := make(chan error, 1)
 	go func() {
 		logger.Info("App running", "address", app.Addr)
@@ -61,7 +61,7 @@ func (app *app) Serve() {
 		}
 	}()
 
-	// 2️⃣ Pokreni Pub/Sub router asinhrono
+	// Start Pub/Sub router
 	pubSubErrChan := make(chan error, 1)
 	go func() {
 		if err := pubSubRouter.Run(context.Background()); err != nil {
@@ -71,7 +71,7 @@ func (app *app) Serve() {
 		}
 	}()
 
-	// 3️⃣ Čekaj signal za gašenje
+	// Wait signal for shutdown
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
 	sig := <-sigChan
@@ -80,7 +80,7 @@ func (app *app) Serve() {
 	logger.Info("Shutting down app, waiting for background processes")
 	defer logger.Info("App shutdown complete")
 
-	// 4️⃣ Shutdown HTTP server sa timeout-om
+	// Shutdown HTTP server with timeout
 	httpCtx, httpCancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer httpCancel()
 
@@ -89,7 +89,7 @@ func (app *app) Serve() {
 	}
 	logger.Info("HTTP server shutdown complete")
 
-	// 5️⃣ Shutdown Pub/Sub sa kraćim timeout-om (5 sekundi)
+	// Shutdown Pub/Sub with timeout (5s)
 	pubSubDone := make(chan struct{})
 	go func() {
 		_ = pubSub.Close()

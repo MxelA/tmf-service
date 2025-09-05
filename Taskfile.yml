@@ -4,27 +4,27 @@ tasks:
   build:
     desc: Build the app
     cmds:
-      - GOFLAGS=-mod=mod go build -o bin/tmf-service src/main.go
+      - GOFLAGS=-mod=mod go build -o bin/tmf-service main.go
 
   build.win32:
     desc: Build the app for Win 32 bits
     cmds:
-      - GOOS=windows GOARCH=386 go build -o bin/tmf-service-win-386 src/main.go
+      - GOOS=windows GOARCH=386 go build -o bin/tmf-service-win-386 main.go
 
   build.win64:
     desc: Build the app for Win 64 bits
     cmds:
-      - GOOS=windows GOARCH=amd64 go build -o bin/tmf-service-win-64 src/main.go
+      - GOOS=windows GOARCH=amd64 go build -o bin/tmf-service-win-64 main.go
 
   build.linux64:
     desc: Build the app for Linux 64 bits
     cmds:
-      - GOOS=linux GOARCH=amd64 go build -o bin/tmf-service-linux-64 src/main.go
+      - GOOS=linux GOARCH=amd64 go build -o bin/tmf-service-linux-64 main.go
 
   build.linux32:
     desc: Build the app for Linux 32 bits
     cmds:
-      - GOOS=linux GOARCH=386 go build -o bin/tmf-service-linux-386 src/main.go
+      - GOOS=linux GOARCH=386 go build -o bin/tmf-service-linux-386 main.go
 
   run.web-run-server:
     desc: Run the app
