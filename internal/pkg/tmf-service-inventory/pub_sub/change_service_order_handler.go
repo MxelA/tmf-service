@@ -9,11 +9,6 @@ import (
 	"github.com/jinzhu/copier"
 )
 
-func (serviceOrderInventoryPubSub *ServiceInventoryPubSub) ServiceOrderStateChangeSubscriber() {
-	router := serviceOrderInventoryPubSub.PubSub.GetRouter()
-	router.AddNoPublisherHandler(fmt.Sprintf("servcie-inventory_%s", ServiceOrderStateChangeEventTopic), ServiceOrderStateChangeEventTopic, serviceOrderInventoryPubSub.PubSub.GetCore(), serviceOrderInventoryPubSub.serviceOrderChangeSubscriberHandler)
-}
-
 func (serviceOrderInventoryPubSub *ServiceInventoryPubSub) ServiceOrderAttributeValueChangeSubscriber() {
 	router := serviceOrderInventoryPubSub.PubSub.GetRouter()
 	router.AddNoPublisherHandler(fmt.Sprintf("service-inventory_%s", ServiceOrderAttributeValueChangeEventTopic), ServiceOrderAttributeValueChangeEventTopic, serviceOrderInventoryPubSub.PubSub.GetCore(), serviceOrderInventoryPubSub.serviceOrderChangeSubscriberHandler)
@@ -37,7 +32,6 @@ func (serviceOrderInventoryPubSub *ServiceInventoryPubSub) serviceOrderChangeSub
 			serviceCreate := MapToServiceCreate(*service)
 			_, _ = serviceOrderInventoryPubSub.Repo.Create(context.Background(), &serviceCreate)
 		}
-
 	}
 
 	return nil

@@ -7,6 +7,7 @@ import (
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/swagger/tmf641v4_2/server/models"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/swagger/tmf641v4_2/server/restapi/operations/service_order"
 	"github.com/MxelA/tmf-service/internal/utils"
+	jsonpatch "github.com/evanphx/json-patch/v5"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
@@ -31,7 +32,7 @@ func SendPatchServiceOrderEventMiddleware(
 		patchMediaType := utils.DetectPatchMediaType(req.HTTPRequest.Header)
 		switch *patchMediaType {
 		case utils.JSONPatch:
-			processJsonPatch(req, okResp, l)
+			processJsonPatch(serviceOrderPubSub, req, okResp, l)
 		case utils.MergePatch:
 			processMergePatch(serviceOrderPubSub, req, okResp, l)
 		}
@@ -41,7 +42,7 @@ func SendPatchServiceOrderEventMiddleware(
 	}
 }
 
-func processJsonPatch(req service_order.PatchServiceOrderParams, okResp *service_order.PatchServiceOrderOK, l *core.Logger) {
+func processJsonPatch(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, req service_order.PatchServiceOrderParams, okResp *service_order.PatchServiceOrderOK, l *core.Logger) {
 
 	//marshal to json bytes
 	raw, err := json.Marshal(req.ServiceOrder)
@@ -54,6 +55,27 @@ func processJsonPatch(req service_order.PatchServiceOrderParams, okResp *service
 		return
 	}
 
+	sendOrderStateChangeEvent := false
+	sendOrderAttributeValueChangeEvent := false
+
+	patchOperations, _ := jsonpatch.DecodePatch(raw)
+	for _, p := range patchOperations {
+		path, _ := p.From()
+
+		if path == "state" {
+			sendOrderStateChangeEvent = true
+		} else {
+			sendOrderAttributeValueChangeEvent = true
+		}
+	}
+
+	if sendOrderStateChangeEvent {
+		sendServiceOrderStateChangeEvent(serviceOrderPubSub, okResp)
+	}
+
+	if sendOrderAttributeValueChangeEvent {
+		sendServiceOrderAttributeValueChangeEvent(serviceOrderPubSub, okResp)
+	}
 }
 
 func processMergePatch(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, req service_order.PatchServiceOrderParams, okResp *service_order.PatchServiceOrderOK, l *core.Logger) {
@@ -67,11 +89,15 @@ func processMergePatch(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, req servi
 		return
 	}
 
-	if serviceOrderUpdate.State != nil {
+	if utils.IsOnlyFieldSet(serviceOrderUpdate, "State") {
 		sendServiceOrderStateChangeEvent(serviceOrderPubSub, okResp)
 	} else {
+		if serviceOrderUpdate.State != nil {
+			sendServiceOrderStateChangeEvent(serviceOrderPubSub, okResp)
+		}
 		sendServiceOrderAttributeValueChangeEvent(serviceOrderPubSub, okResp)
 	}
+
 }
 
 func sendServiceOrderStateChangeEvent(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, okResp *service_order.PatchServiceOrderOK) {

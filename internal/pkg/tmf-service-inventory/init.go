@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-const DbCollectionName = "service"
+const DbCollectionName = "service_testing"
 
 func New(api *middleware.APIWrapper, db *core.DatabaseMongo, pubSub *core.PubSub, l *core.Logger) {
 

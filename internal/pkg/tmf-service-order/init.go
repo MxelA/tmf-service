@@ -58,8 +58,11 @@ func registerOperators(serviceOrderHandler *handler.ServiceOrderHandler, service
 	// Initialize Inventory Api
 	serviceOrder := operations.NewTmfServiceOrderV42API(swaggerSpec)
 
-	// Register Handlers
-	serviceOrder.ServiceOrderCreateServiceOrderHandler = service_order.CreateServiceOrderHandlerFunc(serviceOrderHandler.CreateServiceOrderHandler)
+	// Register create service order Handler with middleware
+	createServiceOrderHandler := serviceOrderHandler.CreateServiceOrderHandler
+	createServiceOrderHandler = local_middleware.SanitizeCreateServiceOrderDataMiddleware(createServiceOrderHandler)
+	serviceOrder.ServiceOrderCreateServiceOrderHandler = service_order.CreateServiceOrderHandlerFunc(createServiceOrderHandler)
+
 	serviceOrder.ServiceOrderDeleteServiceOrderHandler = service_order.DeleteServiceOrderHandlerFunc(serviceOrderHandler.DeleteServiceOrderHandler)
 	serviceOrder.ServiceOrderListServiceOrderHandler = service_order.ListServiceOrderHandlerFunc(serviceOrderHandler.ListServiceOrderHandler)
 

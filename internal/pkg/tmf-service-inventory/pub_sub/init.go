@@ -6,7 +6,6 @@ import (
 )
 
 const (
-	ServiceOrderStateChangeEventTopic          string = "service_order_state_change"
 	ServiceOrderAttributeValueChangeEventTopic string = "service_order_attribute_value_change"
 )
 
@@ -25,6 +24,5 @@ func NewServiceInventoryPubSub(ps *core.PubSub, rep repository.ServiceInventoryR
 }
 
 func (serviceOrderInventoryPubSub *ServiceInventoryPubSub) RegisterSubscribers() {
-	serviceOrderInventoryPubSub.ServiceOrderStateChangeSubscriber()
 	serviceOrderInventoryPubSub.ServiceOrderAttributeValueChangeSubscriber()
 }
