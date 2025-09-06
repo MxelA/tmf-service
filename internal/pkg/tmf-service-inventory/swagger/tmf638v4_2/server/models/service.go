@@ -115,7 +115,7 @@ type Service struct {
 	StartMode *string `json:"startMode,omitempty" bson:"startMode,omitempty"`
 
 	// The life cycle state of the service, such as designed, reserved, active, etc...
-	State ServiceStateType `json:"state,omitempty"`
+	State ServiceStateType `json:"state,omitempty" bson:"state,omitempty"`
 
 	// A list of supporting resources (SupportingResource [*]).Note: only Service of type RFS can be associated with Resources
 	SupportingResource []*ResourceRef `json:"supportingResource,omitempty" bson:"supportingResource,omitempty"`

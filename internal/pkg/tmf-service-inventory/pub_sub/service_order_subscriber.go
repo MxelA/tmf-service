@@ -24,6 +24,14 @@ func (serviceOrderInventoryPubSub *ServiceInventoryPubSub) serviceOrderChangeSub
 
 	for _, service := range services {
 		if service.ID != nil {
+			serviceInventory, _ := serviceOrderInventoryPubSub.Repo.GetByID(context.Background(), *service.ID, nil, nil)
+			for _, serviceOrderItem := range serviceInventory.ServiceOrderItem {
+				if serviceOrderItem != nil && *serviceOrderItem.ServiceOrderID == *service.ServiceOrderItem[0].ServiceOrderID && serviceOrderItem.ItemID == service.ServiceOrderItem[0].ItemID {
+					return nil
+				}
+			}
+			service.ServiceOrderItem = append(serviceInventory.ServiceOrderItem, service.ServiceOrderItem[0])
+
 			_, err := serviceOrderInventoryPubSub.Repo.Update(context.Background(), *service.ID, service)
 			if err != nil {
 				return err
@@ -46,10 +54,10 @@ func parseServiceOrderStateChangeMsg(msg *message.Message) ([]*models.Service, e
 				State            string `json:"state"`
 				Href             string `json:"href"`
 				ServiceOrderItem []struct {
-					ID      string         `json:"id"`
-					Action  string         `json:"action"`
-					State   string         `json:"state"`
-					Service models.Service `json:"service"`
+					ID      string                     `json:"id"`
+					Action  models.OrderItemActionType `json:"action"`
+					State   string                     `json:"state"`
+					Service models.Service             `json:"service"`
 				} `json:"serviceOrderItem"`
 			} `json:"serviceOrder"`
 		} `json:"event"`
@@ -67,8 +75,11 @@ func parseServiceOrderStateChangeMsg(msg *message.Message) ([]*models.Service, e
 					ServiceOrderID:   &evt.Event.ServiceOrder.ID,
 					ItemID:           orderItem.ID,
 					ServiceOrderHref: &evt.Event.ServiceOrder.Href,
-					ItemAction:       models.OrderItemActionType(orderItem.Action),
+					ItemAction:       orderItem.Action,
 				},
+			}
+			if orderItem.Action == models.OrderItemActionTypeAdd && service.State == "" {
+				service.State = models.ServiceStateTypeInactive
 			}
 			services = append(services, &service)
 		}
