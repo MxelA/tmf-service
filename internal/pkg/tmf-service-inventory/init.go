@@ -3,7 +3,7 @@ package tmf_service_inventory
 import (
 	"github.com/MxelA/tmf-service/internal/core"
 	"github.com/MxelA/tmf-service/internal/middleware"
-	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/handlers"
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/handler"
 	local_middleware "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/middleware"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/pub_sub"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/repositories"
