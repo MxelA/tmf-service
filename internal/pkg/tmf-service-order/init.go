@@ -3,7 +3,7 @@ package tmf_service_order
 import (
 	"github.com/MxelA/tmf-service/internal/core"
 	"github.com/MxelA/tmf-service/internal/middleware"
-	handler "github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/handlers"
+	handler "github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/handler"
 	local_middleware "github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/middleware"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/pub_sub"
 	repository "github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/repositories"
@@ -17,7 +17,7 @@ import (
 
 const DbCollectionName = "service_order"
 
-func New(api *middleware.APIWrapper, db *core.DatabaseMongo, ps *core.PubSub, l *core.Logger) {
+func New(api *middleware.APIWrapper, db *core.DatabaseMongo, ps *core.PubSub, l *core.Logger, tr *core.Tracer) {
 
 	// Initialize Mongo Repository
 	mongoDb := db.GetCore()
@@ -27,12 +27,13 @@ func New(api *middleware.APIWrapper, db *core.DatabaseMongo, ps *core.PubSub, l 
 		Logger:          l,
 	}
 
-	serviceOrderPubSub := pub_sub.NewServiceOrderPubSub(ps)
-	serviceOrderPubSub.RegisterSubscribers()
+	// Init PubSub
+	pubSub := pub_sub.NewServiceOrderPubSub(ps, tr)
+	pubSub.RegisterSubscribers()
 
 	// Initialize Handler
 	serviceOrderHandler := handler.NewServiceOrderHandler(repo, l)
-	serviceOrderOperators := registerOperators(serviceOrderHandler, serviceOrderPubSub, l)
+	serviceOrderOperators := registerOperators(serviceOrderHandler, pubSub, l)
 
 	serviceOrderServer := restapi.NewServer(serviceOrderOperators)
 	serviceOrderServer.ConfigureAPI()
@@ -48,7 +49,7 @@ func New(api *middleware.APIWrapper, db *core.DatabaseMongo, ps *core.PubSub, l 
 
 }
 
-func registerOperators(serviceOrderHandler *handler.ServiceOrderHandler, serviceOrderPubSub *pub_sub.ServiceOrderPubSub, l *core.Logger) *operations.TmfServiceOrderV42API {
+func registerOperators(serviceOrderHandler *handler.ServiceOrderHandler, pubSub *pub_sub.ServiceOrderPubSub, l *core.Logger) *operations.TmfServiceOrderV42API {
 	// Initialize Swagger
 	swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "")
 	if err != nil {
@@ -67,7 +68,7 @@ func registerOperators(serviceOrderHandler *handler.ServiceOrderHandler, service
 	serviceOrder.ServiceOrderListServiceOrderHandler = service_order.ListServiceOrderHandlerFunc(serviceOrderHandler.ListServiceOrderHandler)
 
 	patchServiceOrderHandler := serviceOrderHandler.PatchServiceOrderHandler
-	patchServiceOrderHandler = local_middleware.SendPatchServiceOrderEventMiddleware(serviceOrderPubSub, l, patchServiceOrderHandler)
+	patchServiceOrderHandler = local_middleware.SendPatchServiceOrderEventMiddleware(pubSub, l, patchServiceOrderHandler)
 	serviceOrder.ServiceOrderPatchServiceOrderHandler = service_order.PatchServiceOrderHandlerFunc(patchServiceOrderHandler)
 
 	serviceOrder.ServiceOrderRetrieveServiceOrderHandler = service_order.RetrieveServiceOrderHandlerFunc(serviceOrderHandler.RetrieveServiceOrderHandler)

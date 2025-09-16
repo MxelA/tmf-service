@@ -11,11 +11,13 @@ const (
 
 type ServiceOrderPubSub struct {
 	pubSub *core.PubSub
+	tr     *core.Tracer
 }
 
-func NewServiceOrderPubSub(ps *core.PubSub) *ServiceOrderPubSub {
+func NewServiceOrderPubSub(ps *core.PubSub, tr *core.Tracer) *ServiceOrderPubSub {
 	return &ServiceOrderPubSub{
 		pubSub: ps,
+		tr:     tr,
 	}
 }
 

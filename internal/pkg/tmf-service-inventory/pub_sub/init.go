@@ -13,13 +13,15 @@ type ServiceInventoryPubSub struct {
 	PubSub *core.PubSub
 	Logger *core.Logger
 	Repo   repository.ServiceInventoryRepository
+	Tracer *core.Tracer
 }
 
-func NewServiceInventoryPubSub(ps *core.PubSub, rep repository.ServiceInventoryRepository, l *core.Logger) *ServiceInventoryPubSub {
+func NewServiceInventoryPubSub(ps *core.PubSub, rep repository.ServiceInventoryRepository, l *core.Logger, tr *core.Tracer) *ServiceInventoryPubSub {
 	return &ServiceInventoryPubSub{
 		PubSub: ps,
 		Repo:   rep,
 		Logger: l,
+		Tracer: tr,
 	}
 }
 

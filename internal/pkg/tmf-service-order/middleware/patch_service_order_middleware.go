@@ -11,6 +11,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
+	"go.opentelemetry.io/otel"
 	"time"
 )
 
@@ -70,11 +71,11 @@ func processJsonPatch(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, req servic
 	}
 
 	if sendOrderStateChangeEvent {
-		sendServiceOrderStateChangeEvent(serviceOrderPubSub, okResp)
+		sendServiceOrderStateChangeEvent(serviceOrderPubSub, req, okResp)
 	}
 
 	if sendOrderAttributeValueChangeEvent {
-		sendServiceOrderAttributeValueChangeEvent(serviceOrderPubSub, okResp)
+		sendServiceOrderAttributeValueChangeEvent(serviceOrderPubSub, req, okResp)
 	}
 }
 
@@ -90,17 +91,17 @@ func processMergePatch(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, req servi
 	}
 
 	if utils.IsOnlyFieldSet(serviceOrderUpdate, "State") {
-		sendServiceOrderStateChangeEvent(serviceOrderPubSub, okResp)
+		sendServiceOrderStateChangeEvent(serviceOrderPubSub, req, okResp)
 	} else {
 		if serviceOrderUpdate.State != nil {
-			sendServiceOrderStateChangeEvent(serviceOrderPubSub, okResp)
+			sendServiceOrderStateChangeEvent(serviceOrderPubSub, req, okResp)
 		}
-		sendServiceOrderAttributeValueChangeEvent(serviceOrderPubSub, okResp)
+		sendServiceOrderAttributeValueChangeEvent(serviceOrderPubSub, req, okResp)
 	}
 
 }
 
-func sendServiceOrderStateChangeEvent(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, okResp *service_order.PatchServiceOrderOK) {
+func sendServiceOrderStateChangeEvent(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, req service_order.PatchServiceOrderParams, okResp *service_order.PatchServiceOrderOK) {
 	id := uuid.New().String()
 	eventType := "ServiceOrderStateChangeEvent"
 	eventTime := strfmt.DateTime(time.Now().UTC())
@@ -114,10 +115,14 @@ func sendServiceOrderStateChangeEvent(serviceOrderPubSub *pub_sub.ServiceOrderPu
 		EventTime: &eventTime,
 	}
 
+	tracer := otel.Tracer("serviceOrdering")
+	_, span := tracer.Start(req.HTTPRequest.Context(), eventType)
+	defer span.End()
+
 	serviceOrderPubSub.ServiceOrderStateChangePublisher(&serviceOrderStateChangeEvent)
 }
 
-func sendServiceOrderAttributeValueChangeEvent(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, okResp *service_order.PatchServiceOrderOK) {
+func sendServiceOrderAttributeValueChangeEvent(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, req service_order.PatchServiceOrderParams, okResp *service_order.PatchServiceOrderOK) {
 	id := uuid.New().String()
 	eventType := "ServiceOrderAttributeValueChangeEvent"
 	eventTime := strfmt.DateTime(time.Now().UTC())
@@ -131,5 +136,5 @@ func sendServiceOrderAttributeValueChangeEvent(serviceOrderPubSub *pub_sub.Servi
 		},
 	}
 
-	serviceOrderPubSub.ServiceOrderAttributeValueChangePublisher(&serviceOrderAttributeValueChange)
+	serviceOrderPubSub.ServiceOrderAttributeValueChangePublisher(&serviceOrderAttributeValueChange, req.HTTPRequest.Context())
 }

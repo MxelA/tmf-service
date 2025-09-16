@@ -16,6 +16,10 @@ func (app *app) initCore() {
 	logger := core.NewLogger()
 	app.Logger = logger
 
+	// Initialize Tracer
+	tracer := core.NewJaegerTracer(logger)
+	app.Tracer = tracer
+
 	// Initialize Mongo DB
 	db := core.NewDatabaseMongo(logger)
 	app.DBMongo = db
@@ -23,7 +27,7 @@ func (app *app) initCore() {
 	// Initialize Web Api
 	api := core.NewApi(logger)
 	apiWrapper := middleware.NewAPIWrapper(api.GetRouter(),
-		middleware.ApiLoggingMiddleware(logger),
+		middleware.ApiTraceMiddleware(tracer),
 	)
 	app.API = api
 	app.APIWrapper = apiWrapper
@@ -49,10 +53,11 @@ func (app *app) initPackages() {
 		apiWrapper = app.APIWrapper
 		pubSub     = app.PubSub
 		logger     = app.Logger
+		tracer     = app.Tracer
 	)
 
-	tmf_service_inventory.New(apiWrapper, db, pubSub, logger)
-	tmf_service_order.New(apiWrapper, db, pubSub, logger)
+	tmf_service_inventory.New(apiWrapper, db, pubSub, logger, tracer)
+	tmf_service_order.New(apiWrapper, db, pubSub, logger, tracer)
 
 	defer logger.GetCore().Info("Initialize packages done!")
 }

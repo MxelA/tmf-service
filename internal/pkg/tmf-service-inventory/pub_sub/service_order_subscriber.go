@@ -7,6 +7,8 @@ import (
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/swagger/tmf638v4_2/server/models"
 	"github.com/ThreeDotsLabs/watermill/message"
 	"github.com/jinzhu/copier"
+	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/trace"
 )
 
 func (serviceOrderInventoryPubSub *ServiceInventoryPubSub) ServiceOrderAttributeValueChangeSubscriber() {
@@ -15,34 +17,44 @@ func (serviceOrderInventoryPubSub *ServiceInventoryPubSub) ServiceOrderAttribute
 }
 
 func (serviceOrderInventoryPubSub *ServiceInventoryPubSub) serviceOrderChangeSubscriberHandler(msg *message.Message) error {
-	serviceOrderInventoryPubSub.Logger.GetCore().Info("Received message", "payload:", msg.Payload, "metadata", msg.Metadata)
+	//serviceOrderInventoryPubSub.Logger.GetCore().Info("Received message", "payload:", msg.Payload, "metadata", msg.Metadata)
+	traceContext := serviceOrderInventoryPubSub.Tracer.ExtractTraceFromEventMessage(msg)
 
-	services, err := parseServiceOrderStateChangeMsg(msg)
-	if err != nil {
-		return err
-	}
-
-	for _, service := range services {
-		if service.ID != nil {
-			serviceInventory, _ := serviceOrderInventoryPubSub.Repo.GetByID(context.Background(), *service.ID, nil, nil)
-			for _, serviceOrderItem := range serviceInventory.ServiceOrderItem {
-				if serviceOrderItem != nil && *serviceOrderItem.ServiceOrderID == *service.ServiceOrderItem[0].ServiceOrderID && serviceOrderItem.ItemID == service.ServiceOrderItem[0].ItemID {
-					return nil
-				}
-			}
-			service.ServiceOrderItem = append(serviceInventory.ServiceOrderItem, service.ServiceOrderItem[0])
-
-			_, err := serviceOrderInventoryPubSub.Repo.Update(context.Background(), *service.ID, service)
-			if err != nil {
-				return err
-			}
-		} else {
-			serviceCreate := MapToServiceCreate(*service)
-			_, _ = serviceOrderInventoryPubSub.Repo.Create(context.Background(), &serviceCreate)
+	_, err := serviceOrderInventoryPubSub.Tracer.Trace(traceContext, "ServiceOrderAttributeValueChangeEventTopic", "service-inventory", func(ctx context.Context) error {
+		span := trace.SpanFromContext(ctx)
+		span.AddEvent("Receive message from ServiceOrderAttributeValueChangeEvent")
+		services, err := parseServiceOrderStateChangeMsg(msg)
+		if err != nil {
+			span.AddEvent("Error parseServiceOrderStateChangeMsg", trace.WithAttributes(
+				attribute.String("error", err.Error()),
+			))
+			return err
 		}
-	}
+		span.AddEvent("Finish parsing ServiceOrderAttributeValueChangeEvent")
+		for _, service := range services {
+			if service.ID != nil {
+				serviceInventory, _ := serviceOrderInventoryPubSub.Repo.GetByID(context.Background(), *service.ID, nil, nil)
+				for _, serviceOrderItem := range serviceInventory.ServiceOrderItem {
+					if serviceOrderItem != nil && *serviceOrderItem.ServiceOrderID == *service.ServiceOrderItem[0].ServiceOrderID && serviceOrderItem.ItemID == service.ServiceOrderItem[0].ItemID {
+						return nil
+					}
+				}
+				service.ServiceOrderItem = append(serviceInventory.ServiceOrderItem, service.ServiceOrderItem[0])
 
-	return nil
+				_, err := serviceOrderInventoryPubSub.Repo.Update(context.Background(), *service.ID, service)
+				if err != nil {
+					return err
+				}
+			} else {
+				serviceCreate := MapToServiceCreate(*service)
+				_, _ = serviceOrderInventoryPubSub.Repo.Create(context.Background(), &serviceCreate)
+			}
+		}
+		span.AddEvent("Finished")
+		return nil
+	})
+
+	return err
 }
 
 func parseServiceOrderStateChangeMsg(msg *message.Message) ([]*models.Service, error) {

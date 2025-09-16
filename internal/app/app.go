@@ -27,6 +27,7 @@ type app struct {
 	DBMongo    *core.DatabaseMongo
 	Logger     *core.Logger
 	PubSub     *core.PubSub
+	Tracer     *core.Tracer
 }
 
 // // New would implement the App interface by

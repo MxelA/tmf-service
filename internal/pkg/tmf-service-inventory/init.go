@@ -17,7 +17,7 @@ import (
 
 const DbCollectionName = "service_testing"
 
-func New(api *middleware.APIWrapper, db *core.DatabaseMongo, pubSub *core.PubSub, l *core.Logger) {
+func New(api *middleware.APIWrapper, db *core.DatabaseMongo, pubSub *core.PubSub, l *core.Logger, tr *core.Tracer) {
 
 	// Initialize Mongo Repository
 	mongoDb := db.GetCore()
@@ -28,7 +28,7 @@ func New(api *middleware.APIWrapper, db *core.DatabaseMongo, pubSub *core.PubSub
 	}
 
 	// Register Subscribers
-	serviceInventoryPubSub := pub_sub.NewServiceInventoryPubSub(pubSub, repo, l)
+	serviceInventoryPubSub := pub_sub.NewServiceInventoryPubSub(pubSub, repo, l, tr)
 	serviceInventoryPubSub.RegisterSubscribers()
 
 	// Initialize Handler
