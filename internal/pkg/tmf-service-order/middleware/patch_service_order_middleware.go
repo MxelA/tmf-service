@@ -3,22 +3,18 @@ package middleware
 import (
 	"encoding/json"
 	"github.com/MxelA/tmf-service/internal/core"
-	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/pub_sub"
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/event"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/swagger/tmf641v4_2/server/models"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/swagger/tmf641v4_2/server/restapi/operations/service_order"
 	"github.com/MxelA/tmf-service/internal/utils"
 	jsonpatch "github.com/evanphx/json-patch/v5"
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/go-openapi/strfmt"
-	"github.com/google/uuid"
-	"go.opentelemetry.io/otel"
-	"time"
 )
 
 type PatchServiceOrderFunc func(service_order.PatchServiceOrderParams) middleware.Responder
 
 func SendPatchServiceOrderEventMiddleware(
-	serviceOrderPubSub *pub_sub.ServiceOrderPubSub,
+	eventFactory *event.EventFactory,
 	l *core.Logger,
 	next PatchServiceOrderFunc,
 ) PatchServiceOrderFunc {
@@ -33,9 +29,9 @@ func SendPatchServiceOrderEventMiddleware(
 		patchMediaType := utils.DetectPatchMediaType(req.HTTPRequest.Header)
 		switch *patchMediaType {
 		case utils.JSONPatch:
-			processJsonPatch(serviceOrderPubSub, req, okResp, l)
+			processJsonPatch(eventFactory, req, okResp)
 		case utils.MergePatch:
-			processMergePatch(serviceOrderPubSub, req, okResp, l)
+			processMergePatch(eventFactory, req, okResp)
 		}
 
 		l.GetCore().Info("SendPatchServiceOrderEventMiddleware")
@@ -43,7 +39,7 @@ func SendPatchServiceOrderEventMiddleware(
 	}
 }
 
-func processJsonPatch(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, req service_order.PatchServiceOrderParams, okResp *service_order.PatchServiceOrderOK, l *core.Logger) {
+func processJsonPatch(eventFactory *event.EventFactory, req service_order.PatchServiceOrderParams, okResp *service_order.PatchServiceOrderOK) {
 
 	//marshal to json bytes
 	raw, err := json.Marshal(req.ServiceOrder)
@@ -71,15 +67,15 @@ func processJsonPatch(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, req servic
 	}
 
 	if sendOrderStateChangeEvent {
-		sendServiceOrderStateChangeEvent(serviceOrderPubSub, req, okResp)
+		eventFactory.SendServiceOrderStateChangeEvent(okResp.Payload, req.HTTPRequest.Context())
 	}
 
 	if sendOrderAttributeValueChangeEvent {
-		sendServiceOrderAttributeValueChangeEvent(serviceOrderPubSub, req, okResp)
+		eventFactory.SendServiceOrderAttributeValueChangeEvent(okResp.Payload, req.HTTPRequest.Context())
 	}
 }
 
-func processMergePatch(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, req service_order.PatchServiceOrderParams, okResp *service_order.PatchServiceOrderOK, l *core.Logger) {
+func processMergePatch(eventFactory *event.EventFactory, req service_order.PatchServiceOrderParams, okResp *service_order.PatchServiceOrderOK) {
 	raw, err := json.Marshal(req.ServiceOrder)
 	if err != nil {
 		return
@@ -91,50 +87,11 @@ func processMergePatch(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, req servi
 	}
 
 	if utils.IsOnlyFieldSet(serviceOrderUpdate, "State") {
-		sendServiceOrderStateChangeEvent(serviceOrderPubSub, req, okResp)
+		eventFactory.SendServiceOrderStateChangeEvent(okResp.Payload, req.HTTPRequest.Context())
 	} else {
 		if serviceOrderUpdate.State != nil {
-			sendServiceOrderStateChangeEvent(serviceOrderPubSub, req, okResp)
+			eventFactory.SendServiceOrderStateChangeEvent(okResp.Payload, req.HTTPRequest.Context())
 		}
-		sendServiceOrderAttributeValueChangeEvent(serviceOrderPubSub, req, okResp)
+		eventFactory.SendServiceOrderAttributeValueChangeEvent(okResp.Payload, req.HTTPRequest.Context())
 	}
-
-}
-
-func sendServiceOrderStateChangeEvent(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, req service_order.PatchServiceOrderParams, okResp *service_order.PatchServiceOrderOK) {
-	id := uuid.New().String()
-	eventType := "ServiceOrderStateChangeEvent"
-	eventTime := strfmt.DateTime(time.Now().UTC())
-
-	serviceOrderStateChangeEvent := models.ServiceOrderStateChangeEvent{
-		CorrelationID: &id,
-		EventType:     &eventType,
-		Event: &models.ServiceOrderStateChangeEventPayload{
-			ServiceOrder: okResp.Payload,
-		},
-		EventTime: &eventTime,
-	}
-
-	tracer := otel.Tracer("serviceOrdering")
-	_, span := tracer.Start(req.HTTPRequest.Context(), eventType)
-	defer span.End()
-
-	serviceOrderPubSub.ServiceOrderStateChangePublisher(&serviceOrderStateChangeEvent)
-}
-
-func sendServiceOrderAttributeValueChangeEvent(serviceOrderPubSub *pub_sub.ServiceOrderPubSub, req service_order.PatchServiceOrderParams, okResp *service_order.PatchServiceOrderOK) {
-	id := uuid.New().String()
-	eventType := "ServiceOrderAttributeValueChangeEvent"
-	eventTime := strfmt.DateTime(time.Now().UTC())
-
-	serviceOrderAttributeValueChange := models.ServiceOrderAttributeValueChangeEvent{
-		CorrelationID: &id,
-		EventType:     &eventType,
-		EventTime:     &eventTime,
-		Event: &models.ServiceOrderAttributeValueChangeEventPayload{
-			ServiceOrder: okResp.Payload,
-		},
-	}
-
-	serviceOrderPubSub.ServiceOrderAttributeValueChangePublisher(&serviceOrderAttributeValueChange, req.HTTPRequest.Context())
 }
