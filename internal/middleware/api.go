@@ -1,10 +1,12 @@
 package middleware
 
 import (
+	"bytes"
 	"context"
 	"github.com/MxelA/tmf-service/internal/core"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
+	"io"
 	"net/http"
 	"time"
 )
@@ -12,7 +14,7 @@ import (
 // Middleware function type
 type Middleware func(http.Handler) http.Handler
 
-// ChainMiddleware primenjuje više middleware-a na handler
+// ChainMiddleware apply multiple  middlewares on handlers
 func ChainMiddleware(h http.Handler, mws ...Middleware) http.Handler {
 	for i := len(mws) - 1; i >= 0; i-- {
 		h = mws[i](h)
@@ -26,7 +28,7 @@ type APIWrapper struct {
 	GlobalMws []Middleware
 }
 
-// NewAPIWrapper kreira novi wrapper
+// NewAPIWrapper create new  wrapper
 func NewAPIWrapper(router *http.ServeMux, globalMws ...Middleware) *APIWrapper {
 	return &APIWrapper{
 		Router:    router,
@@ -60,10 +62,6 @@ func ApiLoggingMiddleware(l *core.Logger) func(http.Handler) http.Handler {
 }
 
 func ApiTraceMiddleware(t *core.Tracer) func(http.Handler) http.Handler {
-	type statusRecorder struct {
-		http.ResponseWriter
-		status int
-	}
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
@@ -74,17 +72,29 @@ func ApiTraceMiddleware(t *core.Tracer) func(http.Handler) http.Handler {
 					attribute.String("url.path", r.URL.Path),
 				)
 
-				span.AddEvent("Request received", trace.WithAttributes(
-					attribute.String("payload", "{}"),
-				))
+				if r.Body != nil {
+					// Keep original Body
+					bodyBytes, err := io.ReadAll(r.Body)
+					if err != nil {
+						span.AddEvent("Failed to read request body", trace.WithAttributes(
+							attribute.String("payload", err.Error()),
+						))
+					} else if len(bodyBytes) > 0 {
+						// (Limit to 1KB)
+						//max := 1024
+						//if len(bodyBytes) > max {
+						//	bodyBytes = bodyBytes[:max]
+						//}
+						span.AddEvent("Request received", trace.WithAttributes(
+							attribute.String("payload", string(bodyBytes)),
+						))
+					}
 
-				recorder := &statusRecorder{ResponseWriter: w, status: 200}
+					// r.Body original stream
+					r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
+				}
 
 				next.ServeHTTP(w, r.WithContext(ctx))
-
-				span.AddEvent("Response sent", trace.WithAttributes(
-					attribute.Int("status", recorder.status),
-				))
 
 				return nil
 			})

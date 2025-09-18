@@ -3,7 +3,7 @@ package middleware
 import (
 	"encoding/json"
 	"github.com/MxelA/tmf-service/internal/core"
-	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/event"
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/event/publisher"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/swagger/tmf641v4_2/server/models"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-order/swagger/tmf641v4_2/server/restapi/operations/service_order"
 	"github.com/MxelA/tmf-service/internal/utils"
@@ -14,7 +14,7 @@ import (
 type PatchServiceOrderFunc func(service_order.PatchServiceOrderParams) middleware.Responder
 
 func SendPatchServiceOrderEventMiddleware(
-	eventFactory *event.EventFactory,
+	eventPublisher *publisher.EventPublisher,
 	l *core.Logger,
 	next PatchServiceOrderFunc,
 ) PatchServiceOrderFunc {
@@ -29,9 +29,9 @@ func SendPatchServiceOrderEventMiddleware(
 		patchMediaType := utils.DetectPatchMediaType(req.HTTPRequest.Header)
 		switch *patchMediaType {
 		case utils.JSONPatch:
-			processJsonPatch(eventFactory, req, okResp)
+			processJsonPatch(eventPublisher, req, okResp)
 		case utils.MergePatch:
-			processMergePatch(eventFactory, req, okResp)
+			processMergePatch(eventPublisher, req, okResp)
 		}
 
 		l.GetCore().Info("SendPatchServiceOrderEventMiddleware")
@@ -39,7 +39,7 @@ func SendPatchServiceOrderEventMiddleware(
 	}
 }
 
-func processJsonPatch(eventFactory *event.EventFactory, req service_order.PatchServiceOrderParams, okResp *service_order.PatchServiceOrderOK) {
+func processJsonPatch(eventPublisher *publisher.EventPublisher, req service_order.PatchServiceOrderParams, okResp *service_order.PatchServiceOrderOK) {
 
 	//marshal to json bytes
 	raw, err := json.Marshal(req.ServiceOrder)
@@ -67,15 +67,15 @@ func processJsonPatch(eventFactory *event.EventFactory, req service_order.PatchS
 	}
 
 	if sendOrderStateChangeEvent {
-		eventFactory.SendServiceOrderStateChangeEvent(okResp.Payload, req.HTTPRequest.Context())
+		eventPublisher.SendServiceOrderStateChangeEvent(okResp.Payload, req.HTTPRequest.Context())
 	}
 
 	if sendOrderAttributeValueChangeEvent {
-		eventFactory.SendServiceOrderAttributeValueChangeEvent(okResp.Payload, req.HTTPRequest.Context())
+		eventPublisher.SendServiceOrderAttributeValueChangeEvent(okResp.Payload, req.HTTPRequest.Context())
 	}
 }
 
-func processMergePatch(eventFactory *event.EventFactory, req service_order.PatchServiceOrderParams, okResp *service_order.PatchServiceOrderOK) {
+func processMergePatch(eventPublisher *publisher.EventPublisher, req service_order.PatchServiceOrderParams, okResp *service_order.PatchServiceOrderOK) {
 	raw, err := json.Marshal(req.ServiceOrder)
 	if err != nil {
 		return
@@ -87,11 +87,11 @@ func processMergePatch(eventFactory *event.EventFactory, req service_order.Patch
 	}
 
 	if utils.IsOnlyFieldSet(serviceOrderUpdate, "State") {
-		eventFactory.SendServiceOrderStateChangeEvent(okResp.Payload, req.HTTPRequest.Context())
+		eventPublisher.SendServiceOrderStateChangeEvent(okResp.Payload, req.HTTPRequest.Context())
 	} else {
 		if serviceOrderUpdate.State != nil {
-			eventFactory.SendServiceOrderStateChangeEvent(okResp.Payload, req.HTTPRequest.Context())
+			eventPublisher.SendServiceOrderStateChangeEvent(okResp.Payload, req.HTTPRequest.Context())
 		}
-		eventFactory.SendServiceOrderAttributeValueChangeEvent(okResp.Payload, req.HTTPRequest.Context())
+		eventPublisher.SendServiceOrderAttributeValueChangeEvent(okResp.Payload, req.HTTPRequest.Context())
 	}
 }

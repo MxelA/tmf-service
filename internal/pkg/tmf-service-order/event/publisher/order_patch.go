@@ -1,4 +1,4 @@
-package event
+package publisher
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (ef *EventFactory) SendServiceOrderStateChangeEvent(serviceOrder *models.ServiceOrder, ctx context.Context) {
+func (ef *EventPublisher) SendServiceOrderStateChangeEvent(serviceOrder *models.ServiceOrder, ctx context.Context) {
 	id := uuid.New().String()
 	eventType := "ServiceOrderStateChangeEvent"
 	eventTime := strfmt.DateTime(time.Now().UTC())
@@ -25,7 +25,7 @@ func (ef *EventFactory) SendServiceOrderStateChangeEvent(serviceOrder *models.Se
 	ef.pubSub.ServiceOrderStateChangePublisher(&serviceOrderStateChangeEvent)
 }
 
-func (ef *EventFactory) SendServiceOrderAttributeValueChangeEvent(serviceOrder *models.ServiceOrder, ctx context.Context) {
+func (ef *EventPublisher) SendServiceOrderAttributeValueChangeEvent(serviceOrder *models.ServiceOrder, ctx context.Context) {
 	id := uuid.New().String()
 	eventType := "ServiceOrderAttributeValueChangeEvent"
 	eventTime := strfmt.DateTime(time.Now().UTC())
