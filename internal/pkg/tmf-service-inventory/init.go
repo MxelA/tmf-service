@@ -3,6 +3,7 @@ package tmf_service_inventory
 import (
 	"github.com/MxelA/tmf-service/internal/core"
 	"github.com/MxelA/tmf-service/internal/middleware"
+	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/event/subscriber"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/handler"
 	local_middleware "github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/middleware"
 	"github.com/MxelA/tmf-service/internal/pkg/tmf-service-inventory/pub_sub"
@@ -28,7 +29,8 @@ func New(api *middleware.APIWrapper, db *core.DatabaseMongo, pubSub *core.PubSub
 	}
 
 	// Register Subscribers
-	serviceInventoryPubSub := pub_sub.NewServiceInventoryPubSub(pubSub, repo, l, tr)
+	eventSubscriber := subscriber.NewEventSubscriber(repo, tr, l)
+	serviceInventoryPubSub := pub_sub.NewServiceInventoryPubSub(pubSub, eventSubscriber)
 	serviceInventoryPubSub.RegisterSubscribers()
 
 	// Initialize Handler
