@@ -1,4 +1,21 @@
 services:
+  app:
+    build: .
+    ports:
+      - "8081:80"
+    env_file: .env
+    environment:
+      - MONGO_DB_HOST=mongo
+      - MONGO_DB_PORT=${MONGO_DB_PORT}
+      - MONGO_DB_USERNAME=${MONGO_DB_USERNAME}
+      - MONGO_DB_PASSWORD=${MONGO_DB_PASSWORD}
+      - MONGO_DB_DATABASE=${MONGO_DB_DATABASE}
+      - JAEGER_COLLECTOR_HOST=${JAEGER_COLLECTOR_HOST}
+    depends_on:
+      - mongo
+    networks:
+      - tmf-network
+
   mongo:
     image: mongo:8.0
     container_name: db-mongo
@@ -11,6 +28,28 @@ services:
       MONGO_INITDB_DATABASE: ${MONGO_DB_DATABASE}
     volumes:
       - mongo_data:/data/db
+    networks:
+      - tmf-network
 
+  jaeger:
+    image: jaegertracing/all-in-one:1.53
+    container_name: jaeger
+    restart: unless-stopped
+    ports:
+      - "5775:5775/udp"   # agent compact thrift
+      - "6831:6831/udp"   # agent binary thrift
+      - "6832:6832/udp"   # agent compact thrift
+      - "5778:5778"       # agent HTTP
+      - "16686:16686"     # Jaeger UI
+      - "4318:4318"       # collector HTTP endpoint
+      - "14250:14250"     # collector gRPC endpoint
+      - "9411:9411"       # Zipkin compatible
+    environment:
+      - COLLECTOR_ZIPKIN_HTTP_PORT=9411
+      - COLLECTOR_OTLP_ENABLED=true
+      - LOG_LEVEL=debug
+networks:
+  tmf-network:
+    driver: bridge
 volumes:
   mongo_data:
